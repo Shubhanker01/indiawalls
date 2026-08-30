@@ -8,6 +8,8 @@ import OurWorkMinimal from "@/components/OurWork";
 import ManufacturingUnits from "@/components/ManufacturingUnits";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ClienteleSection from "@/components/ClientelSection";
+import FaqSection from "@/components/FaqSection";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -166,7 +168,7 @@ export default function Home() {
             <div className="h-56 bg-slate-200 relative">
               {/* Replace with Next Image */}
               <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
-                Precast RCC Wall Image
+                <Image src='/PreCastWallImage.webp' alt="Precase Wall Image" fill></Image>
               </div>
             </div>
             <div className="p-6">
@@ -183,7 +185,7 @@ export default function Home() {
           <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
             <div className="h-56 bg-slate-200 relative">
               <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
-                Designer Stone Wall Image
+                <Image src='/DesignerStoneWalls.webp' alt="Designer Stone Walls" fill></Image>
               </div>
             </div>
             <div className="p-6">
@@ -200,7 +202,7 @@ export default function Home() {
           <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
             <div className="h-56 bg-slate-200 relative">
               <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
-                Paver Block Image
+                <Image src='/PaverBlocks.webp' alt="Paver Blocks" fill></Image>
               </div>
             </div>
             <div className="p-6">
@@ -221,43 +223,9 @@ export default function Home() {
       <ManufacturingUnits />
       <TestimonialsSection />
       <ClienteleSection />
+      <FaqSection />
       {/* 5. FOOTER */}
-      <footer className="bg-slate-900 text-slate-400 py-12 px-4 sm:px-8 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto grid md:grid-cols-4 gap-8 mb-8">
-          <div>
-            <h4 className="text-white font-black text-xl mb-4">INDIA<span className="text-amber-500">WALLS</span></h4>
-            <p className="text-sm text-slate-400 leading-relaxed">
-              Indiawalls Infratech Pvt. Ltd. provides engineered precast wall solutions for property security across NCR & Rajasthan.
-            </p>
-          </div>
-          <div>
-            <h5 className="text-white font-bold mb-3">Quick Links</h5>
-            <ul className="space-y-2 text-sm">
-              <li><Link href="#products" className="hover:text-white transition">Precast Boundary Walls</Link></li>
-              <li><Link href="#products" className="hover:text-white transition">Interlocking Pavers</Link></li>
-              <li><Link href="#products" className="hover:text-white transition">Fencing Poles</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h5 className="text-white font-bold mb-3">Target Regions</h5>
-            <ul className="space-y-2 text-sm">
-              <li>Alwar & Chopanki</li>
-              <li>Bhiwadi Industrial Area</li>
-              <li>Gurugram & Delhi NCR</li>
-              <li>Faridabad & Palwal</li>
-            </ul>
-          </div>
-          <div>
-            <h5 className="text-white font-bold mb-3">Contact Information</h5>
-            <p className="text-sm">📞 +91 78208 79777</p>
-            <p className="text-sm mt-1">✉️ info@indiawalls.in</p>
-            <p className="text-sm mt-1">📍 Khasra No. 251, Tehsil Tapukara, Alwar, Rajasthan - 301707</p>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
-          © {new Date().getFullYear()} Indiawalls Infratech Private Limited. All rights reserved.
-        </div>
-      </footer>
+      <Footer />
 
     </div>
   );
