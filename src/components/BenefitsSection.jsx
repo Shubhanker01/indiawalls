@@ -53,13 +53,13 @@ export default function BenefitsSection() {
 
                 {/* SECTION HEADER */}
                 <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                    <span className="text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-md border border-amber-200">
+                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-md border border-amber-200">
                         Structural Advantages
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4">
                         Benefits of Reinforced Concrete Walls
                     </h2>
-                    <p className="text-slate-600 text-sm sm:text-base">
+                    <p className="text-slate-700 text-sm sm:text-base">
                         Why leading site developers and landowners across NCR choose precast RCC walls over traditional brick boundaries.
                     </p>
                 </div>

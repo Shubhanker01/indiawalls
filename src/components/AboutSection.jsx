@@ -27,7 +27,7 @@ export default function AboutSection() {
 
                     {/* About Content */}
                     <div className="lg:col-span-7 space-y-6">
-                        <div className="inline-block text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-md border border-amber-200">
+                        <div className="inline-block text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-md border border-amber-200">
                             Established in 2016
                         </div>
 

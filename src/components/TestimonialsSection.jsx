@@ -32,13 +32,13 @@ export default function TestimonialsSection() {
 
                 {/* SECTION HEADER */}
                 <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                    <span className="text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-200">
+                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Client Feedback
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4">
                         What Our Customers Say
                     </h2>
-                    <p className="text-slate-600 text-sm sm:text-base">
+                    <p className="text-slate-700 text-sm sm:text-base">
                         Feedback from site developers, landowners, and contractors who trust our precast concrete boundary solutions.
                     </p>
                 </div>

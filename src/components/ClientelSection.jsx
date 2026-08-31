@@ -18,7 +18,7 @@ export default function ClienteleSection() {
     return (
         <section className="py-16 bg-white border-y border-slate-200 overflow-hidden" id="clientele">
             <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-10 text-center">
-                <span className="text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200">
+                <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200">
                     Trusted Partners
                 </span>
                 <h2 className="text-2xl sm:text-3xl font-black text-slate-900 mt-2">

@@ -43,10 +43,10 @@ export default function ProjectProcess() {
 
                 {/* SECTION HEADER */}
                 <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                    <span className="text-xs font-bold text-amber-600 uppercase tracking-widest bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-200">
+                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-200 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Our Process
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4">
                         How We Complete a Full Project
                     </h2>
                     <p className="text-slate-600 text-sm sm:text-base">
@@ -59,7 +59,7 @@ export default function ProjectProcess() {
                     {processSteps.map((item, index) => (
                         <div
                             key={index}
-                            className="bg-white border border-slate-200 rounded-2xl p-6 relative flex flex-col justify-between shadow-sm hover:shadow-md transition group"
+                            className="bg-white border border-slate-400 rounded-2xl p-6 relative flex flex-col justify-between shadow-sm hover:shadow-md transition group"
                         >
                             <div>
                                 {/* Step Badge & Icon */}
@@ -67,7 +67,7 @@ export default function ProjectProcess() {
                                     <span className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center font-bold text-lg">
                                         {item.icon}
                                     </span>
-                                    <span className="text-3xl font-black text-slate-200 group-hover:text-amber-500 transition">
+                                    <span className="text-3xl font-black text-slate-500 group-hover:text-amber-500 transition">
                                         {item.step}
                                     </span>
                                 </div>
@@ -75,7 +75,7 @@ export default function ProjectProcess() {
                                 <h3 className="text-lg font-bold text-slate-900 mb-2">
                                     {item.title}
                                 </h3>
-                                <p className="text-slate-600 text-xs leading-relaxed">
+                                <p className="text-slate-700 text-xs leading-relaxed">
                                     {item.description}
                                 </p>
                             </div>

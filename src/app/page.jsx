@@ -19,10 +19,10 @@ export default function Home() {
       <div className="bg-slate-900 text-slate-300 text-sm py-2 px-4 sm:px-8 border-b border-slate-800">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
           <p className="text-xs sm:text-sm">
-            📍 Manufacturing Plants: <span className="text-amber-400 font-medium">Alwar • Bhiwadi • Gurugram • Panipat</span>
+            📍 Manufacturing Plants: <span className="text-amber-500 font-medium">Alwar • Bhiwadi • Gurugram • Panipat</span>
           </p>
           <div className="flex items-center space-x-6 text-xs sm:text-sm">
-            <a href="tel:+917820879777" className="hover:text-white transition">📞 +91 78208 79777</a>
+            <a href="tel:+917820879777" className="hover:text-white transition text-slate-100">📞 +91 78208 79777</a>
             <a href="https://wa.me/919653545525" className="text-emerald-400 font-semibold hover:text-emerald-300 transition">💬 WhatsApp Us</a>
           </div>
         </div>
@@ -44,17 +44,17 @@ export default function Home() {
             />
           </Link>
 
-          <div className="hidden md:flex items-center space-x-8 font-medium text-slate-700">
-            <Link href="/" className="text-amber-600">Home</Link>
-            <Link href="#products" className="hover:text-amber-600 transition">Products</Link>
-            <Link href="#why-us" className="hover:text-amber-600 transition">Why Us</Link>
-            <Link href="#gallery" className="hover:text-amber-600 transition">Projects</Link>
-            <Link href="#contact" className="hover:text-amber-600 transition">Contact</Link>
+          <div className="hidden md:flex items-center space-x-8 font-medium text-slate-800">
+            <Link href="/" className="text-amber-800">Home</Link>
+            <Link href="#products" className="hover:text-amber-800 transition">Products</Link>
+            <Link href="#why-us" className="hover:text-amber-800 transition">Why Us</Link>
+            <Link href="#gallery" className="hover:text-amber-800 transition">Projects</Link>
+            <Link href="#contact" className="hover:text-amber-800 transition">Contact</Link>
           </div>
 
           <a
             href="#quote"
-            className="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-lg transition shadow-md hover:shadow-lg"
+            className="bg-amber-700 hover:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-lg transition shadow-md hover:shadow-lg"
           >
             Get Custom Quote
           </a>
@@ -127,14 +127,14 @@ export default function Home() {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">Project Location</label>
-                <select className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none">
-                  <option>Select City</option>
-                  <option>Bhiwadi / Chopanki</option>
-                  <option>Alwar / MIA</option>
-                  <option>Gurugram / NCR</option>
-                  <option>Faridabad / Palwal</option>
-                  <option>Other</option>
+                <label htmlFor="city-select" className="block text-xs font-semibold text-slate-700 uppercase mb-1">Project Location</label>
+                <select id="city-select" name="city" className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none">
+                  <option value="">Select City</option>
+                  <option value="Bhiwadi">Bhiwadi / Chopanki</option>
+                  <option value="Alwar">Alwar / MIA</option>
+                  <option value="Gurugram">Gurugram / NCR</option>
+                  <option value="Faridabad">Faridabad / Palwal</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
@@ -172,9 +172,9 @@ export default function Home() {
               </div>
             </div>
             <div className="p-6">
-              <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">Most Popular</span>
-              <h3 className="text-xl font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Precast RCC Boundary Walls</h3>
-              <p className="text-slate-600 text-sm mb-4">Strong interlocked precast panels supported by pre-stressed concrete posts. Weather-proof and relocatable.</p>
+              <span className="text-md font-bold text-amber-700 uppercase tracking-wider">Most Popular</span>
+              <h3 className="text-md font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Precast RCC Boundary Walls</h3>
+              <p className="text-slate-800 text-sm mb-4">Strong interlocked precast panels supported by pre-stressed concrete posts. Weather-proof and relocatable.</p>
               <Link href="/products/precast-walls" className="text-amber-600 font-semibold text-sm hover:underline">
                 View Specs & Designs →
               </Link>
@@ -189,9 +189,9 @@ export default function Home() {
               </div>
             </div>
             <div className="p-6">
-              <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">Aesthetic Finish</span>
-              <h3 className="text-xl font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Designer Stone Texture Walls</h3>
-              <p className="text-slate-600 text-sm mb-4">Precast concrete molded with natural stone patterns. Ideal for farmhouses, villas, and premium commercial plots.</p>
+              <span className="text-md font-bold text-amber-700 uppercase tracking-wider">Aesthetic Finish</span>
+              <h3 className="text-md font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Designer Stone Texture Walls</h3>
+              <p className="text-slate-800 text-sm mb-4">Precast concrete molded with natural stone patterns. Ideal for farmhouses, villas, and premium commercial plots.</p>
               <Link href="/products/designer-walls" className="text-amber-600 font-semibold text-sm hover:underline">
                 Explore Patterns →
               </Link>
@@ -206,9 +206,9 @@ export default function Home() {
               </div>
             </div>
             <div className="p-6">
-              <span className="text-xs font-bold text-amber-600 uppercase tracking-wider">Heavy Duty</span>
-              <h3 className="text-xl font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Interlocking Paver Blocks</h3>
-              <p className="text-slate-600 text-sm mb-4">High-density interlocking concrete blocks built for industrial driveways, parking lots, and walkways.</p>
+              <span className="text-md font-bold text-amber-700 uppercase tracking-wider">Heavy Duty</span>
+              <h3 className="text-md font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Interlocking Paver Blocks</h3>
+              <p className="text-slate-800 text-sm mb-4">High-density interlocking concrete blocks built for industrial driveways, parking lots, and walkways.</p>
               <Link href="/products/paver-blocks" className="text-amber-600 font-semibold text-sm hover:underline">
                 View Thickness & Shapes →
               </Link>
