@@ -50,7 +50,11 @@ export default function OurWorkMinimal() {
                                 <img
                                     src={item.image}
                                     alt={item.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                    className="w-1/2 h-1/2
+                                    fill
+                                    group-hover:scale-105 transition-transform duration-300"
+                                    height={100}
+                                    width={100}
                                 />
                             </div>
                             <div className="p-4 bg-slate-800 text-center">

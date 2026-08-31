@@ -168,7 +168,7 @@ export default function Home() {
             <div className="h-56 bg-slate-200 relative">
               {/* Replace with Next Image */}
               <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
-                <Image src='/PreCastWallImage.webp' alt="Precase Wall Image" fill></Image>
+                <Image src='/PreCastWallImage.webp' alt="Precase Wall Image" fill width={100} height={100}></Image>
               </div>
             </div>
             <div className="p-6">
