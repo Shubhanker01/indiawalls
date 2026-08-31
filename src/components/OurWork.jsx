@@ -50,8 +50,7 @@ export default function OurWorkMinimal() {
                                 <img
                                     src={item.image}
                                     alt={item.title}
-                                    className="w-1/2 h-1/2
-                                    fill
+                                    className="h-full w-full
                                     group-hover:scale-105 transition-transform duration-300"
                                     height={100}
                                     width={100}
