@@ -1,16 +1,31 @@
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from 'next/dynamic';
 import AboutSection from "../components/AboutSection"
 import WhyUsSection from "@/components/WhyUsSection";
-import ProjectProcess from "@/components/ProjectProcess";
-import BenefitsSection from "@/components/BenefitsSection";
-import OurWorkMinimal from "@/components/OurWork";
-import ManufacturingUnits from "@/components/ManufacturingUnits";
-import TestimonialsSection from "@/components/TestimonialsSection";
-import ClienteleSection from "@/components/ClientelSection";
-import FaqSection from "@/components/FaqSection";
-import Footer from "@/components/Footer";
+const ProjectProcess = dynamic(() => import("@/components/ProjectProcess"));
+const BenefitsSection = dynamic(() => import("@/components/BenefitsSection"));
+const OurWorkMinimal = dynamic(() => import("@/components/OurWork"));
+const ClienteleSection = dynamic(() => import("@/components/ClientelSection"));
 
+const ManufacturingUnits = dynamic(
+  () => import("@/components/ManufacturingUnits"),
+  {
+    loading: () => <div className="h-96 bg-slate-100 animate-pulse rounded-2xl my-8" />,
+  }
+);
+
+const TestimonialsSection = dynamic(
+  () => import("@/components/TestimonialsSection")
+);
+
+const FaqSection = dynamic(
+  () => import("@/components/FaqSection")
+);
+
+const Footer = dynamic(
+  () => import("@/components/Footer")
+);
 export default function Home() {
   return (
     <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
