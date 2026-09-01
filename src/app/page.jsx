@@ -1,3 +1,4 @@
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
@@ -30,33 +31,36 @@ const Footer = dynamic(
 );
 export default function Home() {
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
+    <>
+      <SpeedInsights />
+      <div className="min-h-screen bg-slate-50 text-slate-900 font-sans">
 
-      {/* 1. TOP HEADER / CONTACT BAR */}
-      <Header />
+        {/* 1. TOP HEADER / CONTACT BAR */}
+        <Header />
 
-      {/* 2. NAVIGATION BAR */}
-      <Navbar />
+        {/* 2. NAVIGATION BAR */}
+        <Navbar />
 
-      {/* 3. HERO SECTION */}
-      <HeroSection />
+        {/* 3. HERO SECTION */}
+        <HeroSection />
 
-      <AboutSection />
-      <WhyUsSection />
-      <ProjectProcess />
-      {/* 4. PRODUCT CATALOG */}
-      <ProductCatalog />
+        <AboutSection />
+        <WhyUsSection />
+        <ProjectProcess />
+        {/* 4. PRODUCT CATALOG */}
+        <ProductCatalog />
 
-      <BenefitsSection />
-      <OurWorkMinimal />
-      <ManufacturingUnits />
-      <TestimonialsSection />
-      <ClienteleSection />
-      <FaqSection />
-      {/* 5. FOOTER */}
-      <Footer />
+        <BenefitsSection />
+        <OurWorkMinimal />
+        <ManufacturingUnits />
+        <TestimonialsSection />
+        <ClienteleSection />
+        <FaqSection />
+        {/* 5. FOOTER */}
+        <Footer />
 
-    </div>
+      </div>
+    </>
   );
 
 }
