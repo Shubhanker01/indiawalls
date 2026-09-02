@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-const blogPosts = [
+export const blogPosts = [
     {
         id: 1,
         title: 'Precast Concrete vs. Traditional Brick Boundary Walls: Cost & Speed Comparison',
@@ -22,18 +22,18 @@ const blogPosts = [
         date: 'Apr 28, 2026',
         readTime: '6 min read',
         image: '/images/blogs/How-Precast-Walls-Save-Time-and-Add-Strength.png',
-        slug: 'prestressed-steel-strands-boundary-wall-durability',
+        slug: 'how-precast-walls-build-faster-and-stronger',
     },
     {
         id: 3,
-        title: 'Complete Site Preparation Guide for Installing Precast Compound Walls',
+        title: 'Which Interlocking Paver Blocks Last the Longest?',
         excerpt:
             'Step-by-step checklist for civil contractors: soil excavation, post-hole alignment, and foundation grouting required before erecting precast RCC posts.',
         category: 'Installation Guide',
         date: 'Mar 15, 2026',
         readTime: '5 min read',
         image: '/images/blogs/Which-Interlocking-Paver-Blocks-Last-the-Longest-3.png.bv.webp',
-        slug: 'site-preparation-guide-precast-installation',
+        slug: 'interlocking-paver-block-manufacturer-alwar-rajasthan',
     },
 ];
 
