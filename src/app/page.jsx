@@ -29,6 +29,10 @@ const FaqSection = dynamic(
 const Footer = dynamic(
   () => import("@/components/Footer")
 );
+
+const BlogSection = dynamic(
+  () => import("@/components/BlogSection")
+)
 export default function Home() {
   return (
     <>
@@ -55,6 +59,7 @@ export default function Home() {
         <ManufacturingUnits />
         <TestimonialsSection />
         <ClienteleSection />
+        <BlogSection />
         <FaqSection />
         {/* 5. FOOTER */}
         <Footer />
