@@ -61,7 +61,7 @@ export default function ProductsPage() {
             </section>
 
             {/* Main Content & Product Cards */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 flex-grow">
+            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grow">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {products.map((item) => (
                         <div
