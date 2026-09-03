@@ -1,6 +1,7 @@
 "use client";
 import React from 'react';
 import Navbar from '@/components/Navbar';
+import Link from 'next/link';
 const products = [
     {
         id: 1,
@@ -68,7 +69,7 @@ export default function ProductsPage() {
                             className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
                         >
                             {/* Product Image linked to single product route */}
-                            <a
+                            <Link
                                 href={`/products/${item.slug}`}
                                 className="block relative h-56 bg-slate-100 overflow-hidden group"
                             >
@@ -80,13 +81,13 @@ export default function ProductsPage() {
                                 <span className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full border border-slate-700">
                                     {item.badge}
                                 </span>
-                            </a>
+                            </Link>
 
                             <div className="p-8 flex-1 flex flex-col justify-between">
                                 <div>
                                     {/* Linked Heading */}
                                     <h2 className="text-2xl font-bold text-slate-900 mb-3">
-                                        <a
+                                        <Link
                                             href={`/products/${item.slug}`}
                                             className="hover:text-emerald-600 transition-colors duration-200 flex items-center justify-between group"
                                         >
@@ -94,7 +95,7 @@ export default function ProductsPage() {
                                             <span className="text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all duration-200 text-lg">
                                                 →
                                             </span>
-                                        </a>
+                                        </Link>
                                     </h2>
 
                                     <p className="text-slate-600 text-sm leading-relaxed mb-6">
