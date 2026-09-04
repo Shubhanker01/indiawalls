@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {
     MessageScrollerProvider,
     MessageScroller,
@@ -56,7 +56,14 @@ const UserIcon = () => (
 
 export default function MessageAttachmentDemo() {
     const [messages, setMessages] = useState(initialMessages);
+    const messageEndRef = useRef(null)
     const [input, setInput] = useState('');
+    const scrollToBottom = () => {
+        messageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+    useEffect(() => {
+        scrollToBottom()
+    }, [messages])
 
     const handleSend = (e) => {
         e.preventDefault();
@@ -97,8 +104,8 @@ export default function MessageAttachmentDemo() {
                                         >
                                             <div
                                                 className={`p-3 rounded-2xl text-xs sm:text-sm leading-relaxed ${msg.sender === 'user'
-                                                        ? 'bg-yellow-600 text-white rounded-tr-none'
-                                                        : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200'
+                                                    ? 'bg-yellow-600 text-white rounded-tr-none'
+                                                    : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200'
                                                     }`}
                                             >
                                                 {msg.text}
@@ -109,6 +116,7 @@ export default function MessageAttachmentDemo() {
                                         </div>
                                     </div>
                                 ))}
+                                <div ref={messageEndRef}></div>
                             </MessageScrollerContent>
                         </MessageScrollerViewport>
                     </MessageScroller>
