@@ -6,58 +6,89 @@ import {
     MessageScroller,
     MessageScrollerViewport,
     MessageScrollerContent,
-} from '@/components/ui/message-scroller'; // Adjust path if needed
+} from '@/components/ui/message-scroller';
 
-const initialMessages = [
-    {
-        id: 1,
-        sender: 'bot',
-        text: 'Hello! Welcome to Indiawalls Infratech. How can I assist with your boundary project today?',
-        time: '10:00 AM',
-    },
-    {
-        id: 2,
-        sender: 'user',
-        text: 'Hi, I need a quote for an 8ft precast concrete boundary wall.',
-        time: '10:01 AM',
-    },
-    {
-        id: 3,
-        sender: 'bot',
-        text: 'Great! Could you please share the total running length required and your project site location?',
-        time: '10:01 AM',
-    },
-    {
-        id: 4,
-        sender: 'user',
-        text: 'Around 600 running feet, site is near Bhiwadi, Rajasthan.',
-        time: '10:02 AM',
-    },
-    {
-        id: 5,
-        sender: 'bot',
-        text: 'Thank you! An engineer will send you direct factory rates and transport estimates shortly.',
-        time: '10:02 AM',
-    },
-];
 
 // Icons
 const BotIcon = () => (
-    <div className="w-8 h-8 rounded-full bg-slate-900 text-emerald-400 flex items-center justify-center font-bold text-xs shrink-0 border border-slate-700">
+    <div className="w-9 h-9 flex items-center justify-center shrink-0 text-xl">
         🤖
     </div>
 );
 
-const UserIcon = () => (
-    <div className="w-8 h-8 rounded-full bg-yellow-600 text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
-        👤
-    </div>
-);
-
-export default function MessageAttachmentDemo() {
-    const [messages, setMessages] = useState(initialMessages);
-    const messageEndRef = useRef(null)
+const UserIcon = () => (<div className="w-9 h-9 flex items-center justify-center shrink-0 text-xl">
+    🧑
+</div>);
+export default function MessageAttachmentDemo({ messages, setMessages }) {
+    // const [messages, setMessages] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [input, setInput] = useState('');
+    // Persistent session ID across conversation turns
+    const sessionIdRef = useRef(
+        typeof window !== "undefined"
+            ? `web_${Math.random().toString(36).substring(2, 9)}`
+            : "web_session"
+    );
+
+    const sendMessage = async (e) => {
+        e.preventDefault();
+        if (!input.trim()) return;
+
+        const userMsg = {
+            id: Date.now().toString(),
+            sender: "user",
+            text: input,
+            timestamp: new Date(),
+        };
+
+        setMessages((prev) => [...prev, userMsg]);
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const apiBaseUrl = process.env.NEXT_PUBLIC_RAG_API_URL || process.env.NEXT_PUBLIC_API_FALLBACK_URL;
+            const res = await fetch(`${apiBaseUrl}/api/query`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    query: input.trim(),
+                    session_id: sessionIdRef.current,
+                }),
+            });
+
+            if (!res.ok) {
+                throw new Error(`Server error: ${res.status}`);
+            }
+
+            const data = await res.json();
+
+            const botMsg = {
+                id: (Date.now() + 1).toString(),
+                sender: "bot",
+                text: data.answer,
+                sources: data.sources,
+                timestamp: new Date(),
+            };
+
+            setMessages((prev) => [...prev, botMsg]);
+        } catch (err) {
+            setError(err.message || "Could not connect to AI server.");
+            const fallbackMsg = {
+                id: (Date.now() + 1).toString(),
+                sender: "bot",
+                text: "Maaf kijiye, server se connect karne mein samasya aayi. Kripya thodi der baad prayas karein.",
+                timestamp: new Date(),
+            };
+            setMessages((prev) => [...prev, fallbackMsg]);
+        } finally {
+            setIsLoading(false);
+        }
+        setInput('');
+    }
+
+
+    const messageEndRef = useRef(null)
     const scrollToBottom = () => {
         messageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
     }
@@ -65,20 +96,7 @@ export default function MessageAttachmentDemo() {
         scrollToBottom()
     }, [messages])
 
-    const handleSend = (e) => {
-        e.preventDefault();
-        if (!input.trim()) return;
 
-        const newMessage = {
-            id: Date.now(),
-            sender: 'user',
-            text: input,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        };
-
-        setMessages((prev) => [...prev, newMessage]);
-        setInput('');
-    };
 
     return (
         <div className="flex w-full h-full flex-col bg-white rounded-xl overflow-hidden">
@@ -103,7 +121,7 @@ export default function MessageAttachmentDemo() {
                                                 }`}
                                         >
                                             <div
-                                                className={`p-3 rounded-2xl text-xs sm:text-sm leading-relaxed ${msg.sender === 'user'
+                                                className={`p-3 rounded-2xl text-left whitespace-pre-wrap wrap-break-word text-xs sm:text-sm leading-relaxed ${msg.sender === 'user'
                                                     ? 'bg-yellow-600 text-white rounded-tr-none'
                                                     : 'bg-slate-100 text-slate-800 rounded-tl-none border border-slate-200'
                                                     }`}
@@ -125,7 +143,7 @@ export default function MessageAttachmentDemo() {
 
             {/* 2. Chat Input Bar */}
             <form
-                onSubmit={handleSend}
+                onSubmit={sendMessage}
                 className="p-3 border-t border-slate-200 bg-white flex items-center gap-2"
             >
                 <input
@@ -134,10 +152,12 @@ export default function MessageAttachmentDemo() {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type a message..."
                     className="flex-1 bg-slate-100 border border-slate-200 text-slate-800 text-xs sm:text-sm rounded-xl px-3.5 py-2.5 focus:outline-none focus:border-yellow-500 transition"
+                    disabled={isLoading}
                 />
                 <button
                     type="submit"
-                    className="bg-yellow-600 hover:bg-yellow-500 text-white p-2.5 rounded-xl transition flex items-center justify-center shrink-0"
+                    disabled={isLoading || !input.trim()}
+                    className="bg-yellow-600 hover:bg-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed text-white p-2.5 rounded-xl transition flex items-center justify-center shrink-0"
                     aria-label="Send Message"
                 >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -150,6 +170,16 @@ export default function MessageAttachmentDemo() {
                     </svg>
                 </button>
             </form>
+            {isLoading && (
+                <div className="px-3 pb-2 text-[10px] text-slate-400" aria-live="polite">
+                    IndiaWalls AI is replying...
+                </div>
+            )}
+            {error && !isLoading && (
+                <div className="px-3 pb-2 text-[10px] text-red-500" role="status">
+                    Unable to connect right now. Please try again.
+                </div>
+            )}
         </div>
     );
 }

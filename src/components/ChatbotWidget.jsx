@@ -6,6 +6,7 @@ const MessageScroller = dynamic(() => import('@/components/MessageScroller'))
 
 export default function ChatbotWidget() {
     const [isOpen, setIsOpen] = useState(false);
+    const [messages, setMessages] = useState([]);
 
     return (
         <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end cursor-pointer">
@@ -15,8 +16,8 @@ export default function ChatbotWidget() {
                     {/* Header */}
                     <div className="bg-slate-900 text-white px-4 py-3 flex justify-between items-center border-b border-slate-800">
                         <div className="flex items-center gap-2.5">
-                            <div className="w-8 h-8 rounded-full bg-emerald-500/20 text-yellow-400 flex items-center justify-center font-bold text-sm border border-yellow-500/30">
-                                💬
+                            <div className="w-10 h-10 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-lg border border-emerald-500/30 shrink-0">
+                                🤖
                             </div>
                             <div>
                                 <h3 className="font-bold text-sm text-white leading-none">Indiawalls Assistant</h3>
@@ -37,7 +38,7 @@ export default function ChatbotWidget() {
 
                     {/* Body: Your Shadcn Message Scroller Component */}
                     <div className="flex-1 overflow-hidden p-3 bg-slate-50">
-                        <MessageScroller />
+                        <MessageScroller messages={messages} setMessages={setMessages} />
                     </div>
                 </div>
             )}

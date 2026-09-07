@@ -78,7 +78,7 @@ export default function ChainlinkPage() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
-                            <span className="inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-emerald-500/30">
+                            <span className="inline-block bg-yellow-500/20 text-yellow-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-yellow-500/30">
                                 Perimeter Protection Systems
                             </span>
                             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-6">
@@ -90,7 +90,7 @@ export default function ChainlinkPage() {
                             <div className="flex flex-wrap gap-4">
                                 <a
                                     href="#enquiry-form"
-                                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
+                                    className="bg-yellow-600 hover:bg-yellow-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
                                 >
                                     Get Instant Quote
                                 </a>
@@ -98,7 +98,7 @@ export default function ChainlinkPage() {
                                     href="tel:7820879777"
                                     className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3.5 rounded-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
                                 >
-                                    <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                     </svg>
                                     Call +91 7820879777
@@ -115,7 +115,7 @@ export default function ChainlinkPage() {
                             />
                             <div className="absolute bottom-4 left-4 right-4 bg-slate-900/90 backdrop-blur-md px-4 py-3 rounded-xl border border-slate-700 flex justify-between items-center text-xs text-slate-300">
                                 <span>Heavy Zinc Coating (Up to 275 g/m²)</span>
-                                <span className="text-emerald-400 font-semibold">Custom Mesh Heights</span>
+                                <span className="text-yellow-400 font-semibold">Custom Mesh Heights</span>
                             </div>
                         </div>
                     </div>
@@ -133,7 +133,7 @@ export default function ChainlinkPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
-                        <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
+                        <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🛡️
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Rust & Weather Resistant</h3>
@@ -143,7 +143,7 @@ export default function ChainlinkPage() {
                     </div>
 
                     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
-                        <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
+                        <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             📐
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Customizable Mesh Sizes</h3>
@@ -153,7 +153,7 @@ export default function ChainlinkPage() {
                     </div>
 
                     <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
-                        <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
+                        <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             💰
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Cost-Effective Boundary</h3>
@@ -174,13 +174,13 @@ export default function ChainlinkPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {meshVariants.map((item, idx) => (
-                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-emerald-500 transition">
+                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-yellow-500 transition">
                                 <div>
                                     <div className="flex justify-between items-center mb-3">
                                         <span className="text-xs font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md">
                                             {item.wireGauge}
                                         </span>
-                                        <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-2.5 py-1 rounded-md">
+                                        <span className="text-xs font-bold text-yellow-600 bg-yellow-50 px-2.5 py-1 rounded-md">
                                             {item.badge}
                                         </span>
                                     </div>
@@ -223,9 +223,9 @@ export default function ChainlinkPage() {
                         {installationSteps.map((step) => (
                             <div
                                 key={step.step}
-                                className="bg-white p-5 rounded-2xl border border-slate-200 flex gap-4 items-start shadow-sm hover:border-emerald-500 transition"
+                                className="bg-white p-5 rounded-2xl border border-slate-200 flex gap-4 items-start shadow-sm hover:border-yellow-500 transition"
                             >
-                                <span className="text-emerald-600 font-extrabold text-lg bg-emerald-50 px-3 py-1 rounded-lg flex-shrink-0">
+                                <span className="text-yellow-600 font-extrabold text-lg bg-yellow-50 px-3 py-1 rounded-lg flex-shrink-0">
                                     {step.step}
                                 </span>
                                 <div>
@@ -254,7 +254,7 @@ export default function ChainlinkPage() {
                             <input
                                 type="text"
                                 placeholder="John Doe"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             />
                         </div>
 
@@ -263,13 +263,13 @@ export default function ChainlinkPage() {
                             <input
                                 type="tel"
                                 placeholder="+91 9876543210"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             />
                         </div>
 
                         <div>
                             <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Coating Type</label>
-                            <select className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm">
+                            <select className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm">
                                 <option>Hot-Dip Galvanized (GI)</option>
                                 <option>PVC Coated GI Wire</option>
                                 <option>Not Sure (Need Advice)</option>
@@ -281,7 +281,7 @@ export default function ChainlinkPage() {
                             <input
                                 type="text"
                                 placeholder="e.g. 500 Running Feet"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             />
                         </div>
 
@@ -290,14 +290,14 @@ export default function ChainlinkPage() {
                             <textarea
                                 rows="3"
                                 placeholder="Mention installation city, height requirement (e.g. 6 ft), or if support poles are needed..."
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             ></textarea>
                         </div>
 
                         <div className="sm:col-span-2">
                             <button
                                 type="button"
-                                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 text-base"
+                                className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 text-base"
                             >
                                 Submit Quote Request
                             </button>

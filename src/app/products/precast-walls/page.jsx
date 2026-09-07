@@ -59,7 +59,7 @@ export default function PrecastWallsPage() {
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                         <div>
-                            <span className="inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-emerald-500/30">
+                            <span className="inline-block bg-emerald-500/20 text-yellow-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-4 border border-yellow-500/30">
                                 Boundary & Perimeter Solutions
                             </span>
                             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-6">
@@ -71,7 +71,7 @@ export default function PrecastWallsPage() {
                             <div className="flex flex-wrap gap-4">
                                 <a
                                     href="#enquiry-form"
-                                    className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
+                                    className="bg-yellow-600 hover:bg-yellow-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
                                 >
                                     Get Quick Quote
                                 </a>
@@ -79,7 +79,7 @@ export default function PrecastWallsPage() {
                                     href="tel:7820879777"
                                     className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3.5 rounded-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
                                 >
-                                    <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="0 0h24v24H0z" />
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                     </svg>
@@ -172,7 +172,7 @@ export default function PrecastWallsPage() {
                             {manufacturingSteps.map((step) => (
                                 <div key={step.step} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-start shadow-sm">
                                     <div className="flex gap-4 items-start flex-1">
-                                        <span className="text-emerald-600 font-extrabold text-lg bg-emerald-50 px-3 py-1 rounded-lg">
+                                        <span className="text-yellow-700 font-extrabold text-lg bg-yellow-50 px-3 py-1 rounded-lg">
                                             {step.step}
                                         </span>
                                         <div>
@@ -229,7 +229,7 @@ export default function PrecastWallsPage() {
                             <input
                                 type="text"
                                 placeholder="John Doe"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             />
                         </div>
 
@@ -238,7 +238,7 @@ export default function PrecastWallsPage() {
                             <input
                                 type="tel"
                                 placeholder="+91 9876543210"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             />
                         </div>
 
@@ -247,7 +247,7 @@ export default function PrecastWallsPage() {
                             <input
                                 type="text"
                                 placeholder="e.g., Alwar, Bhiwadi, Gurugram"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             />
                         </div>
 
@@ -256,7 +256,7 @@ export default function PrecastWallsPage() {
                             <input
                                 type="number"
                                 placeholder="e.g., 200 ft"
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             />
                         </div>
 
@@ -265,14 +265,14 @@ export default function PrecastWallsPage() {
                             <textarea
                                 rows="3"
                                 placeholder="Specify wall height required (e.g., 6ft, 8ft) or additional features..."
-                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-emerald-500 text-sm"
+                                className="w-full bg-slate-900 border border-slate-700 rounded-xl px-4 py-3 text-slate-200 focus:outline-none focus:border-yellow-500 text-sm"
                             ></textarea>
                         </div>
 
                         <div className="sm:col-span-2">
                             <button
                                 type="button"
-                                className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 text-base"
+                                className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 text-base"
                             >
                                 Send Enquiry
                             </button>

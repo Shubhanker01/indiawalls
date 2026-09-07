@@ -72,7 +72,7 @@ export default function GalleryPage() {
             {/* 1. Header Section */}
             <section className="bg-slate-900 text-white pt-12 pb-16 px-4">
                 <div className="max-w-7xl mx-auto text-center">
-                    <span className="inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3 border border-emerald-500/30">
+                    <span className="inline-block bg-yellow-500/20 text-yellow-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3 border border-yellow-500/30">
                         Our Portfolio
                     </span>
                     <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
@@ -100,7 +100,7 @@ export default function GalleryPage() {
                                         alt={project.title}
                                         className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                                     />
-                                    <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-emerald-400 text-xs font-bold px-3 py-1 rounded-lg border border-slate-700">
+                                    <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-yellow-400 text-xs font-bold px-3 py-1 rounded-lg border border-slate-700">
                                         {project.category}
                                     </div>
                                 </div>
@@ -108,13 +108,13 @@ export default function GalleryPage() {
                                 {/* Content */}
                                 <div className="p-6">
                                     <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-2 font-medium">
-                                        <svg className="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg className="w-4 h-4 text-yellow-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                                         </svg>
                                         <span>{project.location}</span>
                                     </div>
-                                    <h2 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-emerald-600 transition">
+                                    <h2 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-yellow-600 transition">
                                         {project.title}
                                     </h2>
                                     <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
@@ -125,10 +125,10 @@ export default function GalleryPage() {
 
                             {/* Card Footer */}
                             <div className="px-6 pb-6 pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-semibold text-slate-500">
-                                <span className="text-emerald-600 font-bold">100% Quality Execution</span>
+                                <span className="text-yellow-600 font-bold">100% Quality Execution</span>
                                 <Link
                                     href="/contact"
-                                    className="text-slate-800 hover:text-emerald-600 transition flex items-center gap-1"
+                                    className="text-slate-800 hover:text-yellow-600 transition flex items-center gap-1"
                                 >
                                     Request Similar
                                     <span>→</span>
@@ -149,7 +149,7 @@ export default function GalleryPage() {
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link
                             href="/contact"
-                            className="bg-emerald-600 hover:bg-emerald-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
+                            className="bg-yellow-600 hover:bg-yellow-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
                         >
                             Get Free Site Estimate
                         </Link>

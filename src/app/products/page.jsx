@@ -48,13 +48,13 @@ export default function ProductsPage() {
             {/* Top Banner */}
             <section className="bg-slate-900 text-white py-14 px-4 sm:px-6 lg:px-8 text-center border-b border-slate-800">
                 <div className="max-w-4xl mx-auto">
-                    <span className="text-emerald-400 font-semibold text-xs tracking-widest uppercase">
+                    <span className="text-yellow-400 font-semibold text-sm tracking-widest uppercase">
                         Indiawalls Portfolio
                     </span>
                     <h1 className="text-4xl sm:text-5xl font-extrabold mt-2 tracking-tight">
                         Our Products
                     </h1>
-                    <p className="mt-3 text-slate-400 text-base max-w-xl mx-auto">
+                    <p className="mt-3 text-slate-300 text-base max-w-xl mx-auto">
                         High-durability precast RCC panels, interlocking pavers, and perimeter security fencing manufactured in Alwar, Rajasthan.
                     </p>
                 </div>
@@ -78,7 +78,7 @@ export default function ProductsPage() {
                                     alt={item.title}
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
-                                <span className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-emerald-400 text-xs font-semibold px-3 py-1 rounded-full border border-slate-700">
+                                <span className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-yellow-300 text-xs font-semibold px-3 py-1 rounded-full border border-slate-700">
                                     {item.badge}
                                 </span>
                             </Link>
@@ -89,10 +89,10 @@ export default function ProductsPage() {
                                     <h2 className="text-2xl font-bold text-slate-900 mb-3">
                                         <Link
                                             href={`/products/${item.slug}`}
-                                            className="hover:text-emerald-600 transition-colors duration-200 flex items-center justify-between group"
+                                            className="hover:text-yellow-600 transition-colors duration-200 flex items-center justify-between group"
                                         >
                                             <span>{item.title}</span>
-                                            <span className="text-slate-400 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all duration-200 text-lg">
+                                            <span className="text-slate-400 group-hover:text-yellow-600 group-hover:translate-x-1 transition-all duration-200 text-lg">
                                                 →
                                             </span>
                                         </Link>
@@ -107,7 +107,7 @@ export default function ProductsPage() {
                                     <button
                                         type="button"
                                         onClick={() => alert(`Enquiry initiated for: ${item.title}`)}
-                                        className="w-full bg-slate-900 hover:bg-emerald-600 text-white font-medium py-3 rounded-xl text-sm transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm"
+                                        className="w-full bg-slate-900 hover:bg-yellow-400 hover:text-gray-800 text-white font-medium py-3 rounded-xl text-sm transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm"
                                     >
                                         <span>Send Enquiry</span>
                                         <span className="text-xs">→</span>

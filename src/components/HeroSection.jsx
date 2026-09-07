@@ -81,6 +81,11 @@ export default function HeroSection() {
                             <input type="number" placeholder="e.g. 500 ft" className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none" />
                         </div>
 
+                        <div>
+                            <label htmlFor="height" className="block text-xs font-semibold text-slate-700 uppercase mb-1">Height</label>
+                            <input id="height" name="height" type="number" placeholder="e.g. 6 ft" className="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-amber-500 focus:outline-none" />
+                        </div>
+
                         <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl transition shadow-md">
                             Get Estimated Pricing →
                         </button>

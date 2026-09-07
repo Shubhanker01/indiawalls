@@ -1,9 +1,24 @@
+'use client';
+
 import Link from 'next/link';
 import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+
+const navLinks = [
+    { href: '/', label: 'Home' },
+    { href: '/products', label: 'Products' },
+    { href: '/why-us', label: 'Why Us' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/contact', label: 'Contact' },
+    { href: '/admin', label: 'Admin' },
+];
 
 export default function Navbar() {
+    const pathname = usePathname();
+    const isActive = (href) => href === '/' ? pathname === '/' : pathname === href || pathname?.startsWith(`${href}/`);
+
     return (
-        <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <nav className="sticky top-0 z-50 bg-blue-950/95 backdrop-blur-md border-b border-blue-900 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
                 <Link href="/" className="space-x-2">
                     <Image
@@ -15,20 +30,23 @@ export default function Navbar() {
                     />
                 </Link>
 
-                <div className="hidden md:flex items-center space-x-8 font-medium text-slate-800">
-                    <Link href="/" className="text-amber-800">Home</Link>
-                    <Link href="/products" className="hover:text-amber-800 transition">Products</Link>
-                    <Link href="/why-us" className="hover:text-amber-800 transition">Why Us</Link>
-                    <Link href="/projects" className="hover:text-amber-800 transition">Projects</Link>
-                    <Link href="/contact" className="hover:text-amber-800 transition">Contact</Link>
+                <div className="hidden md:flex items-center space-x-8 font-medium text-slate-100">
+                    {navLinks.map((link) => {
+                        const active = isActive(link.href);
+
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={active ? 'text-yellow-400' : 'text-slate-100 hover:text-yellow-400 transition'}
+                                aria-current={active ? 'page' : undefined}
+                            >
+                                {link.label}
+                            </Link>
+                        );
+                    })}
                 </div>
 
-                <a
-                    href="#quote"
-                    className="bg-amber-700 hover:bg-amber-700 text-white font-semibold px-5 py-2.5 rounded-lg transition shadow-md hover:shadow-lg"
-                >
-                    Get Custom Quote
-                </a>
             </div>
         </nav>
     )

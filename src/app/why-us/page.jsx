@@ -54,34 +54,34 @@ const ComparisonTable = () => (
                 <thead>
                     <tr className="bg-slate-900 text-white">
                         <th className="py-4 px-6 font-semibold">Feature / Parameter</th>
-                        <th className="py-4 px-6 font-semibold text-emerald-400">Indiawalls Precast Solutions</th>
+                        <th className="py-4 px-6 font-semibold text-yellow-400">Indiawalls Precast Solutions</th>
                         <th className="py-4 px-6 font-semibold text-slate-400">Traditional Brick Boundary Wall</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
                     <tr>
                         <td className="py-4 px-6 font-medium text-slate-800">Construction Time</td>
-                        <td className="py-4 px-6 font-semibold text-emerald-600 bg-emerald-50/50">Rapid (Up to 300 ft/day)</td>
+                        <td className="py-4 px-6 font-semibold text-yellow-600 bg-yellow-50/50">Rapid (Up to 300 ft/day)</td>
                         <td className="py-4 px-6 text-slate-500">Slow (20-30 ft/day + curing)</td>
                     </tr>
                     <tr>
                         <td className="py-4 px-6 font-medium text-slate-800">Overall Project Cost</td>
-                        <td className="py-4 px-6 font-semibold text-emerald-600 bg-emerald-50/50">30% to 40% Lower Cost</td>
+                        <td className="py-4 px-6 font-semibold text-yellow-600 bg-yellow-50/50">30% to 40% Lower Cost</td>
                         <td className="py-4 px-6 text-slate-500">High material & labor overheads</td>
                     </tr>
                     <tr>
                         <td className="py-4 px-6 font-medium text-slate-800">Weather & Soil Resistance</td>
-                        <td className="py-4 px-6 font-semibold text-emerald-600 bg-emerald-50/50">Immune to Shora & Dampness</td>
+                        <td className="py-4 px-6 font-semibold text-yellow-600 bg-yellow-50/50">Immune to Shora & Dampness</td>
                         <td className="py-4 px-6 text-slate-500">Prone to dampness, cracks, & peeling</td>
                     </tr>
                     <tr>
                         <td className="py-4 px-6 font-medium text-slate-800">Reusability / Relocation</td>
-                        <td className="py-4 px-6 font-semibold text-emerald-600 bg-emerald-50/50">100% Relocatable & Reusable</td>
+                        <td className="py-4 px-6 font-semibold text-yellow-600 bg-yellow-50/50">100% Relocatable & Reusable</td>
                         <td className="py-4 px-6 text-slate-500">Permanent destruction on site change</td>
                     </tr>
                     <tr>
                         <td className="py-4 px-6 font-medium text-slate-800">Maintenance Required</td>
-                        <td className="py-4 px-6 font-semibold text-emerald-600 bg-emerald-50/50">Zero Maintenance</td>
+                        <td className="py-4 px-6 font-semibold text-yellow-600 bg-yellow-50/50">Zero Maintenance</td>
                         <td className="py-4 px-6 text-slate-500">Frequent plaster & paint maintenance</td>
                     </tr>
                 </tbody>
@@ -98,7 +98,7 @@ export default function WhyUsPage() {
             <section className="bg-slate-900 text-white pt-12 pb-20 px-4">
                 <div className="max-w-7xl mx-auto text-center">
 
-                    <span className="inline-block bg-emerald-500/20 text-emerald-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3 border border-emerald-500/30">
+                    <span className="inline-block bg-yellow-500/20 text-yellow-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3 border border-yellow-500/30">
                         Uncompromising Excellence
                     </span>
                     <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
@@ -115,7 +115,7 @@ export default function WhyUsPage() {
                 <div className="bg-white rounded-2xl border border-slate-200 shadow-xl grid grid-cols-2 md:grid-cols-4 gap-6 p-8 text-center">
                     {impactStats.map((stat, idx) => (
                         <div key={idx} className="border-r last:border-r-0 border-slate-100">
-                            <div className="text-3xl sm:text-4xl font-extrabold text-emerald-600 mb-1">{stat.value}</div>
+                            <div className="text-3xl sm:text-4xl font-extrabold text-yellow-600 mb-1">{stat.value}</div>
                             <div className="text-xs sm:text-sm text-slate-500 font-medium">{stat.label}</div>
                         </div>
                     ))}
@@ -135,10 +135,10 @@ export default function WhyUsPage() {
                     {keyDifferentiators.map((item, idx) => (
                         <div
                             key={idx}
-                            className="bg-white p-7 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition duration-200 flex flex-col justify-between hover:border-emerald-500"
+                            className="bg-white p-7 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition duration-200 flex flex-col justify-between hover:border-yellow-500"
                         >
                             <div>
-                                <div className="text-3xl mb-4 p-3 bg-emerald-50 rounded-xl w-fit">{item.icon}</div>
+                                <div className="text-3xl mb-4 p-3 bg-yellow-50 rounded-xl w-fit">{item.icon}</div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
                                 <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
                             </div>
@@ -151,7 +151,7 @@ export default function WhyUsPage() {
             <section className="bg-slate-100 py-20 px-4 border-y border-slate-200">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center max-w-3xl mx-auto mb-12">
-                        <span className="text-xs font-bold text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">
+                        <span className="text-xs font-bold text-yellow-600 bg-yellow-50 px-3 py-1 rounded-full uppercase tracking-wider mb-2 inline-block">
                             Side-by-Side Analysis
                         </span>
                         <h2 className="text-2xl sm:text-4xl font-bold text-slate-900 mb-3">Precast Wall vs Traditional Brick Wall</h2>
@@ -168,7 +168,7 @@ export default function WhyUsPage() {
             <section className="py-20 px-4 max-w-7xl mx-auto">
                 <div className="bg-slate-900 rounded-3xl p-8 sm:p-14 text-white grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
                     <div>
-                        <span className="text-xs font-semibold text-emerald-400 uppercase tracking-widest bg-emerald-500/20 px-3 py-1 rounded-full border border-emerald-500/30">
+                        <span className="text-xs font-semibold text-yellow-400 uppercase tracking-widest bg-yellow-500/20 px-3 py-1 rounded-full border border-yellow-500/30">
                             Quality Assurance
                         </span>
                         <h2 className="text-2xl sm:text-4xl font-bold mt-4 mb-6 leading-tight">
@@ -179,13 +179,13 @@ export default function WhyUsPage() {
                         </p>
                         <ul className="space-y-3 text-sm text-slate-300">
                             <li className="flex items-center gap-3">
-                                <span className="text-emerald-400 font-bold">✓</span> M-30 to M-40 High-Grade Concrete Mix
+                                <span className="text-yellow-400 font-bold">✓</span> M-30 to M-40 High-Grade Concrete Mix
                             </li>
                             <li className="flex items-center gap-3">
-                                <span className="text-emerald-400 font-bold">✓</span> High-Tensile 3mm - 4mm Steel Reinforcement Strands
+                                <span className="text-yellow-400 font-bold">✓</span> High-Tensile 3mm - 4mm Steel Reinforcement Strands
                             </li>
                             <li className="flex items-center gap-3">
-                                <span className="text-emerald-400 font-bold">✓</span> IS Standard Compliant Casting Practices
+                                <span className="text-yellow-400 font-bold">✓</span> IS Standard Compliant Casting Practices
                             </li>
                         </ul>
                     </div>
@@ -201,10 +201,10 @@ export default function WhyUsPage() {
             </section>
 
             {/* 6. Call to Action Banner */}
-            <section className="bg-emerald-600 text-white py-16 px-4">
+            <section className="bg-yellow-600 text-white py-16 px-4">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-2xl sm:text-4xl font-extrabold mb-4">Ready to Secure Your Boundary?</h2>
-                    <p className="text-emerald-100 text-sm sm:text-base mb-8">
+                    <p className="text-yellow-100 text-sm sm:text-base mb-8">
                         Get site recommendations, free layout estimates, and direct factory pricing within 24 hours.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
