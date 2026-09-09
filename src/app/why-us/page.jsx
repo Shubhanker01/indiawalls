@@ -192,7 +192,7 @@ export default function WhyUsPage() {
 
                     <div className="relative rounded-2xl overflow-hidden border border-slate-700 shadow-2xl h-80 sm:h-96">
                         <img
-                            src="https://indiawalls.in/wp-content/uploads/2023/07/precast-boundary-wall.jpg"
+                            src="/IndustrialAreaBhiwadi.webp"
                             alt="Indiawalls Factory Quality Inspection"
                             className="w-full h-full object-cover"
                         />

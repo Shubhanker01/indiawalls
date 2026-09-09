@@ -47,7 +47,15 @@ export default function MessageAttachmentDemo({ messages, setMessages }) {
         setError(null);
 
         try {
-            const apiBaseUrl = process.env.RAG_API_URL || process.env.RAG_API_FALLBACK_URL;
+            const apiBaseUrl = (
+                process.env.NEXT_PUBLIC_RAG_API_URL ||
+                process.env.NEXT_PUBLIC_RAG_API_FALLBACK_URL
+            )?.replace(/\/$/, '');
+
+            if (!apiBaseUrl) {
+                throw new Error('RAG API URL is not configured.');
+            }
+
             const res = await fetch(`${apiBaseUrl}/api/query`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },

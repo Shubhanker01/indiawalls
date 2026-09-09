@@ -62,7 +62,7 @@ export default function ContactPage() {
             {/* 1. Header Section */}
             <section className="bg-slate-900 text-white pt-12 pb-20 px-4">
                 <div className="max-w-7xl mx-auto text-center">
-                    
+
                     <span className="inline-block bg-yellow-500/20 text-yellow-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3 border border-yellow-500/30">
                         Get Direct Factory Rates
                     </span>
@@ -227,14 +227,8 @@ export default function ContactPage() {
 
             {/* 4. Map Section Placeholder */}
             <section id="map-section" className="py-12 px-4 max-w-7xl mx-auto">
-                <div className="bg-white p-4 rounded-3xl border border-slate-200 shadow-sm overflow-hidden">
-                    <div className="w-full h-80 bg-slate-200 rounded-2xl flex flex-col items-center justify-center text-slate-500 text-center p-6">
-                        <span className="text-4xl mb-2">📍</span>
-                        <p className="font-bold text-slate-800 mb-1">Indiawalls Infratech Factory & Yard</p>
-                        <p className="text-xs text-slate-500 max-w-md">
-                            Industrial Manufacturing Unit, Serving Rajasthan, Delhi NCR, Haryana, and Neighboring Regions.
-                        </p>
-                    </div>
+                <div className="w-full h-96 rounded-xl overflow-hidden shadow-lg border border-slate-200">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3518.98202949284!2d76.827894174552!3d28.11657830732524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d35001e5f6f8f%3A0x7022ae9ca01ce5fa!2sINDIAWALLS%20INFRATECH%20PRIVATE%20LIMITED!5e0!3m2!1sen!2sin!4v1788951812093!5m2!1sen!2sin" allowFullScreen="" height="100%" width="100%" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </section>
         </div>
