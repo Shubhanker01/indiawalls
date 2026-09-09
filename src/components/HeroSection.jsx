@@ -1,3 +1,4 @@
+import Link from "next/link";
 export default function HeroSection() {
     return (
         <section className="relative bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-20 lg:py-28 px-4 sm:px-8 overflow-hidden">
@@ -17,12 +18,12 @@ export default function HeroSection() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                        <a
-                            href="#quote"
+                        <Link
+                            href="/contact"
                             className="bg-amber-500 hover:bg-amber-600 text-slate-950 text-center font-bold px-7 py-4 rounded-xl shadow-lg transition"
                         >
                             Request Site Estimate
-                        </a>
+                        </Link>
                         <a
                             href="tel:+917820879777"
                             className="border border-slate-600 hover:border-slate-400 text-white text-center font-semibold px-7 py-4 rounded-xl transition"

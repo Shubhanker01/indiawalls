@@ -42,15 +42,6 @@ export default function AboutSection() {
                         <p className="text-slate-600 leading-relaxed">
                             Today, with over 2,000 satisfied clients and state-of-the-art manufacturing plants in Alwar, Bhiwadi, Panipat, and Palwal, we specialize in delivering relocatable, high-strength concrete walls engineered for rapid deployment.
                         </p>
-
-                        <div className="pt-2">
-                            <a
-                                href="/company-profile.pdf"
-                                className="inline-flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-white font-semibold px-6 py-3 rounded-xl transition text-sm shadow-md"
-                            >
-                                📄 Download Company Profile
-                            </a>
-                        </div>
                     </div>
                 </div>
 

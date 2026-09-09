@@ -104,14 +104,13 @@ export default function ProductsPage() {
                                 </div>
 
                                 <div className="pt-4 border-t border-slate-100">
-                                    <button
-                                        type="button"
-                                        onClick={() => alert(`Enquiry initiated for: ${item.title}`)}
+                                    <Link
+                                        href="/contact"
                                         className="w-full bg-slate-900 hover:bg-yellow-400 hover:text-gray-800 text-white font-medium py-3 rounded-xl text-sm transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm"
                                     >
                                         <span>Send Enquiry</span>
                                         <span className="text-xs">→</span>
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

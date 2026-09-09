@@ -30,11 +30,11 @@ const socialLinks = [
 ];
 
 const productLinks = [
-    { name: 'Precast RCC Boundary Wall', href: '#products' },
-    { name: 'Folding Compound Wall', href: '#products' },
-    { name: 'Interlocking Paver Blocks', href: '#products' },
-    { name: 'Barbed Wire Fencing Poles', href: '#products' },
-    { name: 'Designer Concrete Panels', href: '#products' },
+    { name: 'Precast RCC Boundary Wall', href: '/products' },
+    { name: 'Folding Compound Wall', href: '/products' },
+    { name: 'Interlocking Paver Blocks', href: '/products' },
+    { name: 'Barbed Wire Fencing Poles', href: '/products' },
+    { name: 'Designer Concrete Panels', href: '/products' },
 ];
 
 const quickLinks = [
