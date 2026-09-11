@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import AnimatedSection from './AnimatedSection';
 
 export const blogPosts = [
     {
@@ -43,7 +44,7 @@ export default function BlogSection() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
-                <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 space-y-4 md:space-y-0">
+                <AnimatedSection delay={0.05} className="flex flex-col md:flex-row md:items-end justify-between mb-12 space-y-4 md:space-y-0">
                     <div className="max-w-xl space-y-3">
                         <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-200">
                             Knowledge Hub
@@ -63,13 +64,14 @@ export default function BlogSection() {
                         <span>View All Insights</span>
                         <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </Link>
-                </div>
+                </AnimatedSection>
 
                 {/* BLOG CARDS GRID */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {blogPosts.map((post) => (
-                        <article
+                        <AnimatedSection
                             key={post.id}
+                            delay={0.15 + (post.id - 1) * 0.08}
                             className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-slate-300 transition-all duration-300 flex flex-col justify-between group"
                         >
                             <div>
@@ -112,7 +114,7 @@ export default function BlogSection() {
                                     <span>→</span>
                                 </Link>
                             </div>
-                        </article>
+                        </AnimatedSection>
                     ))}
                 </div>
 

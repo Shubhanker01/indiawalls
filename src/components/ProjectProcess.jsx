@@ -1,3 +1,5 @@
+import AnimatedSection from './AnimatedSection';
+
 const processSteps = [
     {
         step: '01',
@@ -42,7 +44,7 @@ export default function ProjectProcess() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
-                <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-16 space-y-3">
                     <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-200 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Our Process
                     </span>
@@ -52,13 +54,14 @@ export default function ProjectProcess() {
                     <p className="text-slate-600 text-sm sm:text-base">
                         From initial site measurement to final inspection, our streamlined 5-step workflow ensures fast and reliable execution.
                     </p>
-                </div>
+                </AnimatedSection>
 
                 {/* PROCESS GRID */}
                 <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-6 relative">
                     {processSteps.map((item, index) => (
-                        <div
+                        <AnimatedSection
                             key={index}
+                            delay={0.15 + index * 0.08}
                             className="bg-white border border-slate-400 rounded-2xl p-6 relative flex flex-col justify-between shadow-sm hover:shadow-md transition group"
                         >
                             <div>
@@ -84,7 +87,7 @@ export default function ProjectProcess() {
                             <div className="w-full bg-slate-100 h-1 rounded-full mt-6 overflow-hidden">
                                 <div className="bg-amber-500 h-full w-0 group-hover:w-full transition-all duration-300"></div>
                             </div>
-                        </div>
+                        </AnimatedSection>
                     ))}
                 </div>
 

@@ -1,3 +1,5 @@
+import AnimatedSection from './AnimatedSection';
+
 const units = [
     {
         city: 'Bhiwadi Unit',
@@ -35,7 +37,7 @@ export default function ManufacturingUnits() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
-                <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-14 space-y-3">
                     <span className="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 mb-4">
                         Factory Network
                     </span>
@@ -45,13 +47,14 @@ export default function ManufacturingUnits() {
                     <p className="text-slate-400 text-sm sm:text-base">
                         Our manufacturing units are strategically located across the following cities to ensure prompt precast production and rapid delivery:
                     </p>
-                </div>
+                </AnimatedSection>
 
                 {/* LOCATIONS GRID */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {units.map((unit, idx) => (
-                        <div
+                        <AnimatedSection
                             key={idx}
+                            delay={0.15 + idx * 0.08}
                             className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/50 transition duration-300"
                         >
                             <div className="space-y-4">
@@ -91,7 +94,7 @@ export default function ManufacturingUnits() {
                                     <span>↗</span>
                                 </a>
                             </div>
-                        </div>
+                        </AnimatedSection>
                     ))}
                 </div>
 

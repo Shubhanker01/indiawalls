@@ -1,17 +1,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import AnimatedSection from './AnimatedSection';
+
 export default function ProductCatalog() {
     return (
         <section className="py-20 px-4 sm:px-8 max-w-7xl mx-auto" id="products">
-            <div className="text-center max-w-2xl mx-auto mb-16">
+            <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-16">
                 <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">Our Core Product Line</h2>
                 <p className="text-slate-600">Engineered precast concrete solutions tailored for agricultural, commercial, and residential boundaries.</p>
-            </div>
+            </AnimatedSection>
 
             <div className="grid md:grid-cols-3 gap-8">
 
                 {/* Card 1 */}
-                <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
+                <AnimatedSection delay={0.15} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
                     <div className="h-56 bg-slate-200 relative">
                         {/* Replace with Next Image */}
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
@@ -26,10 +28,10 @@ export default function ProductCatalog() {
                             View Specs & Designs →
                         </Link>
                     </div>
-                </div>
+                </AnimatedSection>
 
                 {/* Card 2 */}
-                <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
+                <AnimatedSection delay={0.23} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
                             <Image src='/DesignerStoneWalls.webp' alt="Designer Stone Walls" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
@@ -43,10 +45,10 @@ export default function ProductCatalog() {
                             Explore Patterns →
                         </Link>
                     </div>
-                </div>
+                </AnimatedSection>
 
                 {/* Card 3 */}
-                <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
+                <AnimatedSection delay={0.31} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
                             <Image src='/PaverBlocks.webp' alt="Paver Blocks" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
@@ -60,7 +62,7 @@ export default function ProductCatalog() {
                             View Thickness & Shapes →
                         </Link>
                     </div>
-                </div>
+                </AnimatedSection>
 
             </div>
         </section>

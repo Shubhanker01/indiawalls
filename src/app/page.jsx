@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import AnimatedSection from "@/components/AnimatedSection";
 const ProductCatalog = dynamic(() => import("@/components/ProductCatalog"));
 const WhyUsSection = dynamic(() => import("@/components/WhyUsSection"));
 const AboutSection = dynamic(() => import("@/components/AboutSection"));
@@ -47,8 +48,10 @@ export default function Home() {
 
         {/* 3. HERO SECTION */}
         <HeroSection />
+        <AnimatedSection delay={0.1}>
+          <AboutSection />
+        </AnimatedSection>
 
-        <AboutSection />
         <WhyUsSection />
         <ProjectProcess />
         {/* 4. PRODUCT CATALOG */}

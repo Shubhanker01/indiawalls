@@ -1,5 +1,7 @@
 'use client';
 
+import AnimatedSection from './AnimatedSection';
+
 const projects = [
     {
         title: 'Industrial Area, Chopanki, Bhiwadi',
@@ -33,17 +35,18 @@ export default function OurWorkMinimal() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION TITLE */}
-                <div className="text-center max-w-2xl mx-auto mb-12">
+                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-12">
                     <h2 className="text-3xl sm:text-4xl font-black text-white">
                         Our Work
                     </h2>
-                </div>
+                </AnimatedSection>
 
                 {/* IMAGE CAROUSEL / GRID */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {projects.map((item, idx) => (
-                        <div
+                        <AnimatedSection
                             key={idx}
+                            delay={0.15 + idx * 0.07}
                             className="bg-slate-800 border border-slate-700/60 rounded-2xl overflow-hidden group shadow-lg"
                         >
                             <div className="relative h-64 overflow-hidden bg-slate-950">
@@ -61,7 +64,7 @@ export default function OurWorkMinimal() {
                                     {item.title}
                                 </p>
                             </div>
-                        </div>
+                        </AnimatedSection>
                     ))}
                 </div>
 

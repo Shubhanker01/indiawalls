@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Why Choose Us | Indiawalls Infratech - Precast & Fencing Leader',
+    title: 'Why Choose Us | RajasthanWalls Infratech - Precast & Fencing Leader',
     description:
         'Discover why developers, industrial parks, and government bodies trust Indiawalls Infratech for high-tensile precast boundary walls, RCC fencing poles, and paver blocks.',
 };
@@ -102,7 +102,7 @@ export default function WhyUsPage() {
                         Uncompromising Excellence
                     </span>
                     <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
-                        Why Indiawalls Infratech?
+                        Why RajasthanWalls Infratech?
                     </h1>
                     <p className="text-slate-300 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
                         We are redefining boundary infrastructure across India by blending advanced precast engineering, high-tensile steel reinforcement, and direct-from-factory cost efficiency.

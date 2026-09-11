@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import AnimatedSection from './AnimatedSection';
 
 const faqs = [
     {
@@ -47,7 +48,7 @@ export default function FaqSection() {
             <div className="max-w-4xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
-                <div className="text-center max-w-2xl mx-auto mb-14 space-y-3">
+                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-14 space-y-3">
                     <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Got Questions?
                     </span>
@@ -57,15 +58,16 @@ export default function FaqSection() {
                     <p className="text-slate-600 text-sm sm:text-base">
                         Everything you need to know about precast concrete walls, manufacturing standards, and installation procedures.
                     </p>
-                </div>
+                </AnimatedSection>
 
                 {/* ACCORDION LIST */}
                 <div className="space-y-4">
                     {faqs.map((faq, idx) => {
                         const isOpen = openIndex === idx;
                         return (
-                            <div
+                            <AnimatedSection
                                 key={idx}
+                                delay={0.15 + idx * 0.06}
                                 className="bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all duration-200 shadow-sm"
                             >
                                 <button
@@ -88,7 +90,7 @@ export default function FaqSection() {
                                         {faq.answer}
                                     </div>
                                 )}
-                            </div>
+                            </AnimatedSection>
                         );
                     })}
                 </div>

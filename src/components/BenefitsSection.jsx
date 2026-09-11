@@ -1,3 +1,5 @@
+import AnimatedSection from './AnimatedSection';
+
 const benefits = [
     {
         icon: '⚡',
@@ -52,7 +54,7 @@ export default function BenefitsSection() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
-                <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-16 space-y-3">
                     <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-md border border-amber-200">
                         Structural Advantages
                     </span>
@@ -62,13 +64,14 @@ export default function BenefitsSection() {
                     <p className="text-slate-700 text-sm sm:text-base">
                         Why leading site developers and landowners across NCR choose precast RCC walls over traditional brick boundaries.
                     </p>
-                </div>
+                </AnimatedSection>
 
                 {/* BENEFITS GRID */}
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {benefits.map((item, idx) => (
-                        <div
+                        <AnimatedSection
                             key={idx}
+                            delay={0.12 + idx * 0.06}
                             className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-500/50 hover:bg-slate-100/80 transition-all duration-200 space-y-3 group"
                         >
                             <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
@@ -80,7 +83,7 @@ export default function BenefitsSection() {
                             <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
                                 {item.description}
                             </p>
-                        </div>
+                        </AnimatedSection>
                     ))}
                 </div>
 

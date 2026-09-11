@@ -1,3 +1,5 @@
+import AnimatedSection from './AnimatedSection';
+
 const testimonials = [
     {
         name: 'Rajesh Sharma',
@@ -31,7 +33,7 @@ export default function TestimonialsSection() {
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
-                <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
+                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-16 space-y-3">
                     <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-100 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Client Feedback
                     </span>
@@ -41,13 +43,14 @@ export default function TestimonialsSection() {
                     <p className="text-slate-700 text-sm sm:text-base">
                         Feedback from site developers, landowners, and contractors who trust our precast concrete boundary solutions.
                     </p>
-                </div>
+                </AnimatedSection>
 
                 {/* TESTIMONIALS GRID */}
                 <div className="grid md:grid-cols-3 gap-8">
                     {testimonials.map((item, idx) => (
-                        <div
+                        <AnimatedSection
                             key={idx}
+                            delay={0.15 + idx * 0.08}
                             className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-200"
                         >
                             <div className="space-y-4">
@@ -78,7 +81,7 @@ export default function TestimonialsSection() {
                                     {item.location}
                                 </span>
                             </div>
-                        </div>
+                        </AnimatedSection>
                     ))}
                 </div>
 

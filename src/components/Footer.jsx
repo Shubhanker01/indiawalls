@@ -57,17 +57,17 @@ export default function Footer() {
                             <div className="relative shrink-0">
                                 <Image
                                     src="/Logo-Indiawalls.svg"
-                                    alt="Indiawalls Infratech Logo"
+                                    alt="RajasthanWalls Infratech Logo"
                                     className="object-contain"
-                                    width={128}
-                                    height={128}
+                                    width={220}
+                                    height={59}
                                 />
                             </div>
 
                         </Link>
 
                         <p className="text-xs sm:text-sm leading-relaxed text-slate-200">
-                            Indiawalls Infratech Private Limited is a leading manufacturer of high-strength precast RCC boundary walls, folding compound walls, and interlocking paver blocks serving industrial and commercial sites across Rajasthan and Delhi NCR.
+                            RajasthanWalls Infratech Private Limited is a leading manufacturer of high-strength precast RCC boundary walls, folding compound walls, and interlocking paver blocks serving industrial and commercial sites across Rajasthan and Delhi NCR.
                         </p>
 
                         {/* SOCIAL MEDIA LINKS */}
@@ -159,7 +159,7 @@ export default function Footer() {
 
                 {/* BOTTOM COPYRIGHT STRIP */}
                 <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-200 space-y-4 sm:space-y-0">
-                    <p>© {new Date().getFullYear()} Indiawalls Infratech Private Limited. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} RajasthanWalls Infratech Private Limited. All rights reserved.</p>
                     <div className="flex space-x-6">
                         <Link href="#privacy" className="hover:text-slate-400 transition">Privacy Policy</Link>
                         <Link href="#terms" className="hover:text-slate-400 transition">Terms of Service</Link>

@@ -17,7 +17,6 @@ export const authOptions = {
             async authorize(credentials) {
                 const allowedEmail = process.env.ADMIN_EMAIL;
                 const allowedHash = process.env.ADMIN_PASSWORD?.replace(/[\r\n]/g, "").replace(/^['"]|['"]$/g, "").trim();
-                console.log(allowedEmail, allowedHash)
                 if (!allowedEmail || !allowedHash) return null;
                 if (!credentials?.email || !credentials?.password) return null;
 
