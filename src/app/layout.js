@@ -9,10 +9,10 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata = {
-  metadataBase: new URL('https://indiawalls.in'),
+  metadataBase: new URL('https://rajasthanwalls.in'),
   title: {
-    default: 'Indiawalls | Precast Boundary Wall & RCC Wall Manufacturer',
-    template: '%s | Indiawalls Infratech',
+    default: 'Rajasthanwalls | Precast Boundary Wall & RCC Wall Manufacturer',
+    template: '%s | Rajasthanwalls Infratech',
   },
   description:
     'Manufacturer of high-strength precast boundary walls, RCC compound walls, and interlocking paver blocks serving Alwar, Bhiwadi, Gurugram, and Delhi NCR.',
@@ -23,17 +23,17 @@ export const metadata = {
     'Precast walls Bhiwadi',
     'Interlocking paver blocks NCR',
   ],
-  authors: [{ name: 'Indiawalls Infratech Private Limited' }],
-  creator: 'Indiawalls Infratech',
-  publisher: 'Indiawalls Infratech',
+  authors: [{ name: 'Rajasthanwalls Infratech Private Limited' }],
+  creator: 'Rajasthanwalls Infratech',
+  publisher: 'Rajasthanwalls Infratech',
   alternates: {
     canonical: '/',
   },
   openGraph: {
-    title: 'Indiawalls | Precast Boundary Wall Manufacturer',
+    title: 'Rajasthanwalls | Precast Boundary Wall Manufacturer',
     description: 'Custom precast concrete walls for land security & construction projects across Delhi NCR & Rajasthan.',
-    url: 'https://indiawalls.in',
-    siteName: 'Indiawalls Infratech',
+    url: 'https://rajasthanwalls.in',
+    siteName: 'Rajasthanwalls Infratech',
     locale: 'en_IN',
     type: 'website',
   },

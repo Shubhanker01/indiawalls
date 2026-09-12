@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { Lock, Mail, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
@@ -19,17 +18,17 @@ export default function AdminLoginForm({ callbackUrl }) {
         setError('');
 
         try {
-            const response = await signIn('credentials', {
-                email,
-                password,
-                redirect: false,
-                callbackUrl,
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email, password }),
             });
 
-            if (response?.error) {
-                setError('Invalid email or password.');
+            if (!response.ok) {
+                const result = await response.json().catch(() => null);
+                setError(result?.error || 'Invalid email or password.');
                 setIsLoading(false);
-            } else if (response?.ok) {
+            } else {
                 router.push(callbackUrl);
                 router.refresh();
             }

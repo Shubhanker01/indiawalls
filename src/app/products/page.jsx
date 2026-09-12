@@ -1,7 +1,10 @@
-"use client";
-import React from 'react';
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
+
 const products = [
     {
         id: 1,
@@ -41,7 +44,22 @@ const products = [
     },
 ];
 
-export default function ProductsPage() {
+async function getUploadedProducts() {
+    try {
+        const uploadsFile = await readFile(
+            path.join(process.cwd(), 'src', 'data', 'uploads.json'),
+            'utf8'
+        );
+        const uploads = JSON.parse(uploadsFile);
+        return Array.isArray(uploads) ? uploads : [];
+    } catch {
+        return [];
+    }
+}
+
+export default async function ProductsPage() {
+    const uploadedProducts = await getUploadedProducts();
+
     return (
         <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between">
             <Navbar />
@@ -116,6 +134,59 @@ export default function ProductsPage() {
                         </div>
                     ))}
                 </div>
+
+                {uploadedProducts.length > 0 && (
+                    <section className="mt-16">
+                        <div className="mb-8">
+                            <p className="text-yellow-600 font-semibold text-sm tracking-widest uppercase">
+                                Latest additions
+                            </p>
+                            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
+                                Updated products
+                            </h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {uploadedProducts.map((item) => (
+                                <article
+                                    key={item.id}
+                                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm"
+                                >
+                                    <div className="h-56 bg-slate-100 overflow-hidden">
+                                        <img
+                                            src={item.imageUrl}
+                                            alt={item.imageName || item.projectName}
+                                            loading="lazy"
+                                            decoding="async"
+                                            fetchPriority="low"
+                                            className="w-full h-full object-cover"
+                                        />
+                                    </div>
+
+                                    <div className="p-8">
+                                        <h3 className="text-2xl font-bold text-slate-900 mb-3">
+                                            {item.projectName}
+                                        </h3>
+                                        <dl className="space-y-2 text-sm text-slate-600">
+                                            <div>
+                                                <dt className="font-semibold text-slate-900">Client</dt>
+                                                <dd>{item.clientName}</dd>
+                                            </div>
+                                            <div>
+                                                <dt className="font-semibold text-slate-900">Location</dt>
+                                                <dd>{item.location}</dd>
+                                            </div>
+                                            <div>
+                                                <dt className="font-semibold text-slate-900">Requirements</dt>
+                                                <dd>{item.requirements}</dd>
+                                            </div>
+                                        </dl>
+                                    </div>
+                                </article>
+                            ))}
+                        </div>
+                    </section>
+                )}
             </main>
 
             {/* Footer Details */}

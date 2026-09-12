@@ -5,6 +5,6 @@ export default function robots() {
             allow: '/',
             disallow: ['/api/'],
         },
-        sitemap: 'https://indiawalls.in/sitemap.xml',
+        sitemap: 'https://rajasthanwalls.in/sitemap.xml',
     };
 }

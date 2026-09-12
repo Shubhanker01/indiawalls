@@ -1,25 +1,25 @@
-// src/middleware.js
-import { NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { NextResponse } from 'next/server';
+import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 export async function middleware(req) {
-    const token = await getToken({
-        req,
-        secret: process.env.NEXTAUTH_SECRET,
+    const { supabase, getResponse } = createSupabaseServerClient({
+        request: req,
+        response: NextResponse.next({ request: req }),
+        updateRequestCookies: true,
     });
 
-    const isLoggedIn = !!token;
-    const isAdmin = token?.role === "ADMIN";
+    const { data: { user } } = await supabase.auth.getUser();
+    const isLoggedIn = !!user;
     const isOnAdmin = req.nextUrl.pathname.startsWith("/admin");
     const isAdminLogin = req.nextUrl.pathname === "/admin";
 
-    if (isOnAdmin && !isAdminLogin && (!isLoggedIn || !isAdmin)) {
+    if (isOnAdmin && !isAdminLogin && !isLoggedIn) {
         const loginUrl = new URL("/admin", req.url);
         loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
         return NextResponse.redirect(loginUrl);
     }
 
-    return NextResponse.next();
+    return getResponse();
 }
 
 export const config = {

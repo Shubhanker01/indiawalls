@@ -1,5 +1,5 @@
 export default async function sitemap() {
-    const baseUrl = 'https://indiawalls.in';
+    const baseUrl = 'https://rajasthanwalls.in';
 
     // Static site routes
     const routes = ['', '/about', '/products', '/why-us', '/contact'].map((route) => ({

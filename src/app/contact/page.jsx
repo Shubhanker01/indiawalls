@@ -228,7 +228,7 @@ export default function ContactPage() {
             {/* 4. Map Section Placeholder */}
             <section id="map-section" className="py-12 px-4 max-w-7xl mx-auto">
                 <div className="w-full h-96 rounded-xl overflow-hidden shadow-lg border border-slate-200">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3518.98202949284!2d76.827894174552!3d28.11657830732524!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d35001e5f6f8f%3A0x7022ae9ca01ce5fa!2sINDIAWALLS%20INFRATECH%20PRIVATE%20LIMITED!5e0!3m2!1sen!2sin!4v1788951812093!5m2!1sen!2sin" allowFullScreen="" height="100%" width="100%" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d905431.5347039085!2d75.98906689793341!3d27.567415731693576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d4d5b6dd506d5%3A0xa2d556086c32334c!2sVR%20ENTERPRISES!5e0!3m2!1sen!2sin!4v1789200071199!5m2!1sen!2sin" allowFullScreen="" loading="lazy" height="100%" width="100%" referrerPolicy="strict-origin-when-cross-origin"></iframe>
                 </div>
             </section>
         </div>
