@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
-import { useEffect, useRef } from 'react';
+import { useActionState, useEffect, useRef, useState } from 'react';
+import { handleUpload } from './handleUpload';
 
 const initialFormData = {
     projectName: '',
@@ -14,16 +14,15 @@ export default function FormPanelPage() {
     const [formData, setFormData] = useState(initialFormData);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
-    const [submitted, setSubmitted] = useState(false);
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [error, setError] = useState('');
+    const [state, formAction, isSubmitting] = useActionState(handleUpload, {
+        error: '',
+        success: false,
+    });
     const imageInputRef = useRef(null);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData((currentData) => ({ ...currentData, [name]: value }));
-        setSubmitted(false);
-        setError('');
     };
 
     const handleImageChange = (event) => {
@@ -32,15 +31,12 @@ export default function FormPanelPage() {
 
         setImageFile(file);
         setImagePreview(URL.createObjectURL(file));
-        setSubmitted(false);
-        setError('');
     };
 
     const resetForm = () => {
         setFormData(initialFormData);
         setImageFile(null);
         setImagePreview('');
-        setSubmitted(false);
 
         if (imageInputRef.current) {
             imageInputRef.current.value = '';
@@ -53,44 +49,11 @@ export default function FormPanelPage() {
         };
     }, [imagePreview]);
 
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setIsSubmitting(true);
-        setSubmitted(false);
-        setError('');
-
-        if (!imageFile) {
-            setError('Please select a product image.');
-            setIsSubmitting(false);
-            return;
-        }
-
-        const payload = new FormData();
-        Object.entries(formData).forEach(([name, value]) => payload.append(name, value));
-        payload.append('image', imageFile);
-
-        try {
-            const response = await fetch('/api/product/upload', {
-                method: 'POST',
-                body: payload,
-            });
-            const result = await response.json().catch(() => null);
-
-            if (!response.ok) {
-                resetForm();
-                setError(result?.error || 'The product specification could not be saved.');
-                return;
-            }
-
+    useEffect(() => {
+        if (state.success || state.error) {
             resetForm();
-            setSubmitted(true);
-        } catch {
-            resetForm();
-            setError('An unexpected error occurred. Please try again.');
-        } finally {
-            setIsSubmitting(false);
         }
-    };
+    }, [state]);
 
     return (
         <main className="min-h-screen bg-slate-950 px-4 py-12 text-slate-100 sm:px-6">
@@ -108,12 +71,12 @@ export default function FormPanelPage() {
                 </div>
 
                 <form
-                    onSubmit={handleSubmit}
+                    action={formAction}
                     className="space-y-6 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl sm:p-8"
                 >
-                    {error && (
+                    {state.error && (
                         <p className="rounded-xl border border-red-500/20 bg-red-500/10 p-3 text-sm text-red-400" role="alert">
-                            {error}
+                            {state.error}
                         </p>
                     )}
 
@@ -198,7 +161,7 @@ export default function FormPanelPage() {
                         {isSubmitting ? 'Uploading...' : 'Save specification'}
                     </button>
 
-                    {submitted && (
+                    {state.success && (
                         <p className="text-sm text-emerald-400" role="status">
                             Specification submitted successfully.
                         </p>

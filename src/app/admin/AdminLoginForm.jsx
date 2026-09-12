@@ -1,42 +1,14 @@
 'use client';
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useActionState, useState } from 'react';
 import { Lock, Mail, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import { handleLogin } from './handleLogin';
 
 export default function AdminLoginForm({ callbackUrl }) {
-    const router = useRouter();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [isLoading, setIsLoading] = useState(false);
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setIsLoading(true);
-        setError('');
-
-        try {
-            const response = await fetch('/api/auth/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, password }),
-            });
-
-            if (!response.ok) {
-                const result = await response.json().catch(() => null);
-                setError(result?.error || 'Invalid email or password.');
-                setIsLoading(false);
-            } else {
-                router.push(callbackUrl);
-                router.refresh();
-            }
-        } catch {
-            setError('An unexpected error occurred. Please try again.');
-            setIsLoading(false);
-        }
-    };
+    const [state, formAction, isLoading] = useActionState(handleLogin, { error: '' });
 
     return (
         <div className="min-h-screen w-full bg-slate-950 flex flex-col justify-center items-center px-4 relative">
@@ -61,13 +33,14 @@ export default function AdminLoginForm({ callbackUrl }) {
                     </p>
                 </div>
 
-                {error && (
+                {state.error && (
                     <div className="mb-6 p-3.5 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs text-center font-medium">
-                        {error}
+                        {state.error}
                     </div>
                 )}
 
-                <form onSubmit={handleSubmit} className="space-y-5">
+                <form action={formAction} className="space-y-5">
+                    <input type="hidden" name="callbackUrl" value={callbackUrl} />
                     <div>
                         <label className="block text-xs font-medium text-slate-300 mb-2">
                             Admin Email
@@ -78,6 +51,7 @@ export default function AdminLoginForm({ callbackUrl }) {
                             </div>
                             <input
                                 type="email"
+                                name="email"
                                 required
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
@@ -97,6 +71,7 @@ export default function AdminLoginForm({ callbackUrl }) {
                             </div>
                             <input
                                 type="password"
+                                name="password"
                                 required
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)}
