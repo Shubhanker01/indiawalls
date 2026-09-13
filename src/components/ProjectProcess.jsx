@@ -40,7 +40,7 @@ const processSteps = [
 
 export default function ProjectProcess() {
     return (
-        <section className="py-20 bg-slate-50 border-y border-slate-200" id="how-it-works">
+        <section className="precast-slate-pattern py-20 border-y border-slate-800" id="how-it-works">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
@@ -48,10 +48,10 @@ export default function ProjectProcess() {
                     <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-200 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Our Process
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4">
+                    <h2 className="text-3xl sm:text-4xl font-black text-[#eef1f4] mt-4">
                         How We Complete a Full Project
                     </h2>
-                    <p className="text-slate-600 text-sm sm:text-base">
+                    <p className="text-[#d7dce1] text-base sm:text-lg leading-7">
                         From initial site measurement to final inspection, our streamlined 5-step workflow ensures fast and reliable execution.
                     </p>
                 </AnimatedSection>
@@ -62,7 +62,7 @@ export default function ProjectProcess() {
                         <AnimatedSection
                             key={index}
                             delay={0.15 + index * 0.08}
-                            className="bg-white border border-slate-400 rounded-2xl p-6 relative flex flex-col justify-between shadow-sm hover:shadow-md transition group"
+                            className="bg-[rgba(20,24,29,0.45)] border border-slate-700/60 rounded-2xl p-7 relative flex flex-col justify-between shadow-sm hover:shadow-md transition-transform duration-300 hover:-translate-y-1 group"
                         >
                             <div>
                                 {/* Step Badge & Icon */}
@@ -75,10 +75,10 @@ export default function ProjectProcess() {
                                     </span>
                                 </div>
 
-                                <h3 className="text-lg font-bold text-slate-900 mb-2">
+                                <h3 className="text-xl sm:text-2xl font-bold leading-tight text-[#eef1f4] mb-5">
                                     {item.title}
                                 </h3>
-                                <p className="text-slate-700 text-xs leading-relaxed">
+                                <p className="text-base sm:text-lg leading-7 text-[#d7dce1]">
                                     {item.description}
                                 </p>
                             </div>

@@ -154,10 +154,10 @@ export default function GalleryPage() {
                             Get Free Site Estimate
                         </Link>
                         <a
-                            href="tel:7820879777"
+                            href="tel:9950711475"
                             className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3.5 rounded-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
                         >
-                            Call +91 7820879777
+                            Call +91 9950711475
                         </a>
                     </div>
                 </div>

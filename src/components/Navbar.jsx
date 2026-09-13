@@ -1,7 +1,6 @@
 'use client';
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
@@ -27,15 +26,12 @@ export default function Navbar() {
         <nav className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
                 {/* Logo */}
-                <Link href="/" className="space-x-2" onClick={closeMenu}>
-                    <Image
-                        src="/Logo-Indiawalls.svg"
-                        alt="RajasthanWalls Infratech Logo"
-                        priority
-                        width={220}
-                        height={59}
-                        className="h-auto w-45 sm:w-55"
-                    />
+                <Link
+                    href="/"
+                    className="text-2xl font-extrabold tracking-tight text-slate-100 sm:text-3xl"
+                    onClick={closeMenu}
+                >
+                    Rajasthan<span className="text-yellow-400">Wall</span>
                 </Link>
 
                 {/* Desktop Navigation */}

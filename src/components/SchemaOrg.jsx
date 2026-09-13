@@ -6,7 +6,7 @@ export default function SchemaOrg() {
         image: 'https://indiawalls.in/logo.png',
         '@id': 'https://indiawalls.in',
         url: 'https://indiawalls.in',
-        telephone: '+917820879777',
+        telephone: '+919950711475',
         priceRange: '₹₹',
         address: {
             '@type': 'PostalAddress',
@@ -22,13 +22,16 @@ export default function SchemaOrg() {
             longitude: 76.824,
         },
         areaServed: [
+            'Kotkasim',
+            'Tapukala',
             'Alwar',
-            'Bhiwadi',
-            'Gurugram',
+            'Ringur',
+            'Ramghar',
             'Faridabad',
-            'Panipat',
+            'Bahadurgarh',
             'Palwal',
-            'Delhi NCR',
+            'Govindgarh',
+            'Mundawar',
         ],
     };
 

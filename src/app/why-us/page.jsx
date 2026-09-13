@@ -215,10 +215,10 @@ export default function WhyUsPage() {
                             Contact Sales Team
                         </Link>
                         <a
-                            href="tel:7820879777"
+                            href="tel:9950711475"
                             className="bg-white hover:bg-slate-100 text-slate-900 font-semibold px-8 py-4 rounded-xl shadow-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
                         >
-                            Call +91 7820879777
+                            Call +91 9950711475
                         </a>
                     </div>
                 </div>

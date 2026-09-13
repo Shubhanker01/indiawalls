@@ -51,9 +51,9 @@ export default function TestimonialsSection() {
                         <AnimatedSection
                             key={idx}
                             delay={0.15 + idx * 0.08}
-                            className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 flex flex-col justify-between shadow-sm hover:shadow-md transition duration-200"
+                            className="bg-white border border-slate-200 rounded-2xl p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:shadow-md transition-transform duration-300 hover:-translate-y-1"
                         >
-                            <div className="space-y-4">
+                            <div className="space-y-6">
                                 {/* Rating Stars */}
                                 <div className="flex space-x-1 text-amber-500 text-sm">
                                     {Array.from({ length: item.rating }).map((_, i) => (
@@ -62,18 +62,18 @@ export default function TestimonialsSection() {
                                 </div>
 
                                 {/* Quote */}
-                                <p className="text-slate-700 text-sm leading-relaxed italic">
+                                <p className="text-slate-800 text-lg sm:text-xl leading-8 italic">
                                     "{item.quote}"
                                 </p>
                             </div>
 
                             {/* Author Details */}
-                            <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+                            <div className="pt-8 mt-8 border-t border-slate-100 flex items-center justify-between">
                                 <div>
-                                    <h3 className="text-base font-bold text-slate-900">
+                                    <h3 className="text-lg sm:text-xl font-bold text-slate-900">
                                         {item.name}
                                     </h3>
-                                    <p className="text-xs text-slate-500">
+                                    <p className="text-sm sm:text-base text-slate-600 leading-6">
                                         {item.role}
                                     </p>
                                 </div>

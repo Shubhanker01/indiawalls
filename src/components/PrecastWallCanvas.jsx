@@ -44,12 +44,11 @@ function ProceduralWallModel() {
                     <mesh position={[0, 0, 0.15]} material={materials.edge} castShadow>
                         <boxGeometry args={[panelWidth - 0.12, panelHeight - 0.12, 0.025]} />
                     </mesh>
-                    <mesh position={[0, 0, 0.18]} material={materials.groove}>
-                        <boxGeometry args={[0.035, panelHeight - 0.35, 0.025]} />
-                    </mesh>
-                    <mesh position={[0, 0, 0.18]} rotation={[0, 0, Math.PI / 4]} material={materials.groove}>
-                        <boxGeometry args={[0.035, 1.15, 0.025]} />
-                    </mesh>
+                    {[-0.8, 0, 0.8].map((y) => (
+                        <mesh key={y} position={[0, y, 0.18]} material={materials.groove}>
+                            <boxGeometry args={[panelWidth - 0.18, 0.035, 0.025]} />
+                        </mesh>
+                    ))}
                 </group>
             ))}
 
@@ -69,7 +68,7 @@ function ProceduralWallModel() {
 export default function RenderDownloadedModel() {
     return (
         // Bright light-gray/slate-50 background for strong contrast against dark model
-        <div className="absolute inset-0 z-0 w-full h-full bg-slate-50 pointer-events-none">
+        <div className="precast-wall-pattern absolute inset-0 z-0 w-full h-full pointer-events-none">
             <Canvas shadows camera={{ position: [0, 1.5, 6], fov: 45 }}>
                 {/* Soft fill lighting */}
                 <ambientLight intensity={0.8} />

@@ -2,11 +2,11 @@ import Image from 'next/image';
 
 export default function AboutSection() {
     return (
-        <section className="py-20 bg-white border-y border-slate-200" id="about">
+        <section className="precast-wall-pattern py-24 border-y border-slate-200" id="about">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* MAIN FOUNDER & STORY GRID */}
-                <div className="grid lg:grid-cols-12 gap-12 items-center mb-16">
+                <div className="grid lg:grid-cols-12 gap-16 items-center mb-20">
 
                     {/* Founder Image Frame */}
                     <div className="lg:col-span-5 relative">
@@ -26,46 +26,46 @@ export default function AboutSection() {
                     </div>
 
                     {/* About Content */}
-                    <div className="lg:col-span-7 space-y-6">
+                    <div className="lg:col-span-7 space-y-8">
                         <div className="inline-block text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-md border border-amber-200">
                             Established in 2016
                         </div>
 
-                        <h2 className="text-3xl sm:text-4xl font-black text-slate-900 leading-tight">
+                        <h2 className="text-3xl sm:text-4xl font-black text-[#1c2024] leading-tight">
                             Pioneering Durable Precast Security & Construction Solutions Across NCR
                         </h2>
 
-                        <p className="text-slate-600 leading-relaxed">
-                            Founded in 2016 by <strong className="text-slate-900">Rohit Kumar Yadav</strong>, Indiawalls Infratech Private Limited was established to enhance security solutions for properties across Rajasthan and Delhi NCR. Recognizing the growing demand for secure, eco-friendly, and sustainable boundary wall options, we expanded our manufacturing capabilities in 2017 to include specialized precast RCC walls, barbed fencing, and interlocking paver blocks.
+                        <p className="text-lg sm:text-xl text-[#1f4e5f] leading-8">
+                            Founded in 2016 by <strong className="text-[#1f4e5f]">Rohit Kumar Yadav</strong>, Indiawalls Infratech Private Limited was established to enhance security solutions for properties across Rajasthan and Delhi NCR. Recognizing the growing demand for secure, eco-friendly, and sustainable boundary wall options, we expanded our manufacturing capabilities in 2017 to include specialized precast RCC walls, barbed fencing, and interlocking paver blocks.
                         </p>
 
-                        <p className="text-slate-600 leading-relaxed">
-                            Today, with over 2,000 satisfied clients and state-of-the-art manufacturing plants in Alwar, Bhiwadi, Panipat, and Palwal, we specialize in delivering relocatable, high-strength concrete walls engineered for rapid deployment.
+                        <p className="text-lg sm:text-xl text-[#1f4e5f] leading-8">
+                            Today, with over 2,000 satisfied clients and manufacturing plants across Kotkasim, Tapukala, Alwar, Ringur, Ramghar, Faridabad, Bahadurgarh, Palwal, Govindgarh, and Mundawar, we specialize in delivering relocatable, high-strength concrete walls engineered for rapid deployment.
                         </p>
                     </div>
                 </div>
 
                 {/* MISSION & VISION CARDS */}
-                <div className="grid md:grid-cols-2 gap-8">
+                <div className="grid md:grid-cols-2 gap-10">
 
                     {/* Mission */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-3 relative overflow-hidden">
+                    <div className="bg-slate-50/95 border border-slate-200 rounded-2xl p-9 space-y-5 relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
                         <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🎯
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900">Our Mission</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Our Mission</h3>
+                        <p className="text-lg sm:text-xl text-slate-800 leading-8">
                             To provide high-quality, innovative, and customizable precast wall and fencing solutions that ensure safety, structural efficiency, and long-term security for our clients across industrial and agricultural land developments.
                         </p>
                     </div>
 
                     {/* Vision */}
-                    <div className="bg-slate-50 border border-slate-200 rounded-2xl p-8 space-y-3 relative overflow-hidden">
+                    <div className="bg-slate-50/95 border border-slate-200 rounded-2xl p-9 space-y-5 relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
                         <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             👁️
                         </div>
-                        <h3 className="text-xl font-bold text-slate-900">Our Vision</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <h3 className="text-2xl sm:text-3xl font-bold text-slate-900">Our Vision</h3>
+                        <p className="text-lg sm:text-xl text-slate-800 leading-8">
                             To be the leading precast wall and security fencing manufacturer in India, recognized for structural reliability, technical excellence, and unmatched customer satisfaction across all infrastructure initiatives.
                         </p>
                     </div>

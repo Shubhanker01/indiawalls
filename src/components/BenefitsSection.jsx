@@ -50,7 +50,7 @@ const benefits = [
 
 export default function BenefitsSection() {
     return (
-        <section className="py-20 bg-white border-y border-slate-200" id="benefits">
+        <section className="py-20 bg-white bg-[url('/precast-white-pattern.svg')] bg-repeat border-y border-slate-200" id="benefits">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
@@ -58,10 +58,10 @@ export default function BenefitsSection() {
                     <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3 py-1 rounded-md border border-amber-200">
                         Structural Advantages
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-4">
+                    <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mt-4 leading-tight">
                         Benefits of Reinforced Concrete Walls
                     </h2>
-                    <p className="text-slate-700 text-sm sm:text-base">
+                    <p className="text-lg sm:text-xl text-slate-700 leading-8">
                         Why leading site developers and landowners across NCR choose precast RCC walls over traditional brick boundaries.
                     </p>
                 </AnimatedSection>
@@ -72,15 +72,15 @@ export default function BenefitsSection() {
                         <AnimatedSection
                             key={idx}
                             delay={0.12 + idx * 0.06}
-                            className="p-6 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-500/50 hover:bg-slate-100/80 transition-all duration-200 space-y-3 group"
+                            className="p-7 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-500/50 hover:bg-slate-100/80 transition-transform duration-300 hover:-translate-y-1 space-y-5 group"
                         >
                             <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                                 {item.icon}
                             </div>
-                            <h3 className="text-lg font-bold text-slate-900 group-hover:text-amber-600 transition-colors">
+                            <h3 className="text-xl sm:text-2xl font-bold leading-tight text-slate-900 group-hover:text-amber-600 transition-colors">
                                 {item.title}
                             </h3>
-                            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                            <p className="text-base sm:text-lg text-slate-700 leading-7">
                                 {item.description}
                             </p>
                         </AnimatedSection>

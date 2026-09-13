@@ -6,14 +6,14 @@ export default function ProductCatalog() {
     return (
         <section className="py-20 px-4 sm:px-8 max-w-7xl mx-auto" id="products">
             <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-16">
-                <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">Our Core Product Line</h2>
-                <p className="text-slate-600">Engineered precast concrete solutions tailored for agricultural, commercial, and residential boundaries.</p>
+                <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mb-5 leading-tight">Our Core Product Line</h2>
+                <p className="text-lg sm:text-xl text-slate-700 leading-8">Engineered precast concrete solutions tailored for agricultural, commercial, and residential boundaries.</p>
             </AnimatedSection>
 
             <div className="grid md:grid-cols-3 gap-8">
 
                 {/* Card 1 */}
-                <AnimatedSection delay={0.15} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
+                <AnimatedSection delay={0.15} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         {/* Replace with Next Image */}
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
@@ -31,7 +31,7 @@ export default function ProductCatalog() {
                 </AnimatedSection>
 
                 {/* Card 2 */}
-                <AnimatedSection delay={0.23} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
+                <AnimatedSection delay={0.23} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
                             <Image src='/DesignerStoneWalls.webp' alt="Designer Stone Walls" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
@@ -48,7 +48,7 @@ export default function ProductCatalog() {
                 </AnimatedSection>
 
                 {/* Card 3 */}
-                <AnimatedSection delay={0.31} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition group">
+                <AnimatedSection delay={0.31} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
                             <Image src='/PaverBlocks.webp' alt="Paver Blocks" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>

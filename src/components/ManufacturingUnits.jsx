@@ -2,38 +2,80 @@ import AnimatedSection from './AnimatedSection';
 
 const units = [
     {
-        city: 'Bhiwadi Unit',
-        region: 'Rajasthan / Delhi NCR',
-        address: 'RIICO Industrial Area, Chopanki & Pathredi, Bhiwadi',
-        geo: '28.2100° N, 76.8600° E',
-        mapsUrl: 'https://maps.google.com/?q=28.2100,76.8600',
+        city: 'Kotkasim Unit',
+        region: 'Rajasthan',
+        address: 'Kotkasim industrial area, Rajasthan',
+        geo: 'Kotkasim, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Kotkasim,Rajasthan',
+    },
+    {
+        city: 'Tapukala Unit',
+        region: 'Rajasthan',
+        address: 'Tapukala industrial area, Rajasthan',
+        geo: 'Tapukala, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Tapukala,Rajasthan',
     },
     {
         city: 'Alwar Unit',
-        region: 'Matsya Industrial Area (M.I.A)',
-        address: 'RIICO Industrial Area, M.I.A., Alwar',
-        geo: '27.5530° N, 76.6346° E',
-        mapsUrl: 'https://maps.google.com/?q=27.5530,76.6346',
+        region: 'Rajasthan',
+        address: 'Alwar industrial area, Rajasthan',
+        geo: 'Alwar, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Alwar,Rajasthan',
+    },
+    {
+        city: 'Ringur Unit',
+        region: 'Rajasthan',
+        address: 'Ringur industrial area, Rajasthan',
+        geo: 'Ringur, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Ringur,Rajasthan',
+    },
+    {
+        city: 'Ramghar Unit',
+        region: 'Rajasthan',
+        address: 'Ramghar industrial area, Rajasthan',
+        geo: 'Ramghar, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Ramghar,Rajasthan',
     },
     {
         city: 'Faridabad Unit',
         region: 'Haryana / NCR Zone',
-        address: 'Dayalpur & Ballabhgarh Industrial Belt, Faridabad',
-        geo: '28.3400° N, 77.3200° E',
-        mapsUrl: 'https://maps.google.com/?q=28.3400,77.3200',
+        address: 'Faridabad industrial area, Haryana',
+        geo: 'Faridabad, Haryana',
+        mapsUrl: 'https://maps.google.com/?q=Faridabad,Haryana',
     },
     {
-        city: 'Gurugram / Sohna Unit',
-        region: 'Gurugram Extension Zone',
-        address: 'Sohna Industrial Corridor, Gurugram',
-        geo: '28.2476° N, 77.0600° E',
-        mapsUrl: 'https://maps.google.com/?q=28.2476,77.0600',
+        city: 'Bahadurgarh Unit',
+        region: 'Haryana / NCR Zone',
+        address: 'Bahadurgarh industrial area, Haryana',
+        geo: 'Bahadurgarh, Haryana',
+        mapsUrl: 'https://maps.google.com/?q=Bahadurgarh,Haryana',
+    },
+    {
+        city: 'Palwal Unit',
+        region: 'Haryana / NCR Zone',
+        address: 'Palwal industrial area, Haryana',
+        geo: 'Palwal, Haryana',
+        mapsUrl: 'https://maps.google.com/?q=Palwal,Haryana',
+    },
+    {
+        city: 'Govindgarh Unit',
+        region: 'Rajasthan',
+        address: 'Govindgarh industrial area, Rajasthan',
+        geo: 'Govindgarh, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Govindgarh,Rajasthan',
+    },
+    {
+        city: 'Mundawar Unit',
+        region: 'Rajasthan',
+        address: 'Mundawar industrial area, Rajasthan',
+        geo: 'Mundawar, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Mundawar,Rajasthan',
     },
 ];
 
 export default function ManufacturingUnits() {
     return (
-        <section className="py-20 bg-slate-900 text-white border-y border-slate-800" id="locations">
+        <section className="precast-slate-pattern py-20 text-white border-y border-slate-800" id="locations">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
@@ -41,12 +83,29 @@ export default function ManufacturingUnits() {
                     <span className="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 mb-4">
                         Factory Network
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-white mt-4">
+                    <h2 className="text-4xl sm:text-5xl font-black text-white mt-4 leading-tight">
                         Our Manufacturing Units
                     </h2>
-                    <p className="text-slate-400 text-sm sm:text-base">
+                    <p className="text-lg sm:text-xl text-[#d7dce1] leading-8">
                         Our manufacturing units are strategically located across the following cities to ensure prompt precast production and rapid delivery:
                     </p>
+                    <p className="text-amber-300 text-sm sm:text-base font-medium">
+                        Site visit within two hours.
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-3 pt-2">
+                        <a
+                            href="tel:+919950711475"
+                            className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-amber-400"
+                        >
+                            Call Now
+                        </a>
+                        <a
+                            href="/contact"
+                            className="inline-flex items-center justify-center rounded-xl border border-slate-600 px-5 py-2.5 text-sm font-bold text-slate-100 transition hover:border-amber-400 hover:text-amber-300"
+                        >
+                            Enquire Now
+                        </a>
+                    </div>
                 </AnimatedSection>
 
                 {/* LOCATIONS GRID */}
@@ -55,7 +114,7 @@ export default function ManufacturingUnits() {
                         <AnimatedSection
                             key={idx}
                             delay={0.15 + idx * 0.08}
-                            className="bg-slate-800/80 border border-slate-700/80 rounded-2xl p-6 flex flex-col justify-between hover:border-amber-500/50 transition duration-300"
+                            className="bg-[rgba(20,24,29,0.45)] border border-slate-700/80 rounded-2xl p-7 flex flex-col justify-between hover:border-amber-500/50 transition-transform duration-300 hover:-translate-y-1"
                         >
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between">
@@ -68,10 +127,10 @@ export default function ManufacturingUnits() {
                                 </div>
 
                                 <div>
-                                    <h3 className="text-xl font-bold text-white mb-1">
+                                    <h3 className="text-2xl sm:text-3xl font-bold leading-tight text-white mb-3">
                                         {unit.city}
                                     </h3>
-                                    <p className="text-slate-400 text-xs leading-relaxed">
+                                    <p className="text-base sm:text-lg text-[#d7dce1] leading-7">
                                         {unit.address}
                                     </p>
                                 </div>

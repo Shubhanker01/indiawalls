@@ -1,6 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
-
+import Image from 'next/image'
 const socialLinks = [
     {
         name: 'Facebook',
@@ -53,17 +52,11 @@ export default function Footer() {
 
                     {/* COLUMN 1: BRAND & ABOUT (4 COLS) */}
                     <div className="lg:col-span-4 space-y-6">
-                        <Link href="/" className="items-center space-x-3 group inline-block">
-                            <div className="relative shrink-0">
-                                <Image
-                                    src="/Logo-Indiawalls.svg"
-                                    alt="RajasthanWalls Infratech Logo"
-                                    className="object-contain"
-                                    width={220}
-                                    height={59}
-                                />
-                            </div>
-
+                        <Link
+                            href="/"
+                            className="inline-block text-2xl font-extrabold tracking-tight text-slate-100 sm:text-3xl"
+                        >
+                            Rajasthan<span className="text-yellow-400">Wall</span>
                         </Link>
 
                         <p className="text-xs sm:text-sm leading-relaxed text-slate-200">
@@ -142,8 +135,8 @@ export default function Footer() {
                             </p>
                             <p className="flex items-center space-x-3">
                                 <span className="text-amber-500">📞</span>
-                                <a href="tel:+917820879777" className="hover:text-amber-400 transition">
-                                    +91 78208 79777
+                                <a href="tel:+919950711475" className="hover:text-amber-400 transition">
+                                    +91 9950711475
                                 </a>
                             </p>
                             <p className="flex items-center space-x-3">

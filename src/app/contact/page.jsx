@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar';
 export const metadata = {
     title: 'Contact Us | RajasthanWalls Infratech - Get Free Site Estimate',
     description:
-        'Get in touch with Indiawalls Infratech for factory quotes on precast boundary walls, RCC fencing poles, chainlink mesh, and paver blocks. Call +91 7820879777.',
+        'Get in touch with Indiawalls Infratech for factory quotes on precast boundary walls, RCC fencing poles, chainlink mesh, and paver blocks. Call +91 9950711475.',
 };
 
 const contactDetails = [
@@ -15,8 +15,8 @@ const contactDetails = [
             </svg>
         ),
         title: 'Phone & Direct Call',
-        value: '+91 7820879777',
-        href: 'tel:7820879777',
+        value: '+91 9950711475',
+        href: 'tel:9950711475',
         actionText: 'Call Immediately',
     },
     {
@@ -48,8 +48,20 @@ const contactDetails = [
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
         ),
-        title: 'Factory & Head Office',
+        title: 'Main Office',
         value: 'Indiawalls Infratech, Industrial Area, Rajasthan / NCR, India',
+        href: '#map-section',
+        actionText: 'View Location',
+    },
+    {
+        icon: (
+            <svg className="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+        ),
+        title: 'Head Office',
+        value: 'C7, Shri Hari Laxmi Tower, Bhagat Singh Circle, Alwar',
         href: '#map-section',
         actionText: 'View Location',
     },
@@ -216,10 +228,10 @@ export default function ContactPage() {
                             For urgent bulk dispatches or immediate site inspections across Rajasthan, Delhi NCR, and Haryana, call our technical sales desk directly.
                         </p>
                         <a
-                            href="tel:7820879777"
+                            href="tel:9950711475"
                             className="inline-flex items-center justify-center gap-2 bg-yellow-600 text-white font-bold px-6 py-3 rounded-xl hover:bg-yellow-500 transition text-sm w-full text-center"
                         >
-                            📞 Call Sales Manager (+91 7820879777)
+                            📞 Call Sales Manager (+91 9950711475)
                         </a>
                     </div>
                 </div>
