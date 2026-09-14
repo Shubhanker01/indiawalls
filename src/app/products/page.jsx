@@ -10,7 +10,8 @@ const products = [
         id: 1,
         title: 'Precast Walls',
         slug: 'precast-walls',
-        image: 'images/products/precast walls.webp',
+        image: '/images/products/precast walls.webp',
+        imageBackground: 'bg-slate-900',
         description:
             'Precast walls are durable concrete panels manufactured off-site and assembled quickly, reducing construction time and ensuring consistent quality. They offer design flexibility and improve site safety by minimizing on-site labor.',
         badge: 'Boundary Solutions',
@@ -20,6 +21,7 @@ const products = [
         title: 'Paver Blocks',
         slug: 'paver-blocks',
         image: '/images/products/paver blocks.webp',
+        imageBackground: 'bg-white',
         description:
             'Paver blocks are sturdy, interlocking concrete units ideal for driveways, walkways, and patios. They provide easy installation, require minimal maintenance, and come in various shapes and colors, allowing for customized, visually appealing designs in outdoor spaces.',
         badge: 'Paving Solutions',
@@ -61,7 +63,7 @@ export default async function ProductsPage() {
     const uploadedProducts = await getUploadedProducts();
 
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col justify-between">
+        <div className="min-h-screen precast-wall-pattern text-slate-800 flex flex-col justify-between">
             <Navbar />
             {/* Top Banner */}
             <section className="bg-slate-900 text-white py-14 px-4 sm:px-6 lg:px-8 text-center border-b border-slate-800">
@@ -84,12 +86,12 @@ export default async function ProductsPage() {
                     {products.map((item) => (
                         <div
                             key={item.id}
-                            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
                         >
                             {/* Product Image linked to single product route */}
                             <Link
                                 href={`/products/${item.slug}`}
-                                className="block relative h-56 bg-slate-100 overflow-hidden group"
+                                className={`block relative h-56 ${item.imageBackground || 'bg-slate-100'} overflow-hidden group`}
                             >
                                 <img
                                     src={item.image}
@@ -150,7 +152,7 @@ export default async function ProductsPage() {
                             {uploadedProducts.map((item) => (
                                 <article
                                     key={item.id}
-                                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm"
+                                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:-translate-y-1 transition-transform duration-300"
                                 >
                                     <div className="h-56 bg-slate-100 overflow-hidden">
                                         <img

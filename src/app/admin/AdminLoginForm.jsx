@@ -1,14 +1,36 @@
 'use client';
 
-import { useActionState, useState } from 'react';
+import { useState } from 'react';
 import { Lock, Mail, Loader2, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
-import { handleLogin } from './handleLogin';
+import { useRouter } from 'next/navigation';
+import { loginAdmin } from '@/lib/api/auth';
 
 export default function AdminLoginForm({ callbackUrl }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [state, formAction, isLoading] = useActionState(handleLogin, { error: '' });
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const router = useRouter();
+
+    async function handleSubmit(event) {
+        event.preventDefault();
+        setError('');
+        setIsLoading(true);
+
+        try {
+            await loginAdmin({ email, password });
+            const destination =
+                callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//')
+                    ? callbackUrl
+                    : '/admin/form-panel';
+            router.push(destination);
+        } catch (requestError) {
+            setError(requestError.response?.data?.error || 'Unable to sign in. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
     return (
         <div className="min-h-screen w-full bg-slate-950 flex flex-col justify-center items-center px-4 relative">
@@ -33,14 +55,13 @@ export default function AdminLoginForm({ callbackUrl }) {
                     </p>
                 </div>
 
-                {state.error && (
+                {error && (
                     <div className="mb-6 p-3.5 bg-red-500/10 border border-red-500/20 rounded-xl text-red-400 text-xs text-center font-medium">
-                        {state.error}
+                        {error}
                     </div>
                 )}
 
-                <form action={formAction} className="space-y-5">
-                    <input type="hidden" name="callbackUrl" value={callbackUrl} />
+                <form onSubmit={handleSubmit} className="space-y-5">
                     <div>
                         <label className="block text-xs font-medium text-slate-300 mb-2">
                             Admin Email

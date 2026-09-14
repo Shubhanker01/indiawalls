@@ -1,7 +1,7 @@
 'use client';
 
-import { useActionState, useEffect, useRef, useState } from 'react';
-import { handleUpload } from './handleUpload';
+import { useEffect, useRef, useState } from 'react';
+import { uploadProduct } from '@/lib/api/products';
 
 const initialFormData = {
     projectName: '',
@@ -14,10 +14,11 @@ export default function FormPanelPage() {
     const [formData, setFormData] = useState(initialFormData);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
-    const [state, formAction, isSubmitting] = useActionState(handleUpload, {
+    const [state, setState] = useState({
         error: '',
         success: false,
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const imageInputRef = useRef(null);
 
     const handleChange = (event) => {
@@ -40,6 +41,31 @@ export default function FormPanelPage() {
 
         if (imageInputRef.current) {
             imageInputRef.current.value = '';
+        }
+    };
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setState({ error: '', success: false });
+        setIsSubmitting(true);
+
+        const uploadData = new FormData();
+        uploadData.append('projectName', formData.projectName);
+        uploadData.append('clientName', formData.clientName);
+        uploadData.append('location', formData.location);
+        uploadData.append('requirements', formData.requirements);
+        uploadData.append('image', imageFile);
+
+        try {
+            await uploadProduct(uploadData);
+            setState({ error: '', success: true });
+        } catch (requestError) {
+            setState({
+                error: requestError.response?.data?.error || 'Upload failed. Please try again.',
+                success: false,
+            });
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -71,7 +97,7 @@ export default function FormPanelPage() {
                 </div>
 
                 <form
-                    action={formAction}
+                    onSubmit={handleSubmit}
                     className="space-y-6 rounded-2xl border border-slate-800 bg-slate-900 p-6 shadow-2xl sm:p-8"
                 >
                     {state.error && (
