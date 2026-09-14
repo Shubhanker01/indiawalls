@@ -1,4 +1,8 @@
+import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+
+const ChainLinkModel = dynamic(() => import('@/components/ChainLinkModel'));
 
 export const metadata = {
     title: 'GI & PVC Coated Chainlink Mesh Fencing | Indiawalls',
@@ -84,16 +88,16 @@ export default function ChainlinkPage() {
                             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-6">
                                 Galvanized & PVC Coated Chainlink Mesh
                             </h1>
-                            <p className="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed">
+                            <p className="text-slate-300 text-lg sm:text-xl mb-8 leading-relaxed">
                                 Durable, high-tensile diamond mesh fencing engineered for cost-effective boundary demarcation across agricultural land, solar parks, sports fields, and commercial properties.
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <a
-                                    href="#enquiry-form"
+                                <Link
+                                    href="/contact"
                                     className="bg-yellow-600 hover:bg-yellow-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
                                 >
                                     Get Instant Quote
-                                </a>
+                                </Link>
                                 <a
                                     href="tel:9950711475"
                                     className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3.5 rounded-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
@@ -122,42 +126,46 @@ export default function ChainlinkPage() {
                 </div>
             </section>
 
+            <div className="mt-12">
+                <ChainLinkModel />
+            </div>
+
             {/* 2. Key Benefits */}
             <section className="py-16 px-4 max-w-7xl mx-auto">
                 <div className="text-center max-w-3xl mx-auto mb-12">
                     <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">Why Choose Indiawalls Chainlink Fencing?</h2>
-                    <p className="text-slate-600 text-sm sm:text-base">
+                    <p className="text-slate-600 text-base sm:text-lg">
                         Versatile, open-weave structure that provides high visibility, low wind resistance, and long-term boundary security.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🛡️
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Rust & Weather Resistant</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Manufactured with high-grade hot-dip galvanized wire and UV-stabilized PVC coating to withstand continuous rain, humidity, and intense sunlight.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             📐
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Customizable Mesh Sizes</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Available in multiple mesh apertures (1" to 4") and wire gauge thicknesses tailored specifically to your site containment needs.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             💰
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Cost-Effective Boundary</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Delivers maximum per-linear-foot perimeter coverage at a fraction of the cost of solid concrete wall installations.
                         </p>
                     </div>
@@ -169,12 +177,12 @@ export default function ChainlinkPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-10">
                         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Chainlink Mesh Options</h2>
-                        <p className="text-slate-600 text-sm">Choose the ideal material coating and wire gauge for your location.</p>
+                        <p className="text-slate-600 text-base sm:text-lg">Choose the ideal material coating and wire gauge for your location.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {meshVariants.map((item, idx) => (
-                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-yellow-500 transition">
+                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-yellow-500 hover:-translate-y-1 transition-transform duration-300">
                                 <div>
                                     <div className="flex justify-between items-center mb-3">
                                         <span className="text-xs font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md">
@@ -185,7 +193,7 @@ export default function ChainlinkPage() {
                                         </span>
                                     </div>
                                     <h3 className="text-lg font-bold text-slate-900 mb-2">{item.name}</h3>
-                                    <p className="text-slate-600 text-xs sm:text-sm mb-4 leading-relaxed">{item.desc}</p>
+                                    <p className="text-slate-600 text-base sm:text-lg mb-4 leading-relaxed">{item.desc}</p>
                                 </div>
                                 <div className="pt-4 border-t border-slate-100 text-xs text-slate-500">
                                     <span className="font-semibold text-slate-700">Best for:</span> {item.bestFor}
@@ -223,14 +231,14 @@ export default function ChainlinkPage() {
                         {installationSteps.map((step) => (
                             <div
                                 key={step.step}
-                                className="bg-white p-5 rounded-2xl border border-slate-200 flex gap-4 items-start shadow-sm hover:border-yellow-500 transition"
+                                className="bg-white p-5 rounded-2xl border border-slate-200 flex gap-4 items-start shadow-sm hover:border-yellow-500 hover:-translate-y-1 transition-transform duration-300"
                             >
                                 <span className="text-yellow-600 font-extrabold text-lg bg-yellow-50 px-3 py-1 rounded-lg flex-shrink-0">
                                     {step.step}
                                 </span>
                                 <div>
                                     <h3 className="font-bold text-slate-800 text-base mb-1">{step.title}</h3>
-                                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{step.desc}</p>
+                                    <p className="text-slate-600 text-base sm:text-lg leading-relaxed">{step.desc}</p>
                                 </div>
                             </div>
                         ))}
@@ -243,7 +251,7 @@ export default function ChainlinkPage() {
                 <div className="max-w-4xl mx-auto bg-slate-800 p-8 sm:p-12 rounded-3xl border border-slate-700 shadow-2xl">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl sm:text-3xl font-bold mb-2">Request Chainlink Estimate</h2>
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-slate-400 text-base sm:text-lg">
                             Provide total running feet, height requirement, and wire preference for an immediate factory quote.
                         </p>
                     </div>

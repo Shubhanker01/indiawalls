@@ -78,7 +78,7 @@ export default function GalleryPage() {
                     <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
                         Completed Project Gallery
                     </h1>
-                    <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
+                    <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
                         Take a look at our recent on-site installations across industrial sites, commercial complexes, farmland boundaries, and infrastructure projects.
                     </p>
                 </div>
@@ -90,7 +90,7 @@ export default function GalleryPage() {
                     {projects.map((project) => (
                         <div
                             key={project.id}
-                            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl transition duration-300 flex flex-col justify-between group"
+                            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-between group"
                         >
                             {/* Image Container */}
                             <div>
@@ -117,7 +117,7 @@ export default function GalleryPage() {
                                     <h2 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-yellow-600 transition">
                                         {project.title}
                                     </h2>
-                                    <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
+                                    <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                                         {project.description}
                                     </p>
                                 </div>
@@ -143,7 +143,7 @@ export default function GalleryPage() {
             <section className="bg-slate-900 text-white py-14 px-4 border-t border-slate-800">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-2xl sm:text-3xl font-bold mb-3">Have a Project in Mind?</h2>
-                    <p className="text-slate-400 text-sm sm:text-base mb-8">
+                    <p className="text-slate-400 text-base sm:text-lg mb-8">
                         Get site-specific recommendations, material estimates, and competitive factory rates for your site boundary.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">

@@ -180,6 +180,20 @@ export default function ContactPage() {
                             />
                         </div>
 
+                        <div>
+                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
+                                Running Height (Feet)
+                            </label>
+                            <input
+                                type="number"
+                                name="runningHeight"
+                                min="0"
+                                step="0.01"
+                                placeholder="e.g. 6"
+                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
+                            />
+                        </div>
+
                         <div className="sm:col-span-2">
                             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                                 Site Location & Specific Requirements

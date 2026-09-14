@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar'
+
+const FencingPoleModel = dynamic(() => import('@/components/FencingPoleModel'));
 export const metadata = {
     title: 'Heavy Duty RCC Concrete & Metal Fencing Poles | Indiawalls',
     description:
@@ -126,42 +129,46 @@ export default function FencingPolesPage() {
                 </div>
             </section>
 
+            <div className="mt-12">
+                <FencingPoleModel />
+            </div>
+
             {/* 2. Key Benefits */}
             <section className="py-16 px-4 max-w-7xl mx-auto">
                 <div className="text-center max-w-3xl mx-auto mb-12">
                     <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">Why Choose Precast Fencing Poles?</h2>
-                    <p className="text-slate-600 text-sm sm:text-base">
+                    <p className="text-slate-600 text-base sm:text-lg">
                         Long-lasting structural support that outperforms wooden posts and untreated metal pipes against soil moisture, termites, and harsh weather.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             📌
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Pre-Drilled Wire Holes</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Equipped with pre-molded hole slots to allow easy stringing of barbed wire, chainlink mesh, or concertina coils without drilling on-site.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🌧️
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Weather & Soil Resistant</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Impervious to saltpeter (shora), subterranean termites, and damp soil conditions, guaranteeing decades of service.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             💪
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Pre-Stressed Steel Core</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Reinforced internally with high-tensile carbon steel strands for flexural strength against animal impact and high winds.
                         </p>
                     </div>
@@ -173,12 +180,12 @@ export default function FencingPolesPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="mb-10">
                         <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Available Pole Types</h2>
-                        <p className="text-slate-600 text-sm">Select the right structural support based on your property security requirement.</p>
+                        <p className="text-slate-600 text-base sm:text-lg">Select the right structural support based on your property security requirement.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {poleTypes.map((item, idx) => (
-                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-yellow-500 transition">
+                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-yellow-500 hover:-translate-y-1 transition-transform duration-300">
                                 <div>
                                     <div className="flex justify-between items-center mb-3">
                                         <span className="text-xs font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md">
@@ -189,7 +196,7 @@ export default function FencingPolesPage() {
                                         </span>
                                     </div>
                                     <h3 className="text-lg font-bold text-slate-900 mb-2">{item.name}</h3>
-                                    <p className="text-slate-600 text-xs sm:text-sm mb-4 leading-relaxed">{item.desc}</p>
+                                    <p className="text-slate-600 text-base sm:text-lg mb-4 leading-relaxed">{item.desc}</p>
                                 </div>
                                 <div className="pt-4 border-t border-slate-100 text-xs text-slate-500">
                                     <span className="font-semibold text-slate-700">Best for:</span> {item.bestFor}
@@ -224,14 +231,14 @@ export default function FencingPolesPage() {
                     <h2 className="text-2xl font-bold text-slate-900 mb-6">How Fencing Poles Are Made</h2>
                     <div className="space-y-4">
                         {installationSteps.map((step) => (
-                            <div key={step.step} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-start shadow-sm">
+                            <div key={step.step} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-start shadow-sm hover:-translate-y-1 transition-transform duration-300">
                                 <div className="flex gap-4 items-start flex-1">
                                     <span className="text-yellow-600 font-extrabold text-lg bg-yellow-50 px-3 py-1 rounded-lg">
                                         {step.step}
                                     </span>
                                     <div>
                                         <h3 className="font-bold text-slate-800 text-base mb-1">{step.title}</h3>
-                                        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{step.description}</p>
+                                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">{step.description}</p>
                                     </div>
                                 </div>
 
@@ -259,7 +266,7 @@ export default function FencingPolesPage() {
                 <div className="max-w-4xl mx-auto bg-slate-800 p-8 sm:p-12 rounded-3xl border border-slate-700 shadow-2xl">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl sm:text-3xl font-bold mb-2">Request Pole Quotation</h2>
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-slate-400 text-base sm:text-lg">
                             Provide your required pole height and approximate quantity for an instant factory rate quote.
                         </p>
                     </div>

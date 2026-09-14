@@ -24,7 +24,7 @@ export default function ProductCatalog() {
                         <span className="text-md font-bold text-amber-700 uppercase tracking-wider">Most Popular</span>
                         <h3 className="text-md font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Precast RCC Boundary Walls</h3>
                         <p className="text-slate-800 text-sm mb-4">Strong interlocked precast panels supported by pre-stressed concrete posts. Weather-proof and relocatable.</p>
-                        <Link href="/products/precast-walls" className="text-amber-600 font-semibold text-sm hover:underline">
+                        <Link href="/products" className="text-amber-600 font-semibold text-sm hover:underline">
                             View Specs & Designs →
                         </Link>
                     </div>
@@ -41,7 +41,7 @@ export default function ProductCatalog() {
                         <span className="text-md font-bold text-amber-700 uppercase tracking-wider">Aesthetic Finish</span>
                         <h3 className="text-md font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Designer Stone Texture Walls</h3>
                         <p className="text-slate-800 text-sm mb-4">Precast concrete molded with natural stone patterns. Ideal for farmhouses, villas, and premium commercial plots.</p>
-                        <Link href="/products/designer-walls" className="text-amber-600 font-semibold text-sm hover:underline">
+                        <Link href="/products" className="text-amber-600 font-semibold text-sm hover:underline">
                             Explore Patterns →
                         </Link>
                     </div>
@@ -58,7 +58,7 @@ export default function ProductCatalog() {
                         <span className="text-md font-bold text-amber-700 uppercase tracking-wider">Heavy Duty</span>
                         <h3 className="text-md font-bold mt-1 mb-2 group-hover:text-amber-600 transition">Interlocking Paver Blocks</h3>
                         <p className="text-slate-800 text-sm mb-4">High-density interlocking concrete blocks built for industrial driveways, parking lots, and walkways.</p>
-                        <Link href="/products/paver-blocks" className="text-amber-600 font-semibold text-sm hover:underline">
+                        <Link href="/products" className="text-amber-600 font-semibold text-sm hover:underline">
                             View Thickness & Shapes →
                         </Link>
                     </div>

@@ -131,7 +131,7 @@ export default function Footer() {
                         <div className="space-y-3 text-xs sm:text-sm">
                             <p className="flex items-start space-x-3">
                                 <span className="text-amber-500">📍</span>
-                                <span>Khasra No. 251, 252, Tehsil Tapukara, Daganheri, Alwar, Rajasthan - 301707</span>
+                                <span>C-7 Shri Hari Laxmi Tower, Bhagat Singh Circle, Alwar</span>
                             </p>
                             <p className="flex items-center space-x-3">
                                 <span className="text-amber-500">📞</span>

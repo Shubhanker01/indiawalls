@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
+
+const PrecastWallViewer = dynamic(() => import('@/components/PrecastWallViewer'));
 
 export const metadata = {
     title: 'Precast Concrete Boundary Walls & RCC Compound Walls | Indiawalls',
@@ -65,17 +68,17 @@ export default function PrecastWallsPage() {
                             <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight leading-tight mb-6">
                                 Precast RCC Boundary & Compound Walls
                             </h1>
-                            <p className="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed">
+                            <p className="text-slate-300 text-lg sm:text-xl mb-8 leading-relaxed">
                                 Factory-manufactured reinforced concrete wall panels designed for quick assembly, superior durability, and low long-term maintenance across residential plots, farmhouses, and industrial land.
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <a
-                                    href="#enquiry-form"
+                                <Link
+                                    href="/contact"
                                     className="bg-yellow-600 hover:bg-yellow-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
                                 >
                                     Get Quick Quote
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="tel:9950711475"
                                     className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3.5 rounded-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
                                 >
@@ -84,7 +87,7 @@ export default function PrecastWallsPage() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                     </svg>
                                     Call +91 9950711475
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
@@ -103,42 +106,46 @@ export default function PrecastWallsPage() {
                 </div>
             </section>
 
+            <div className="mt-12">
+                <PrecastWallViewer />
+            </div>
+
             {/* 2. Key Highlights / Benefits */}
             <section className="py-16 px-4 max-w-7xl mx-auto">
                 <div className="text-center max-w-3xl mx-auto mb-12">
                     <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">Why Choose Precast Concrete Walls?</h2>
-                    <p className="text-slate-600 text-sm sm:text-base">
+                    <p className="text-slate-600 text-base sm:text-lg">
                         Replacing traditional brick walls with ready-made reinforced concrete structures saves time, reduces total cost, and provides uniform structural stability.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             ⚡
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Rapid Installation</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Installed up to 5x faster than brick masonry. Completed within a few days without waiting for wet curing or on-site brick laying.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🛡️
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">High Durability & Strength</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Manufactured with M-30 to M-40 grade RCC. Designed to withstand harsh weather, seismic vibrations, and extreme temperatures.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             💰
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Cost Effective & Relocatable</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Minimizes labor overhead and material wastage. Can be safely dismantled and relocated if boundary layouts change in the future.
                         </p>
                     </div>
@@ -170,14 +177,14 @@ export default function PrecastWallsPage() {
                         <h2 className="text-2xl font-bold text-slate-900 mb-6">How Precast Walls Are Made</h2>
                         <div className="space-y-4">
                             {manufacturingSteps.map((step) => (
-                                <div key={step.step} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-start shadow-sm">
+                                <div key={step.step} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-start shadow-sm hover:-translate-y-1 transition-transform duration-300">
                                     <div className="flex gap-4 items-start flex-1">
                                         <span className="text-yellow-700 font-extrabold text-lg bg-yellow-50 px-3 py-1 rounded-lg">
                                             {step.step}
                                         </span>
                                         <div>
                                             <h3 className="font-bold text-slate-800 text-base mb-1">{step.title}</h3>
-                                            <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{step.description}</p>
+                                            <p className="text-slate-600 text-base sm:text-lg leading-relaxed">{step.description}</p>
                                         </div>
                                     </div>
 
@@ -203,7 +210,7 @@ export default function PrecastWallsPage() {
                 <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 text-center mb-10">4-Step On-Site Installation Process</h2>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                     {installationSteps.map((item) => (
-                        <div key={item.num} className="bg-white p-6 rounded-2xl border border-slate-200 relative text-center shadow-sm">
+                        <div key={item.num} className="bg-white p-6 rounded-2xl border border-slate-200 relative text-center shadow-sm hover:-translate-y-1 transition-transform duration-300">
                             <div className="w-10 h-10 bg-slate-900 text-white rounded-full flex items-center justify-center font-bold mx-auto mb-4">
                                 {item.num}
                             </div>
@@ -218,7 +225,7 @@ export default function PrecastWallsPage() {
                 <div className="max-w-4xl mx-auto bg-slate-800 p-8 sm:p-12 rounded-3xl border border-slate-700 shadow-2xl">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl sm:text-3xl font-bold mb-2">Request an Instant Quote</h2>
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-slate-400 text-base sm:text-lg">
                             Send us your site details and boundary dimensions for a customized cost estimate.
                         </p>
                     </div>

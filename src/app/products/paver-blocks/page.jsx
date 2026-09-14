@@ -1,5 +1,8 @@
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import Navbar from '@/components/Navbar';
+
+const PaverBlockModel = dynamic(() => import('@/components/PaverBlockModel'));
 
 export const metadata = {
     title: 'Heavy Duty Interlocking Paver Blocks & Concrete Tiles | Indiawalls',
@@ -102,13 +105,13 @@ export default function PaverBlocksPage() {
                                 Factory-pressed heavy-duty concrete paver blocks engineered for extreme vehicular load, all-weather durability, and rapid installation across commercial driveways, petrol pumps, and public walkways.
                             </p>
                             <div className="flex flex-wrap gap-4">
-                                <a
-                                    href="#enquiry-form"
+                                <Link
+                                    href="/contact"
                                     className="bg-yellow-600 hover:bg-yellow-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
                                 >
                                     Request Price List
-                                </a>
-                                <a
+                                </Link>
+                                <Link
                                     href="tel:9950711475"
                                     className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3.5 rounded-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
                                 >
@@ -116,7 +119,7 @@ export default function PaverBlocksPage() {
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                                     </svg>
                                     Call +91 9950711475
-                                </a>
+                                </Link>
                             </div>
                         </div>
 
@@ -136,42 +139,46 @@ export default function PaverBlocksPage() {
                 </div>
             </section>
 
+            <div className="mt-12">
+                <PaverBlockModel />
+            </div>
+
             {/* 2. Key Benefits */}
             <section className="py-16 px-4 max-w-7xl mx-auto">
                 <div className="text-center max-w-3xl mx-auto mb-12">
                     <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">Why Choose Interlocking Pavers?</h2>
-                    <p className="text-slate-600 text-sm sm:text-base">
+                    <p className="text-slate-600 text-base sm:text-lg">
                         Superior alternative to traditional asphalt and plain concrete flooring with zero curing downtime and instant usability.
                     </p>
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🚛
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Heavy Load Bearing</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Engineered to handle high point-loads, heavy trucks, container movements, and continuous traffic without cracking.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🔧
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Easy Underground Access</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Blocks can be easily lifted for underground pipe/cable repairs and reinstated without leaving messy patches or cuts.
                         </p>
                     </div>
 
-                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition">
+                    <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform duration-300">
                         <div className="w-12 h-12 bg-yellow-100 text-yellow-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🌧️
                         </div>
                         <h3 className="text-xl font-bold text-slate-800 mb-2">Anti-Skid & Weather Proof</h3>
-                        <p className="text-slate-600 text-sm leading-relaxed">
+                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
                             Textured surface ensures high friction even during heavy rains, reducing accidents in steep driveways and parking ramps.
                         </p>
                     </div>
@@ -184,13 +191,13 @@ export default function PaverBlocksPage() {
                     <div className="flex flex-col md:flex-row md:items-end justify-between mb-10">
                         <div>
                             <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2">Available Shapes & Patterns</h2>
-                            <p className="text-slate-600 text-sm">Choose the ideal interlocking profile for your specific traffic requirement.</p>
+                            <p className="text-slate-600 text-base sm:text-lg">Choose the ideal interlocking profile for your specific traffic requirement.</p>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         {paverTypes.map((item, idx) => (
-                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-yellow-500 transition">
+                            <div key={idx} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:border-yellow-500 hover:-translate-y-1 transition-transform duration-300">
                                 <div>
                                     <div className="flex justify-between items-center mb-3">
                                         <span className="text-xs font-bold bg-slate-100 text-slate-700 px-2.5 py-1 rounded-md">
@@ -201,7 +208,7 @@ export default function PaverBlocksPage() {
                                         </span>
                                     </div>
                                     <h3 className="text-lg font-bold text-slate-900 mb-2">{item.name}</h3>
-                                    <p className="text-slate-600 text-xs sm:text-sm mb-4 leading-relaxed">{item.desc}</p>
+                                    <p className="text-slate-600 text-base sm:text-lg mb-4 leading-relaxed">{item.desc}</p>
                                 </div>
                                 <div className="pt-4 border-t border-slate-100 text-xs text-slate-500">
                                     <span className="font-semibold text-slate-700">Best for:</span> {item.bestFor}
@@ -236,14 +243,14 @@ export default function PaverBlocksPage() {
                     <h2 className="text-2xl font-bold text-slate-900 mb-6">How Precast Walls Are Made</h2>
                     <div className="space-y-4">
                         {installationSteps.map((step) => (
-                            <div key={step.step} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-start shadow-sm">
+                            <div key={step.step} className="bg-white p-5 rounded-2xl border border-slate-200 flex flex-col sm:flex-row gap-4 items-start shadow-sm hover:-translate-y-1 transition-transform duration-300">
                                 <div className="flex gap-4 items-start flex-1">
                                     <span className="text-yellow-600 font-extrabold text-lg bg-yellow-50 px-3 py-1 rounded-lg">
                                         {step.step}
                                     </span>
                                     <div>
                                         <h3 className="font-bold text-slate-800 text-base mb-1">{step.title}</h3>
-                                        <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{step.description}</p>
+                                        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">{step.description}</p>
                                     </div>
                                 </div>
 
@@ -268,7 +275,7 @@ export default function PaverBlocksPage() {
                 <div className="max-w-4xl mx-auto bg-slate-800 p-8 sm:p-12 rounded-3xl border border-slate-700 shadow-2xl">
                     <div className="text-center mb-8">
                         <h2 className="text-2xl sm:text-3xl font-bold mb-2">Calculate Your Paver Block Requirement</h2>
-                        <p className="text-slate-400 text-sm">
+                        <p className="text-slate-400 text-base sm:text-lg">
                             Submit your area dimensions (in Sq. Ft. or Sq. Meter) for an accurate price estimate per square foot.
                         </p>
                     </div>

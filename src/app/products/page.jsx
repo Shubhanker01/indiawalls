@@ -2,6 +2,9 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
+import ProductCementPlank from "@/components/ProductCementPlank"
+import ColumnProductPage from '@/components/ColumnProductPage';
+import CompoundWallPage from '@/components/CompoundWallPage';
 
 export const dynamic = 'force-dynamic';
 
@@ -69,7 +72,7 @@ export default async function ProductsPage() {
             <section className="bg-slate-900 text-white py-14 px-4 sm:px-6 lg:px-8 text-center border-b border-slate-800">
                 <div className="max-w-4xl mx-auto">
                     <span className="text-yellow-400 font-semibold text-sm tracking-widest uppercase">
-                        Indiawalls Portfolio
+                        RajasthanWall Portfolio
                     </span>
                     <h1 className="text-4xl sm:text-5xl font-extrabold mt-2 tracking-tight">
                         Our Products
@@ -118,7 +121,7 @@ export default async function ProductsPage() {
                                         </Link>
                                     </h2>
 
-                                    <p className="text-slate-600 text-sm leading-relaxed mb-6">
+                                    <p className="text-slate-600 text-base leading-relaxed mb-6">
                                         {item.description}
                                     </p>
                                 </div>
@@ -190,18 +193,25 @@ export default async function ProductsPage() {
                     </section>
                 )}
             </main>
-
+            <ProductCementPlank></ProductCementPlank>
+            <div className="mt-12">
+                <ColumnProductPage />
+            </div>
+            <div className='mt-12 mb-12'>
+                <CompoundWallPage />
+            </div>
             {/* Footer Details */}
-            <footer className="bg-slate-900 text-slate-400 text-xs py-8 border-t border-slate-800">
+            <footer className="bg-slate-900 text-slate-400 text-md py-8 border-t border-slate-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
                     <div>
-                        <p className="font-semibold text-slate-300">Indiawalls Manufacturing Unit</p>
+                        <p className="font-semibold text-slate-300">RajasthanWall Manufacturing Unit</p>
                         <p className="mt-1">
-                            Khasra No. 251, 252, Tehsil Tapukara, Daganheri Alwar, Rajasthan- 301707.
+                            Near Gyan Sagar, Alampur, Kotkasim, Rajasthan.
                         </p>
                     </div>
                     <p className="text-slate-500">
-                        Copyright © 2026 Indiawalls. All Rights Reserved.
+                        Copyright © 2026
+                        RajasthanWall. All Rights Reserved.
                     </p>
                 </div>
             </footer>

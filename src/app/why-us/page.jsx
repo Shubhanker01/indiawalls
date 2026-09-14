@@ -92,7 +92,7 @@ const ComparisonTable = () => (
 
 export default function WhyUsPage() {
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800">
+        <div className="min-h-screen precast-white-pattern text-slate-800">
             <Navbar />
             {/* 1. Hero Header */}
             <section className="bg-slate-900 text-white pt-12 pb-20 px-4">
@@ -135,12 +135,12 @@ export default function WhyUsPage() {
                     {keyDifferentiators.map((item, idx) => (
                         <div
                             key={idx}
-                            className="bg-white p-7 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition duration-200 flex flex-col justify-between hover:border-yellow-500"
+                            className="bg-white p-7 rounded-2xl border border-slate-200 shadow-sm hover:shadow-lg transition duration-300 flex flex-col justify-between hover:border-yellow-500 hover:-translate-y-1"
                         >
                             <div>
                                 <div className="text-3xl mb-4 p-3 bg-yellow-50 rounded-xl w-fit">{item.icon}</div>
                                 <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
-                                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">{item.desc}</p>
+                                <p className="text-slate-600 text-base sm:text-lg leading-relaxed">{item.desc}</p>
                             </div>
                         </div>
                     ))}
