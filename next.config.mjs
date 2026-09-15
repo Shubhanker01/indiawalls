@@ -20,7 +20,8 @@ const nextConfig = {
   experimental: {
     inlineCss: true
   },
-  devIndicators: false
+  devIndicators: false,
+  productionBrowserSourceMaps: false,
 };
 
 export default nextConfig;

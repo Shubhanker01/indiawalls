@@ -10,13 +10,24 @@ export async function middleware(req) {
 
     const { data: { user } } = await supabase.auth.getUser();
     const isLoggedIn = !!user;
-    const isOnAdmin = req.nextUrl.pathname.startsWith("/admin");
-    const isAdminLogin = req.nextUrl.pathname === "/admin";
-
-    if (isOnAdmin && !isAdminLogin && !isLoggedIn) {
+    const pathname = req.nextUrl.pathname;
+    const isOnAdmin = pathname.startsWith("/admin");
+    const isAdminLogin = pathname === "/admin";
+    const isErrorRoute = pathname.startsWith("/admin/form-panel") || pathname.startsWith("/admin/api");
+    if (isOnAdmin && !isAdminLogin && !isLoggedIn && !isErrorRoute) {
         const loginUrl = new URL("/admin", req.url);
         loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
         return NextResponse.redirect(loginUrl);
+    }
+    if (isErrorRoute && !isLoggedIn) {
+        return NextResponse.json(
+            {
+                error: "Unauthorized Access",
+                message: "Sorry this page is forbidden",
+                status: 403,
+            },
+            { status: 403 }
+        );
     }
 
     return getResponse();
