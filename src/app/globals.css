@@ -92,6 +92,12 @@
   background-attachment: fixed;
 }
 
+@media (max-width: 640px) {
+  .home-wall-background {
+    background-size: auto 100vh;
+  }
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
