@@ -67,10 +67,8 @@
 
 .precast-wall-pattern {
   background-color: rgb(248 250 252);
-  background-image: linear-gradient(
-      rgb(248 250 252 / 0.78),
-      rgb(248 250 252 / 0.78)
-    ),
+  background-image: linear-gradient(rgb(248 250 252 / 0.78),
+      rgb(248 250 252 / 0.78)),
     url("/precast-white-pattern.svg");
   background-repeat: repeat;
   background-size: auto;
@@ -78,13 +76,20 @@
 
 .precast-slate-pattern {
   background-color: rgb(15 23 42);
-  background-image: linear-gradient(
-      rgb(15 23 42 / 0.72),
-      rgb(15 23 42 / 0.72)
-    ),
+  background-image: linear-gradient(rgb(15 23 42 / 0.72),
+      rgb(15 23 42 / 0.72)),
     url("/precast-slate-pattern.svg");
   background-repeat: repeat;
   background-size: auto;
+}
+
+.home-wall-background {
+  background-color: rgb(241 245 249);
+  background-image: url("/PrecastWallPatternImage.png");
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-attachment: fixed;
 }
 
 :root {
@@ -190,4 +195,31 @@
   label {
     font-family: "Montserrat", sans-serif;
   }
+}
+
+.wall {
+  background-color: #e6e8e6;
+  background-image:
+    /* horizontal slab seams */
+    repeating-linear-gradient(to right,
+      rgba(255, 255, 255, 0.55) 0px,
+      /* post highlight */
+      rgba(255, 255, 255, 0.55) 10px,
+      rgba(0, 0, 0, 0.13) 10px,
+      /* post shadow edge */
+      rgba(0, 0, 0, 0.13) 16px,
+      transparent 16px,
+      transparent 320px
+      /* <-- gap between posts */
+    )
+}
+
+/* scalloped coping along the top edge */
+.scallop {
+  height: 28px;
+  background:
+    radial-gradient(circle at 27px 0, transparent 20px, #c3c7c3 21px),
+    radial-gradient(circle at 0px 0, #c3c7c3 20px, transparent 21px);
+  background-size: 54px 28px;
+  background-repeat: repeat-x;
 }

@@ -103,7 +103,7 @@ function ColumnMesh() {
                 map={texture}
                 roughness={0.8}
                 metalness={0.05}
-                color="#c8c8c8"
+                color="#F2F2F2"
             />
         </mesh>
     );

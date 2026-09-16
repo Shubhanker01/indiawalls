@@ -58,7 +58,7 @@ function CementPlank() {
                 map={texture}
                 roughness={0.85}
                 metalness={0.05}
-                color="#c2c2c2"
+                color="#F2F2F2"
             />
         </mesh>
     );

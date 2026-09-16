@@ -13,7 +13,7 @@ export default function ProductCatalog() {
             <div className="grid md:grid-cols-3 gap-8">
 
                 {/* Card 1 */}
-                <AnimatedSection delay={0.15} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
+                <AnimatedSection delay={0.15} className="bg-white/90 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         {/* Replace with Next Image */}
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
@@ -31,7 +31,7 @@ export default function ProductCatalog() {
                 </AnimatedSection>
 
                 {/* Card 2 */}
-                <AnimatedSection delay={0.23} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
+                <AnimatedSection delay={0.23} className="bg-white/90 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
                             <Image src='/DesignerStoneWalls.webp' alt="Designer Stone Walls" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
@@ -48,7 +48,7 @@ export default function ProductCatalog() {
                 </AnimatedSection>
 
                 {/* Card 3 */}
-                <AnimatedSection delay={0.31} className="bg-white rounded-2xl overflow-hidden border border-slate-200 shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
+                <AnimatedSection delay={0.31} className="bg-white/90 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
                             <Image src='/PaverBlocks.webp' alt="Paver Blocks" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>

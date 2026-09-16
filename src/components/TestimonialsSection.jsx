@@ -29,7 +29,7 @@ const testimonials = [
 
 export default function TestimonialsSection() {
     return (
-        <section className="py-20 bg-slate-50 border-y border-slate-200" id="testimonials">
+        <section className="py-20 border-y border-slate-200" id="testimonials">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
@@ -51,7 +51,7 @@ export default function TestimonialsSection() {
                         <AnimatedSection
                             key={idx}
                             delay={0.15 + idx * 0.08}
-                            className="bg-white border border-slate-200 rounded-2xl p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:shadow-md transition-transform duration-300 hover:-translate-y-1"
+                            className="bg-white/90 border border-slate-200 rounded-2xl p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:shadow-md transition-transform duration-300 hover:-translate-y-1"
                         >
                             <div className="space-y-6">
                                 {/* Rating Stars */}

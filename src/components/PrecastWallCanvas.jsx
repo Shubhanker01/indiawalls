@@ -51,8 +51,8 @@ function ProceduralWallModel() {
     // Authentic precast concrete materials
     const materials = useMemo(
         () => ({
-            concretePlank: new THREE.MeshStandardMaterial({ color: '#c4c4c4', roughness: 0.85 }),
-            concretePost: new THREE.MeshStandardMaterial({ color: '#9e9e9e', roughness: 0.8 }),
+            concretePlank: new THREE.MeshStandardMaterial({ color: '#F2F2F2', roughness: 0.85 }),
+            concretePost: new THREE.MeshStandardMaterial({ color: '#F2F2F2', roughness: 0.8 }),
             jointLine: new THREE.MeshStandardMaterial({ color: '#686868', roughness: 0.95 }),
         }),
         []

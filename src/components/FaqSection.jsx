@@ -44,7 +44,7 @@ export default function FaqSection() {
     };
 
     return (
-        <section className="py-20 bg-slate-50 border-y border-slate-200" id="faq">
+        <section className="py-20 border-y border-slate-200" id="faq">
             <div className="max-w-4xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
@@ -68,7 +68,7 @@ export default function FaqSection() {
                             <AnimatedSection
                                 key={idx}
                                 delay={0.15 + idx * 0.06}
-                                className="bg-white border border-slate-200 rounded-2xl overflow-hidden transition-all duration-200 shadow-sm"
+                                className="bg-white/90 border border-slate-200 rounded-2xl overflow-hidden transition-all duration-200 shadow-sm"
                             >
                                 <button
                                     onClick={() => toggleFaq(idx)}

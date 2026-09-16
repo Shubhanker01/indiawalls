@@ -94,7 +94,7 @@ function ConcertinaFenceAssembly() {
     const materials = useMemo(
         () => ({
             metalPost: new THREE.MeshStandardMaterial({
-                color: '#22252a',
+                color: '#F2F2F2',
                 roughness: 0.35,
                 metalness: 0.85,
             }),
@@ -107,12 +107,12 @@ function ConcertinaFenceAssembly() {
                 metalness: 0.7,
             }),
             razorWire: new THREE.MeshStandardMaterial({
-                color: '#444850',
+                color: '#F2F2F2',
                 roughness: 0.3,
                 metalness: 0.9,
             }),
             ground: new THREE.MeshStandardMaterial({
-                color: '#e2e8f0',
+                color: '#F2F2F2',
                 roughness: 0.9,
             }),
         }),

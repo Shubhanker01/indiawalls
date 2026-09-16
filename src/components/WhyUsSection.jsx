@@ -32,18 +32,18 @@ const features = [
 
 export default function WhyUsSection() {
     return (
-        <section className="precast-slate-pattern py-20 text-white border-y border-slate-800" id="why-us">
+        <section className="py-20 border-y border-slate-200" id="why-us">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
                 <div className="text-center max-w-2xl mx-auto mb-16 space-y-3">
-                    <span className="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-500/10 px-3.5 py-1.5 rounded-full border border-amber-500/20">
+                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200">
                         Why Choose Indiawalls
                     </span>
-                    <h2 className="text-3xl sm:text-4xl font-black text-[#eef1f4] mt-6">
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-6">
                         Engineered for Strength. Delivered with Speed.
                     </h2>
-                    <p className="text-[#d7dce1] text-sm sm:text-base">
+                    <p className="text-slate-700 text-sm sm:text-base">
                         Over a decade of manufacturing excellence across Rajasthan and Delhi NCR.
                     </p>
                 </div>
@@ -53,12 +53,12 @@ export default function WhyUsSection() {
                     {stats.map((stat, idx) => (
                         <div
                             key={idx}
-                            className="bg-[rgba(20,24,29,0.45)] border border-slate-700/60 rounded-2xl p-6 text-center hover:border-amber-500/40 transition"
+                            className="bg-white/90 border border-slate-200 rounded-2xl p-6 text-center hover:border-amber-500/40 transition"
                         >
                             <p className="text-3xl sm:text-4xl lg:text-5xl font-black text-amber-400 mb-1">
                                 <AnimatedCounter value={stat.value} suffix={stat.suffix} />
                             </p>
-                            <p className="text-xs sm:text-sm font-medium text-[#d7dce1]">{stat.label}</p>
+                            <p className="text-xs sm:text-sm font-medium text-slate-700">{stat.label}</p>
                         </div>
                     ))}
                 </div>
@@ -68,13 +68,13 @@ export default function WhyUsSection() {
                     {features.map((feature, idx) => (
                         <div
                             key={idx}
-                            className="bg-[rgba(20,24,29,0.45)] border border-slate-700/40 rounded-2xl p-7 space-y-5 hover:bg-[rgba(20,24,29,0.45)] transition-transform duration-300 hover:-translate-y-1"
+                            className="bg-white/90 border border-slate-200 rounded-2xl p-7 space-y-5 hover:bg-white transition-transform duration-300 hover:-translate-y-1"
                         >
                             <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-xl">
                                 {feature.icon}
                             </div>
-                            <h3 className="text-xl sm:text-2xl font-bold leading-tight text-[#eef1f4]">{feature.title}</h3>
-                            <p className="text-base sm:text-lg leading-7 text-[#d7dce1]">{feature.description}</p>
+                            <h3 className="text-xl sm:text-2xl font-bold leading-tight text-slate-900">{feature.title}</h3>
+                            <p className="text-base sm:text-lg leading-7 text-slate-700">{feature.description}</p>
                         </div>
                     ))}
                 </div>

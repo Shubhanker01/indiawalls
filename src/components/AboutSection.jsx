@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 export default function AboutSection() {
     return (
-        <section className="precast-wall-pattern py-24 border-y border-slate-200" id="about">
+        <section className="py-24 border-y border-slate-200" id="about">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* MAIN FOUNDER & STORY GRID */}
@@ -49,7 +49,7 @@ export default function AboutSection() {
                 <div className="grid md:grid-cols-2 gap-10">
 
                     {/* Mission */}
-                    <div className="bg-slate-50/95 border border-slate-200 rounded-2xl p-9 space-y-5 relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
+                    <div className="bg-white/90 border border-slate-200 rounded-2xl p-9 space-y-5 relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
                         <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             🎯
                         </div>
@@ -60,7 +60,7 @@ export default function AboutSection() {
                     </div>
 
                     {/* Vision */}
-                    <div className="bg-slate-50/95 border border-slate-200 rounded-2xl p-9 space-y-5 relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
+                    <div className="bg-white/90 border border-slate-200 rounded-2xl p-9 space-y-5 relative overflow-hidden transition-transform duration-300 hover:-translate-y-1">
                         <div className="w-12 h-12 bg-amber-500/10 border border-amber-500/20 text-amber-600 rounded-xl flex items-center justify-center font-bold text-xl mb-4">
                             👁️
                         </div>

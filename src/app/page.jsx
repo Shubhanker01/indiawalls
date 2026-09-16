@@ -38,7 +38,7 @@ export default function Home() {
   return (
     <>
       <SpeedInsights />
-      <div className="precast-wall-pattern min-h-screen text-slate-900 font-sans">
+      <div className="min-h-screen text-slate-900 font-sans">
 
         {/* 1. TOP HEADER / CONTACT BAR */}
         <Header />
@@ -48,22 +48,22 @@ export default function Home() {
 
         {/* 3. HERO SECTION */}
         <HeroSection />
-        <AnimatedSection delay={0.1}>
-          <AboutSection />
-        </AnimatedSection>
+        <main className="home-wall-background">
+          <ProductCatalog />
+          <OurWorkMinimal />
+          <ClienteleSection />
+          <ManufacturingUnits />
+          <WhyUsSection />
+          <ProjectProcess />
+          <BenefitsSection />
+          <AnimatedSection delay={0.1}>
+            <AboutSection />
+          </AnimatedSection>
+          <TestimonialsSection />
 
-        <WhyUsSection />
-        <ProjectProcess />
-        {/* 4. PRODUCT CATALOG */}
-        <ProductCatalog />
-
-        <BenefitsSection />
-        <OurWorkMinimal />
-        <ManufacturingUnits />
-        <TestimonialsSection />
-        <ClienteleSection />
-        <BlogSection />
-        <FaqSection />
+          <BlogSection />
+          <FaqSection />
+        </main>
         {/* 5. FOOTER */}
         <Footer />
 

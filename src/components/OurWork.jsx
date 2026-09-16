@@ -31,12 +31,12 @@ const projects = [
 
 export default function OurWorkMinimal() {
     return (
-        <section className="precast-slate-pattern py-20 text-white" id="our-work">
+        <section className="py-20" id="our-work">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION TITLE */}
                 <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-12">
-                    <h2 className="text-3xl sm:text-4xl font-black text-[#ffffff]">
+                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900">
                         Our Work
                     </h2>
                 </AnimatedSection>
@@ -47,7 +47,7 @@ export default function OurWorkMinimal() {
                         <AnimatedSection
                             key={idx}
                             delay={0.15 + idx * 0.07}
-                            className="bg-[rgba(20,24,29,0.45)] border border-slate-700/60 rounded-2xl overflow-hidden group shadow-lg transition-transform duration-300 hover:-translate-y-1"
+                            className="bg-white/90 border border-slate-200 rounded-2xl overflow-hidden group shadow-lg transition-transform duration-300 hover:-translate-y-1"
                         >
                             <div className="relative h-64 overflow-hidden bg-slate-950">
                                 <img
@@ -59,8 +59,8 @@ export default function OurWorkMinimal() {
                                     width={100}
                                 />
                             </div>
-                            <div className="p-4 bg-[rgba(20,24,29,0.45)] text-center">
-                                <p className="text-sm font-semibold text-[#d7dce1]">
+                            <div className="p-4 bg-white/90 text-center">
+                                <p className="text-sm font-semibold text-slate-800">
                                     {item.title}
                                 </p>
                             </div>

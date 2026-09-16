@@ -73,15 +73,15 @@ function WavyTopPlank({ width, height, thickness, material }) {
 function PrecastWallAssembly() {
   const modelRef = useRef();
 
-  const textureLight = useMemo(() => createConcreteTexture('#d6d6d6'), []);
-  const textureFooting = useMemo(() => createConcreteTexture('#b8b8b8'), []);
+  const textureLight = useMemo(() => createConcreteTexture('#F2F2F2'), []);
+  const textureFooting = useMemo(() => createConcreteTexture('#F2F2F2'), []);
 
   // Materials strictly reflecting the schematic colors
   const materials = useMemo(
     () => ({
       plank: new THREE.MeshStandardMaterial({ map: textureLight, roughness: 0.85 }),
-      post: new THREE.MeshStandardMaterial({ color: '#1e2022', roughness: 0.7 }), // Dark charcoal/black posts
-      footing: new THREE.MeshStandardMaterial({ map: textureFooting, roughness: 0.9 }), // Light grey foundation blocks
+      post: new THREE.MeshStandardMaterial({ color: '#F2F2F2', roughness: 0.7 }),
+      footing: new THREE.MeshStandardMaterial({ map: textureFooting, roughness: 0.9 }),
       ground: new THREE.MeshStandardMaterial({ color: '#191d24', roughness: 0.95 }), // Dark blue-charcoal ground base layer
       joint: new THREE.MeshStandardMaterial({ color: '#787878', roughness: 0.9 }),
     }),

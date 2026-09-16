@@ -7,7 +7,7 @@ export function createConcreteTexture() {
     const ctx = canvas.getContext('2d');
 
     // Base cement gray
-    ctx.fillStyle = '#808080';
+    ctx.fillStyle = '#F2F2F2';
     ctx.fillRect(0, 0, 512, 512);
 
     const imgData = ctx.getImageData(0, 0, 512, 512);

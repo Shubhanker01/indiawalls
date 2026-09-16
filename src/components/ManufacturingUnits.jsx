@@ -9,11 +9,11 @@ const units = [
         mapsUrl: 'https://maps.google.com/?q=Kotkasim,Rajasthan',
     },
     {
-        city: 'Tapukala Unit',
+        city: 'Tapukara Unit',
         region: 'Rajasthan',
-        address: 'Tapukala industrial area, Rajasthan',
-        geo: 'Tapukala, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Tapukala,Rajasthan',
+        address: 'Tapukara industrial area, Rajasthan',
+        geo: 'Tapukara, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Tapukara,Rajasthan',
     },
     {
         city: 'Alwar Unit',
@@ -23,18 +23,18 @@ const units = [
         mapsUrl: 'https://maps.google.com/?q=Alwar,Rajasthan',
     },
     {
-        city: 'Ringur Unit',
+        city: 'Ringus Unit',
         region: 'Rajasthan',
-        address: 'Ringur industrial area, Rajasthan',
-        geo: 'Ringur, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Ringur,Rajasthan',
+        address: 'Ringus industrial area, Rajasthan',
+        geo: 'Ringus, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Ringus,Rajasthan',
     },
     {
-        city: 'Ramghar Unit',
+        city: 'Ramgarh Unit',
         region: 'Rajasthan',
-        address: 'Ramghar industrial area, Rajasthan',
-        geo: 'Ramghar, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Ramghar,Rajasthan',
+        address: 'Ramgarh industrial area, Rajasthan',
+        geo: 'Ramgarh, Rajasthan',
+        mapsUrl: 'https://maps.google.com/?q=Ramgarh,Rajasthan',
     },
     {
         city: 'Faridabad Unit',
@@ -75,21 +75,21 @@ const units = [
 
 export default function ManufacturingUnits() {
     return (
-        <section className="precast-slate-pattern py-20 text-white border-y border-slate-800" id="locations">
+        <section className="py-20 border-y border-slate-200" id="locations">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
                 <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-                    <span className="text-xs font-bold text-amber-400 uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 mb-4">
+                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200 mb-4">
                         Factory Network
                     </span>
-                    <h2 className="text-4xl sm:text-5xl font-black text-white mt-4 leading-tight">
+                    <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mt-4 leading-tight">
                         Our Manufacturing Units
                     </h2>
-                    <p className="text-lg sm:text-xl text-[#d7dce1] leading-8">
+                    <p className="text-lg sm:text-xl text-slate-700 leading-8">
                         Our manufacturing units are strategically located across the following cities to ensure prompt precast production and rapid delivery:
                     </p>
-                    <p className="text-amber-300 text-sm sm:text-base font-medium">
+                    <p className="text-amber-700 text-sm sm:text-base font-medium">
                         Site visit within two hours.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3 pt-2">
@@ -101,7 +101,7 @@ export default function ManufacturingUnits() {
                         </a>
                         <a
                             href="/contact"
-                            className="inline-flex items-center justify-center rounded-xl border border-slate-600 px-5 py-2.5 text-sm font-bold text-slate-100 transition hover:border-amber-400 hover:text-amber-300"
+                            className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-amber-400 hover:text-amber-700"
                         >
                             Enquire Now
                         </a>
@@ -114,7 +114,7 @@ export default function ManufacturingUnits() {
                         <AnimatedSection
                             key={idx}
                             delay={0.15 + idx * 0.08}
-                            className="bg-[rgba(20,24,29,0.45)] border border-slate-700/80 rounded-2xl p-7 flex flex-col justify-between hover:border-amber-500/50 transition-transform duration-300 hover:-translate-y-1"
+                            className="bg-white/90 border border-slate-200 rounded-2xl p-7 flex flex-col justify-between hover:border-amber-500/50 transition-transform duration-300 hover:-translate-y-1"
                         >
                             <div className="space-y-4">
                                 <div className="flex items-center justify-between">
@@ -127,18 +127,18 @@ export default function ManufacturingUnits() {
                                 </div>
 
                                 <div>
-                                    <h3 className="text-2xl sm:text-3xl font-bold leading-tight text-white mb-3">
+                                    <h3 className="text-2xl sm:text-3xl font-bold leading-tight text-slate-900 mb-3">
                                         {unit.city}
                                     </h3>
-                                    <p className="text-base sm:text-lg text-[#d7dce1] leading-7">
+                                    <p className="text-base sm:text-lg text-slate-700 leading-7">
                                         {unit.address}
                                     </p>
                                 </div>
                             </div>
 
                             {/* GEO-LOCATION & MAP BUTTON */}
-                            <div className="pt-6 mt-6 border-t border-slate-700/60 space-y-3">
-                                <div className="flex items-center space-x-2 text-xs font-mono text-slate-300">
+                            <div className="pt-6 mt-6 border-t border-slate-200 space-y-3">
+                                <div className="flex items-center space-x-2 text-xs font-mono text-slate-600">
                                     <span className="text-amber-500">🌐</span>
                                     <span>{unit.geo}</span>
                                 </div>
@@ -147,7 +147,7 @@ export default function ManufacturingUnits() {
                                     href={unit.mapsUrl}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="w-full inline-flex items-center justify-center space-x-2 bg-slate-700 hover:bg-amber-500 text-slate-200 hover:text-slate-950 text-xs font-bold py-2.5 px-4 rounded-xl transition duration-200"
+                                    className="w-full inline-flex items-center justify-center space-x-2 bg-slate-100 hover:bg-amber-500 text-slate-700 hover:text-slate-950 text-xs font-bold py-2.5 px-4 rounded-xl transition duration-200"
                                 >
                                     <span>Open in Google Maps</span>
                                     <span>↗</span>

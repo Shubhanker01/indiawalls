@@ -40,7 +40,7 @@ export const blogPosts = [
 
 export default function BlogSection() {
     return (
-        <section className="py-20 bg-white border-b border-slate-200" id="blog">
+        <section className="py-20 border-b border-slate-200" id="blog">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
@@ -72,7 +72,7 @@ export default function BlogSection() {
                         <AnimatedSection
                             key={post.id}
                             delay={0.15 + (post.id - 1) * 0.08}
-                            className="bg-slate-50 border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-slate-300 transition-all duration-300 flex flex-col justify-between group"
+                            className="bg-white/90 border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-slate-300 transition-all duration-300 flex flex-col justify-between group"
                         >
                             <div>
                                 {/* CARD IMAGE CONTAINER */}

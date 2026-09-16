@@ -1,5 +1,6 @@
 'use client';
 
+import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
 import {
     MessageScrollerProvider,
@@ -24,12 +25,6 @@ export default function MessageAttachmentDemo({ messages, setMessages }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [input, setInput] = useState('');
-    // Persistent session ID across conversation turns
-    const sessionIdRef = useRef(
-        typeof window !== "undefined"
-            ? `web_${Math.random().toString(36).substring(2, 9)}`
-            : "web_session"
-    );
 
     const sendMessage = async (e) => {
         e.preventDefault();
@@ -47,35 +42,14 @@ export default function MessageAttachmentDemo({ messages, setMessages }) {
         setError(null);
 
         try {
-            const apiBaseUrl = (
-                process.env.NEXT_PUBLIC_RAG_API_URL ||
-                process.env.NEXT_PUBLIC_RAG_API_FALLBACK_URL
-            )?.replace(/\/$/, '');
-
-            if (!apiBaseUrl) {
-                throw new Error('RAG API URL is not configured.');
-            }
-
-            const res = await fetch(`${apiBaseUrl}/api/query`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    query: input.trim(),
-                    session_id: sessionIdRef.current,
-                }),
+            const { data } = await axios.post('/api/chat', {
+                query: input.trim(),
             });
-
-            if (!res.ok) {
-                throw new Error(`Server error: ${res.status}`);
-            }
-
-            const data = await res.json();
-
+            console.log(data)
             const botMsg = {
                 id: (Date.now() + 1).toString(),
                 sender: "bot",
                 text: data.answer,
-                sources: data.sources,
                 timestamp: new Date(),
             };
 

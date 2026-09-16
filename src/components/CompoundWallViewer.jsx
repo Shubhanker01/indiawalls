@@ -12,7 +12,7 @@ function createConcreteTexture() {
     canvas.height = 512;
     const ctx = canvas.getContext('2d');
 
-    ctx.fillStyle = '#b5b5b5';
+    ctx.fillStyle = '#F2F2F2';
     ctx.fillRect(0, 0, 512, 512);
 
     for (let i = 0; i < 40000; i++) {
@@ -48,13 +48,13 @@ function WallBay({ position }) {
             {/* 1. Left Post Column (10ft Total) */}
             <mesh position={[-plankLength / 2, (columnHeight / 2) - undergroundDepth, 0]} castShadow receiveShadow>
                 <boxGeometry args={[columnWidth, columnHeight, columnWidth]} />
-                <meshStandardMaterial map={texture} roughness={0.8} color="#9e9e9e" />
+                <meshStandardMaterial map={texture} roughness={0.8} color="#F2F2F2" />
             </mesh>
 
             {/* 2. Right Post Column (10ft Total) */}
             <mesh position={[plankLength / 2, (columnHeight / 2) - undergroundDepth, 0]} castShadow receiveShadow>
                 <boxGeometry args={[columnWidth, columnHeight, columnWidth]} />
-                <meshStandardMaterial map={texture} roughness={0.8} color="#9e9e9e" />
+                <meshStandardMaterial map={texture} roughness={0.8} color="#F2F2F2" />
             </mesh>
 
             {/* 3. Standard Stacked Planks (5 Planks = 5ft height above ground) */}
@@ -66,24 +66,24 @@ function WallBay({ position }) {
                     receiveShadow
                 >
                     <boxGeometry args={[plankLength - 0.05, plankHeight - 0.02, plankThickness]} />
-                    <meshStandardMaterial map={texture} roughness={0.85} color="#c8c8c8" />
+                    <meshStandardMaterial map={texture} roughness={0.85} color="#F2F2F2" />
                 </mesh>
             ))}
 
             {/* 4. Top Decorative Wave Plank (6th Plank) */}
             <mesh position={[0, 5 * plankHeight + (plankHeight / 2), 0]} castShadow receiveShadow>
                 <boxGeometry args={[plankLength - 0.05, plankHeight - 0.02, plankThickness]} />
-                <meshStandardMaterial map={texture} roughness={0.85} color="#d4d4d4" />
+                <meshStandardMaterial map={texture} roughness={0.85} color="#F2F2F2" />
             </mesh>
 
             {/* 5. Concrete Foundation Base (2ft x 2ft in-ground footing) */}
             <mesh position={[-plankLength / 2, -undergroundDepth + 1, 0]} receiveShadow>
                 <boxGeometry args={[2.0, 2.0, 1.5]} />
-                <meshStandardMaterial color="#8c3a34" roughness={0.9} />
+                <meshStandardMaterial color="#F2F2F2" roughness={0.9} />
             </mesh>
             <mesh position={[plankLength / 2, -undergroundDepth + 1, 0]} receiveShadow>
                 <boxGeometry args={[2.0, 2.0, 1.5]} />
-                <meshStandardMaterial color="#8c3a34" roughness={0.9} />
+                <meshStandardMaterial color="#F2F2F2" roughness={0.9} />
             </mesh>
         </group>
     );

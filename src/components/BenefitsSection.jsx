@@ -50,7 +50,7 @@ const benefits = [
 
 export default function BenefitsSection() {
     return (
-        <section className="py-20 bg-white bg-[url('/precast-white-pattern.svg')] bg-repeat border-y border-slate-200" id="benefits">
+        <section className="py-20 border-y border-slate-200" id="benefits">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
@@ -72,7 +72,7 @@ export default function BenefitsSection() {
                         <AnimatedSection
                             key={idx}
                             delay={0.12 + idx * 0.06}
-                            className="p-7 rounded-2xl bg-slate-50 border border-slate-200 hover:border-amber-500/50 hover:bg-slate-100/80 transition-transform duration-300 hover:-translate-y-1 space-y-5 group"
+                            className="p-7 rounded-2xl bg-white/90 border border-slate-200 hover:border-amber-500/50 hover:bg-white transition-transform duration-300 hover:-translate-y-1 space-y-5 group"
                         >
                             <div className="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform">
                                 {item.icon}

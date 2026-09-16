@@ -83,7 +83,7 @@ function FenceAssembly() {
     const materials = useMemo(
         () => ({
             metalPost: new THREE.MeshStandardMaterial({
-                color: '#1a1a1a',
+                color: '#F2F2F2',
                 roughness: 0.4,
                 metalness: 0.8,
             }),
@@ -96,12 +96,12 @@ function FenceAssembly() {
                 metalness: 0.7,
             }),
             barbedWire: new THREE.MeshStandardMaterial({
-                color: '#444444',
+                color: '#F2F2F2',
                 roughness: 0.3,
                 metalness: 0.9,
             }),
             ground: new THREE.MeshStandardMaterial({
-                color: '#e2e8f0',
+                color: '#F2F2F2',
                 roughness: 0.9,
             }),
         }),

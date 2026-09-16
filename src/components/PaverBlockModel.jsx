@@ -81,17 +81,17 @@ function PaverGridAssembly() {
   const materials = useMemo(
     () => ({
       greyConcrete: new THREE.MeshStandardMaterial({
-        color: '#aaaaaa',
+        color: '#F2F2F2',
         roughness: 0.85,
         metalness: 0.05,
       }),
       redConcrete: new THREE.MeshStandardMaterial({
-        color: '#9e4334',
+        color: '#F2F2F2',
         roughness: 0.85,
         metalness: 0.05,
       }),
       sandJoint: new THREE.MeshStandardMaterial({
-        color: '#d4c5a9',
+        color: '#F2F2F2',
         roughness: 0.95,
       }),
     }),
