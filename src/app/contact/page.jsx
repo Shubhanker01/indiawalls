@@ -102,7 +102,7 @@ export default function ContactPage() {
                                 <h3 className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-1">
                                     {item.title}
                                 </h3>
-                                <p className="text-slate-900 font-bold text-base mb-4 break-words">
+                                <p className="text-slate-900 font-bold text-base mb-4 wrap-break-word">
                                     {item.value}
                                 </p>
                             </div>
@@ -182,7 +182,7 @@ export default function ContactPage() {
 
                         <div>
                             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Running Height (Feet)
+                                Height (Feet)
                             </label>
                             <input
                                 type="number"

@@ -44,8 +44,8 @@ export default function MessageAttachmentDemo({ messages, setMessages }) {
         try {
             const { data } = await axios.post('/api/chat', {
                 query: input.trim(),
+                session_id: `web_${Math.random().toString(36).substring(2, 9)}`
             });
-            console.log(data)
             const botMsg = {
                 id: (Date.now() + 1).toString(),
                 sender: "bot",
