@@ -38,14 +38,14 @@ export default function ClienteleSection() {
                     {doubledClients.map((client, idx) => (
                         <div
                             key={idx}
-                            className="relative w-36 sm:w-40 h-36 sm:h-44 opacity-100 transition-all duration-300 shrink-0"
+                            className="relative w-28 sm:w-40 h-28 sm:h-44 opacity-100 transition-all duration-300 shrink-0"
                         >
                             <Image
                                 src={client.logo}
                                 alt={`${client.name} Logo`}
                                 fill
                                 className="object-contain"
-                                sizes="(min-width: 640px) 160px, 144px"
+                                sizes="(min-width: 640px) 160px, 112px"
                             />
                         </div>
                     ))}
