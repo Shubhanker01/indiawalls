@@ -23,7 +23,7 @@ export default function Navbar() {
     const closeMenu = () => setIsOpen(false);
 
     return (
-        <nav className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-sm">
+        <nav className="sticky top-0 z-100 bg-gray-900/95 backdrop-blur-md border-b border-gray-800 shadow-sm">
             <div className="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
                 {/* Logo */}
                 <Link

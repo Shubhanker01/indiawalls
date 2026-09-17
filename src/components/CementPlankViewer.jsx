@@ -72,7 +72,7 @@ export default function CementPlankViewer() {
                 Interactive 3D • Drag to rotate / Scroll to zoom
             </div>
 
-            <Canvas shadows camera={{ position: [2, 1.5, 2.5], fov: 45 }}>
+            <Canvas shadows camera={{ position: [1.7, 1.25, 2.1], fov: 45 }}>
                 <color attach="background" args={['#f8fafc']} />
 
                 {/* Lighting */}

@@ -39,19 +39,19 @@ export default function CompoundWallPage() {
                         <tbody className="divide-y divide-slate-200 text-slate-600">
                             <tr>
                                 <td className="py-2.5 px-4 font-medium text-slate-800">Available Wall Heights</td>
-                                <td className="py-2.5 px-4 font-mono">5 Feet to 10 Feet</td>
+                                <td className="py-2.5 px-4 font-mono">6 Feet</td>
                             </tr>
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Plank Length (Span)</td>
-                                <td className="py-2.5 px-4 font-mono">6 Feet (1828.8 mm)</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-800">Panel Length</td>
+                                <td className="py-2.5 px-4 font-mono">6 Feet (1828.8mm)</td>
                             </tr>
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Plank Height / Thickness</td>
-                                <td className="py-2.5 px-4 font-mono">1 Foot (300 mm) / 2 Inches (50 mm)</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-800">Panel Height / Thickness</td>
+                                <td className="py-2.5 px-4 font-mono">1 Foot (300mm) / 2 Inches (50mm)</td>
                             </tr>
                             <tr>
                                 <td className="py-2.5 px-4 font-medium text-slate-800">Column Dimension</td>
-                                <td className="py-2.5 px-4 font-mono">6 x 6 Inches (150 mm x 150 mm)</td>
+                                <td className="py-2.5 px-4 font-mono">6 x 6 Inches (150mm x 150mm)</td>
                             </tr>
                             <tr>
                                 <td className="py-2.5 px-4 font-medium text-slate-800">Column Total Length</td>

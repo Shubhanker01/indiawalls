@@ -49,14 +49,12 @@ export default function OurWorkMinimal() {
                             delay={0.15 + idx * 0.07}
                             className="bg-white/90 border border-slate-200 rounded-2xl overflow-hidden group shadow-lg transition-transform duration-300 hover:-translate-y-1"
                         >
-                            <div className="relative h-64 overflow-hidden bg-slate-950">
+                            <div className="relative h-48 sm:h-64 overflow-hidden bg-slate-950">
                                 <img
                                     src={item.image}
                                     alt={item.title}
-                                    className="h-full w-full
+                                    className="h-full w-full object-cover
                                     group-hover:scale-105 transition-transform duration-300"
-                                    height={100}
-                                    width={100}
                                 />
                             </div>
                             <div className="p-4 bg-white/90 text-center">

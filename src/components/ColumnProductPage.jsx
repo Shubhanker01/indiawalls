@@ -5,7 +5,7 @@ const ColumnViewer = dynamic(() => import('./ColumnViewer'))
 export default function ColumnProductPage() {
   return (
     <div className="max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-      
+
       {/* 3D Model Viewport */}
       <div>
         <ColumnViewer />
@@ -16,7 +16,7 @@ export default function ColumnProductPage() {
         <span className="text-xs uppercase tracking-wider text-amber-600 font-bold">
           Precast RCC Component
         </span>
-        
+
         {/* Updated Heading */}
         <h1 className="text-3xl font-bold text-slate-800">
           RCC Columns (H-Post)
@@ -24,7 +24,7 @@ export default function ColumnProductPage() {
 
         {/* Updated Paragraph */}
         <p className="text-slate-600 text-lg leading-relaxed">
-          Pre-stressed concrete vertical columns engineered with a slotted H-beam profile 
+          Pre-stressed concrete vertical columns engineered with a slotted H-beam profile
           to securely lock boundary wall planks in place, delivering maximum stability and high wind resistance.
         </p>
 
@@ -40,11 +40,11 @@ export default function ColumnProductPage() {
           </div>
           <div className="flex justify-between border-b border-slate-200 pb-2">
             <span className="text-slate-700">Technology:</span>
-            <span className="text-slate-800 font-semibold">Prestress Tension System</span>
+            <span className="text-slate-800 font-semibold">Stressing System</span>
           </div>
           <div className="flex justify-between">
             <span className="text-slate-700">Length / Height:</span>
-            <span className="text-slate-800 font-semibold">Customized to requirement</span>
+            <span className="text-slate-800 font-semibold">According to Customer Requirement</span>
           </div>
         </div>
       </div>
