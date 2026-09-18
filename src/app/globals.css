@@ -1,6 +1,47 @@
-@import url("https://fonts.cdnfonts.com/css/futura-pt");
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+/* @import url("https://fonts.cdnfonts.com/css/futura-pt"); */
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('https://fonts.cdnfonts.com/s/72205/FuturaCyrillicBook.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('https://fonts.cdnfonts.com/s/72205/FuturaCyrillicDemi.woff') format('woff');
+}
+
+/* Futura PT Bold (700) */
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('https://fonts.cdnfonts.com/s/72205/FuturaCyrillicBold.woff') format('woff');
+}
+
+/* Futura PT Heavy (800) */
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('https://fonts.cdnfonts.com/s/72205/FuturaCyrillicHeavy.woff') format('woff');
+}
+
+/* Futura PT Extra Bold (900) */
+@font-face {
+  font-family: 'Futura PT';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('https://fonts.cdnfonts.com/s/72205/FuturaCyrillicExtraBold.woff') format('woff');
+}
+
 @import "tailwindcss";
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";

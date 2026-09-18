@@ -37,6 +37,10 @@
     "tailwindcss": "^4"
   },
   "browserslist": [
-    "defaults and supports es6-module"
+    "chrome >= 90",
+    "firefox >= 88",
+    "safari >= 14.1",
+    "edge >= 90",
+    "not dead"
   ]
 }
