@@ -38,28 +38,28 @@ export default function CompoundWallPage() {
                         </thead>
                         <tbody className="divide-y divide-slate-200 text-slate-600">
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Available Wall Heights</td>
-                                <td className="py-2.5 px-4 font-mono">6 Feet</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-700">Available Wall Heights</td>
+                                <td className="py-2.5 px-4 font-mono text-slate-800">6 Feet</td>
                             </tr>
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Panel Length</td>
-                                <td className="py-2.5 px-4 font-mono">6 Feet (1828.8mm)</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-700">Panel Length</td>
+                                <td className="py-2.5 px-4 font-mono text-slate-800">6 Feet (1828.8mm)</td>
                             </tr>
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Panel Height / Thickness</td>
-                                <td className="py-2.5 px-4 font-mono">1 Foot (300mm) / 2 Inches (50mm)</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-700">Panel Height / Thickness</td>
+                                <td className="py-2.5 px-4 font-mono text-slate-800">1 Foot (300mm) / 2 Inches (50mm)</td>
                             </tr>
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Column Dimension</td>
-                                <td className="py-2.5 px-4 font-mono">6 x 6 Inches (150mm x 150mm)</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-700">Column Dimension</td>
+                                <td className="py-2.5 px-4 font-mono text-slate-800">6 x 6 Inches (150mm x 150mm)</td>
                             </tr>
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Column Total Length</td>
-                                <td className="py-2.5 px-4 font-mono">10 Feet (6ft above ground + 4ft in-ground)</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-700">Column Total Length</td>
+                                <td className="py-2.5 px-4 font-mono text-slate-800">10 Feet (6ft above ground + 4ft in-ground)</td>
                             </tr>
                             <tr>
-                                <td className="py-2.5 px-4 font-medium text-slate-800">Concrete Foundation</td>
-                                <td className="py-2.5 px-4 font-mono">2 Feet x 2 Feet poured base</td>
+                                <td className="py-2.5 px-4 font-medium text-slate-700">Concrete Foundation</td>
+                                <td className="py-2.5 px-4 font-mono text-slate-800">2 Feet x 2 Feet poured base</td>
                             </tr>
                         </tbody>
                     </table>

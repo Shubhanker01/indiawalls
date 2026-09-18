@@ -104,11 +104,11 @@ function WallAssembly() {
                 color: '#E2E2E2',
             }),
             groutFooting: new THREE.MeshStandardMaterial({
-                color: '#dc2626',
+                color: '#424242',
                 roughness: 0.95,
             }),
             ground: new THREE.MeshStandardMaterial({
-                color: '#334155',
+                color: '#A5A391',
                 roughness: 0.9,
             }),
             jointLine: new THREE.MeshStandardMaterial({

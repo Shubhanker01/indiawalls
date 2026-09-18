@@ -54,7 +54,7 @@ const ComparisonTable = () => (
                 <thead>
                     <tr className="bg-slate-900 text-white">
                         <th className="py-4 px-6 font-semibold">Feature / Parameter</th>
-                        <th className="py-4 px-6 font-semibold text-yellow-400">Indiawalls Precast Solutions</th>
+                        <th className="py-4 px-6 font-semibold text-yellow-400">RajasthanWalls Precast Solutions</th>
                         <th className="py-4 px-6 font-semibold text-slate-400">Traditional Brick Boundary Wall</th>
                     </tr>
                 </thead>
@@ -102,7 +102,7 @@ export default function WhyUsPage() {
                         Uncompromising Excellence
                     </span>
                     <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
-                        Why RajasthanWalls Infratech?
+                        Why RajasthanWalls?
                     </h1>
                     <p className="text-slate-300 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
                         We are redefining boundary infrastructure across India by blending advanced precast engineering, high-tensile steel reinforcement, and direct-from-factory cost efficiency.

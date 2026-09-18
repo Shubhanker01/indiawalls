@@ -56,7 +56,7 @@ export default function Footer() {
                             href="/"
                             className="inline-block text-2xl font-extrabold tracking-tight text-slate-100 sm:text-3xl"
                         >
-                            Rajasthan<span className="text-yellow-400">Wall</span>
+                            Rajasthan<span className="text-yellow-400">Walls</span>
                         </Link>
 
                         <p className="text-xs sm:text-sm leading-relaxed text-slate-200">

@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AnimatedSection from "@/components/AnimatedSection";
+import EstimateCalculator from "@/components/EstimateCalculator";
 const ProductCatalog = dynamic(() => import("@/components/ProductCatalog"));
 const WhyUsSection = dynamic(() => import("@/components/WhyUsSection"));
 const AboutSection = dynamic(() => import("@/components/AboutSection"));

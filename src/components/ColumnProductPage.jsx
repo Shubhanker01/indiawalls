@@ -19,12 +19,12 @@ export default function ColumnProductPage() {
 
         {/* Updated Heading */}
         <h1 className="text-3xl font-bold text-slate-800">
-          RCC Columns (H-Post)
+          RCC Columns
         </h1>
 
         {/* Updated Paragraph */}
         <p className="text-slate-600 text-lg leading-relaxed">
-          Pre-stressed concrete vertical columns engineered with a slotted H-beam profile
+          Precast RCC columns manufactured with a stressing system
           to securely lock boundary wall planks in place, delivering maximum stability and high wind resistance.
         </p>
 
@@ -32,7 +32,7 @@ export default function ColumnProductPage() {
         <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2 font-mono text-sm">
           <div className="flex justify-between border-b border-slate-200 pb-2">
             <span className="text-slate-700">Cross Section:</span>
-            <span className="text-slate-800 font-semibold">6 x 6 Inches (150 mm x 150 mm)</span>
+            <span className="text-slate-800 font-semibold">6 x 6 Inches (150mm x 150mm)</span>
           </div>
           <div className="flex justify-between border-b border-slate-200 pb-2">
             <span className="text-slate-700">Reinforcement:</span>

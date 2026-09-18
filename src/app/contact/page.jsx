@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import EstimateCalculator from '@/components/EstimateCalculator';
 
 export const metadata = {
     title: 'Contact Us | RajasthanWalls Infratech - Get Free Site Estimate',
@@ -248,6 +249,8 @@ export default function ContactPage() {
                             📞 Call Sales Manager (+91 9950711475)
                         </a>
                     </div>
+
+                    <EstimateCalculator />
                 </div>
             </section>
 

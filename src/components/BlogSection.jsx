@@ -56,14 +56,6 @@ export default function BlogSection() {
                             Expert advice on precast manufacturing, boundary wall installation standards, and industrial site security.
                         </p>
                     </div>
-
-                    <Link
-                        href="#all-articles"
-                        className="inline-flex items-center space-x-2 text-sm font-bold text-amber-700 hover:text-amber-800 transition group"
-                    >
-                        <span>View All Insights</span>
-                        <span className="group-hover:translate-x-1 transition-transform">→</span>
-                    </Link>
                 </AnimatedSection>
 
                 {/* BLOG CARDS GRID */}

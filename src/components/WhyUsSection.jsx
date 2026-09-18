@@ -2,7 +2,7 @@ import AnimatedCounter from './AnimatedCounter';
 
 const stats = [
     { label: 'Satisfied Clients', value: 2000, suffix: '+' },
-    { label: 'Years Experience', value: 10, suffix: '+' },
+    { label: 'Years Experience', value: 11, suffix: '+' },
     { label: 'Manufacturing Units', value: 10, suffix: '' },
     { label: 'Skilled Laborers', value: 150, suffix: '+' },
 ];

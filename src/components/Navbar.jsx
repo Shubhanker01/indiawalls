@@ -31,7 +31,7 @@ export default function Navbar() {
                     className="text-2xl font-extrabold tracking-tight text-slate-100 sm:text-3xl"
                     onClick={closeMenu}
                 >
-                    Rajasthan<span className="text-yellow-400">Wall</span>
+                    Rajasthan<span className="text-yellow-400">Walls</span>
                 </Link>
 
                 {/* Desktop Navigation */}

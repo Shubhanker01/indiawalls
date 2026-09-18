@@ -9,7 +9,7 @@ export default function ChatbotWidget() {
     const [messages, setMessages] = useState([]);
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end cursor-pointer">
+        <div className="fixed bottom-6 right-6 z-150 flex flex-col items-end cursor-pointer">
             {/* 1. Message Scroller Popup Container */}
             {isOpen && (
                 <div className="mb-4 w-[90vw] sm:w-150 h-150 max-h-[80vh] bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden flex flex-col transition-all duration-200 ease-in-out animate-in fade-in slide-in-from-bottom-4">
