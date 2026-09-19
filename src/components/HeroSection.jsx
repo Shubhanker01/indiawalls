@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
 
 const PrecastWallCanvas = dynamic(() => import('@/components/PrecastWallCanvas'), {
-    ssr: false,
+    ssr: false
 });
 
 export default function HeroSection() {
@@ -16,13 +16,13 @@ export default function HeroSection() {
     }, []);
 
     return (
-        <section className="relative bg-slate-100 text-slate-900 py-16 lg:py-20 px-4 sm:px-8 overflow-hidden min-h-[580px]">
+        <section className="relative bg-slate-100 text-slate-900 py-16 lg:py-20 px-4 sm:px-8 overflow-hidden min-h-145">
 
             {/* 1. 3D Rotating Dark Model Canvas */}
             {isCanvasReady && <PrecastWallCanvas />}
 
             {/* 2. Soft Light Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-slate-100/95 via-slate-100/70 to-transparent z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-linear-to-r from-slate-100/95 via-slate-100/70 to-transparent z-10 pointer-events-none" />
 
             {/* 3. Foreground Content */}
             <div className="relative z-20 max-w-7xl mx-auto grid lg:grid-cols-12 gap-8 items-center">

@@ -1,4 +1,3 @@
-'use client';
 
 import AnimatedSection from './AnimatedSection';
 import Image from 'next/image';
