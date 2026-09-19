@@ -4,45 +4,8 @@ import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
+import { WavePlankWorker } from './WavePlankWorker';
 
-// 1. Component to build the top curved/waved plank
-function WavePlank({ width, height, thickness, material }) {
-    const geometry = useMemo(() => {
-        const shape = new THREE.Shape();
-        const halfW = width / 2;
-        const baseH = height - 0.15; // Rectangular base height
-
-        // Draw bottom rectangle
-        shape.moveTo(-halfW, 0);
-        shape.lineTo(halfW, 0);
-        shape.lineTo(halfW, baseH);
-
-        // Draw top sinusoidal crest (3 waves across span)
-        const segments = 60;
-        for (let i = 0; i <= segments; i++) {
-            const x = halfW - (i / segments) * width;
-            const progress = (i / segments) * Math.PI * 6; // 3 full wave periods
-            const y = baseH + Math.abs(Math.sin(progress)) * 0.15;
-            shape.lineTo(x, y);
-        }
-
-        shape.lineTo(-halfW, 0);
-
-        const extrudeSettings = {
-            depth: thickness,
-            bevelEnabled: true,
-            bevelSegments: 2,
-            bevelSize: 0.005,
-            bevelThickness: 0.005,
-        };
-
-        const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-        geom.center(); // Center geometry
-        return geom;
-    }, [width, height, thickness]);
-
-    return <mesh geometry={geometry} material={material} castShadow receiveShadow />;
-}
 
 // 2. Main Procedural Boundary Wall Assembly
 function ProceduralWallModel() {
@@ -97,7 +60,7 @@ function ProceduralWallModel() {
 
                     {/* Top Scalloped Wave Plank */}
                     <group position={[0, plankCount * plankHeight + 0.12, -plankThickness / 2]}>
-                        <WavePlank
+                        <WavePlankWorker
                             width={bayWidth - 0.08}
                             height={plankHeight + 0.08}
                             thickness={plankThickness}
