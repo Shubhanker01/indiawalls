@@ -16,7 +16,7 @@ export default function ProductCementPlank() {
                 <span className="text-xs uppercase tracking-wider text-amber-500 font-bold">
                     Precast RCC Component
                 </span>
-                <h1 className="text-3xl font-bold text-slate-800">Cement Sets (Panel)</h1>
+                <h1 className="text-3xl font-bold text-slate-800">Cement Sets (Pannel)</h1>
 
                 <p className="text-slate-700 text-lg leading-relaxed">
                     Vertical concrete posts and horizontal panel manufactured with stressing system
@@ -27,7 +27,7 @@ export default function ProductCementPlank() {
                 <div className="bg-slate-50 p-4 rounded-lg border border-slate-200 space-y-2 font-mono text-sm">
                     <div className="flex justify-between border-b border-slate-200 pb-2">
                         <span className="text-slate-700">Length:</span>
-                        <span className="text-slate-800 font-semibold">6 Feet (1828.8mm)</span>
+                        <span className="text-slate-800 font-semibold">6 Feet (1800mm/2150mm)</span>
                     </div>
                     <div className="flex justify-between border-b border-slate-200 pb-2">
                         <span className="text-slate-700">Height:</span>

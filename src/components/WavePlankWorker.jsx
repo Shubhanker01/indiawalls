@@ -37,8 +37,6 @@ export function WavePlankWorker({ width, height, thickness, material }) {
         <mesh
             geometry={geometry}
             material={material}
-            castShadow
-            receiveShadow
         />
     );
 }

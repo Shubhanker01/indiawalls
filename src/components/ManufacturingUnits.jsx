@@ -84,7 +84,7 @@ export default function ManufacturingUnits() {
                         Factory Network
                     </span>
                     <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mt-4 leading-tight">
-                        Our Manufacturing Units
+                        Our Manufacturing Sites
                     </h2>
                     <p className="text-lg sm:text-xl text-slate-700 leading-8">
                         Our manufacturing units are strategically located across the following cities to ensure prompt precast production and rapid delivery:

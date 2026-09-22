@@ -105,6 +105,7 @@ function PaverBlock({ position, rotation, material }) {
 // 4. Paver Grid Assembly with Realistic Materials & Color Pattern
 function PaverGridAssembly() {
   const groupRef = useRef();
+  const timer = useMemo(() => new THREE.Timer(), []);
   const bumpTexture = useMemo(() => createConcreteTextures(), []);
 
   // Concrete Materials with proper Red and Grey Tones + Surface Texture
@@ -162,7 +163,9 @@ function PaverGridAssembly() {
   }, [materials]);
 
   // Gentle idle rotation
-  useFrame((_, delta) => {
+  useFrame(() => {
+    timer.update();
+    const delta = timer.getDelta();
     if (groupRef.current) {
       groupRef.current.rotation.y += delta * 0.1;
     }
@@ -208,7 +211,7 @@ export default function ViewPaverBlock3D() {
           Tri-Hex Interlocking System • 60mm Terracotta & Grey
         </div>
 
-        <Canvas shadows camera={{ position: [0, 5, 6], fov: 42 }}>
+        <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, 5, 6], fov: 42 }}>
           <color attach="background" args={['#f8fafc']} />
 
           {/* Realistic Lighting Setup */}

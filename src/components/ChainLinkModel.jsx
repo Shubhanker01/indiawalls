@@ -90,6 +90,7 @@ function ConcertinaCoil({ length = 5.0, radius = 0.45, loops = 12, material }) {
 function ConcertinaFenceAssembly() {
     const groupRef = useRef();
     const chainLinkTex = useMemo(() => createChainLinkTexture(), []);
+    const timer = useMemo(() => new THREE.Timer(), []);
 
     const materials = useMemo(
         () => ({
@@ -125,7 +126,9 @@ function ConcertinaFenceAssembly() {
     const topRailRadius = 0.035;
 
     // Continuous gentle rotation
-    useFrame((_, delta) => {
+    useFrame(() => {
+        timer.update();
+        const delta = timer.getDelta();
         if (groupRef.current) {
             groupRef.current.rotation.y += delta * 0.12;
         }
@@ -195,7 +198,7 @@ export default function ViewConcertinaFence3D() {
                     Framed Chain-Link • Top Concertina Razor Coils
                 </div>
 
-                <Canvas shadows camera={{ position: [0, 1.8, 6.2], fov: 45 }}>
+                <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, 1.8, 6.2], fov: 45 }}>
                     <color attach="background" args={['#f8fafc']} />
 
                     {/* Lighting */}

@@ -35,6 +35,7 @@ function createConcreteTexture() {
 function ColumnMesh() {
     const meshRef = useRef(null);
     const texture = useMemo(() => createConcreteTexture(), []);
+    const timer = useMemo(() => new THREE.Timer(), []);
 
     // Dimensions in meters (6x6 inch cross-section, ~7ft height for display)
     const size = 0.15; // 6 inches = 150mm
@@ -91,7 +92,9 @@ function ColumnMesh() {
     }, [size, height, flangeThick, webThick]);
 
     // Gentle Y-axis auto-rotation
-    useFrame((_, delta) => {
+    useFrame(() => {
+        timer.update();
+        const delta = timer.getDelta();
         if (meshRef.current) {
             meshRef.current.rotation.y += delta * 0.25;
         }
@@ -117,7 +120,7 @@ export default function ColumnViewer() {
                 Interactive 3D • Drag to rotate / Scroll to zoom
             </div>
 
-            <Canvas shadows camera={{ position: [1.2, 1.2, 1.8], fov: 45 }}>
+            <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [1.2, 1.2, 1.8], fov: 45 }}>
                 {/* Soft slate background fill */}
                 <color attach="background" args={['#f8fafc']} />
 

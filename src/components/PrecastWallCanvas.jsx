@@ -2,7 +2,6 @@
 
 import React, { useRef, useLayoutEffect, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { WavePlankWorker } from './WavePlankWorker';
 
@@ -25,8 +24,11 @@ function ProceduralWallModel({ isVisible }) {
     const planksRef = useRef();
     const jointsRef = useRef();
     const postsRef = useRef();
+    const timer = useMemo(() => new THREE.Timer(), []);
 
-    useFrame((_, delta) => {
+    useFrame(() => {
+        timer.update();
+        const delta = timer.getDelta();
         if (isVisible && modelRef.current) {
             modelRef.current.rotation.y += delta * 0.22;
         }
@@ -99,8 +101,6 @@ function ProceduralWallModel({ isVisible }) {
                 ref={planksRef}
                 args={[null, null, totalPlanks]}
                 material={CONCRETE_PLANK_MAT}
-                castShadow
-                receiveShadow
             >
                 <boxGeometry args={[bayWidth - 0.08, plankHeight - 0.015, plankThickness]} />
             </instancedMesh>
@@ -119,8 +119,6 @@ function ProceduralWallModel({ isVisible }) {
                 ref={postsRef}
                 args={[null, null, totalPosts]}
                 material={CONCRETE_POST_MAT}
-                castShadow
-                receiveShadow
             >
                 <boxGeometry
                     args={[0.2, (plankCount + 1) * plankHeight + 0.15, 0.22]}
@@ -163,10 +161,9 @@ export default function PreCastWallCanvas() {
 
         return () => observer.disconnect();
     }, []);
-
     return (
         <div className="precast-wall-pattern absolute inset-0 z-0 w-full h-full pointer-events-none" ref={canvasRef}>
-            <Canvas shadows camera={{ position: [0, 2, 7], fov: 42 }}>
+            <Canvas camera={{ position: [0, 2, 7], fov: 42 }} dpr={[1, 1.5]} frameloop={isVisible ? 'always' : 'demand'} gl={{ antialias: false, powerPreference: 'low-power' }}>
                 <color attach="background" args={['#f8fafc']} />
 
                 <ambientLight intensity={0.85} />
@@ -174,24 +171,10 @@ export default function PreCastWallCanvas() {
                     position={[8, 12, 6]}
                     intensity={1.8}
                     color="#fffbeb"
-                    castShadow
-                    shadow-mapSize-width={512} // Reduced shadow map size
-                    shadow-mapSize-height={512}
-                    onUpdate={(self) => {
-                        self.shadow.autoUpdate = false; // Shadow calculated once
-                        self.shadow.needsUpdate = true;
-                    }}
                 />
                 <directionalLight position={[-6, 4, -5]} intensity={0.4} color="#e2e8f0" />
 
                 <ProceduralWallModel isVisible={isVisible} />
-
-                <OrbitControls
-                    enableZoom={false}
-                    enablePan={false}
-                    maxPolarAngle={Math.PI / 2.05}
-                    minPolarAngle={Math.PI / 3.5}
-                />
             </Canvas>
         </div>
     );

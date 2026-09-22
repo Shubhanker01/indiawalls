@@ -72,6 +72,7 @@ function WavyTopPlank({ width, height, thickness, material }) {
 // 3. Complete Precast Wall Assembly Matching the Schematic
 function PrecastWallAssembly() {
   const modelRef = useRef();
+  const timer = useMemo(() => new THREE.Timer(), []);
 
   const textureLight = useMemo(() => createConcreteTexture('#F2F2F2'), []);
   const textureFooting = useMemo(() => createConcreteTexture('#F2F2F2'), []);
@@ -96,7 +97,9 @@ function PrecastWallAssembly() {
 
   const totalWallWidth = bayCount * bayWidth;
 
-  useFrame((_, delta) => {
+  useFrame(() => {
+    timer.update();
+    const delta = timer.getDelta();
     if (modelRef.current) {
       modelRef.current.rotation.y += delta * 0.15;
     }
@@ -184,7 +187,7 @@ export default function ViewPrecastWall3D() {
           Drag to rotate • Scroll to zoom
         </div>
 
-        <Canvas shadows camera={{ position: [0, 1.8, 7.5], fov: 42 }}>
+        <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, 1.8, 7.5], fov: 42 }}>
           <color attach="background" args={['#f8fafc']} />
 
           {/* Natural Studio Lighting */}

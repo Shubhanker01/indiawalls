@@ -2,7 +2,7 @@
 
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Center, Text, Html } from '@react-three/drei';
+import { OrbitControls, Center, Html } from '@react-three/drei';
 import * as THREE from 'three';
 
 // 1. Procedural Concrete Texture
@@ -90,9 +90,10 @@ function ColumnMesh({ material }) {
     );
 }
 
-// 3. Complete Precast Assembly with 4 Pillars & 6 Horizontal Panels
+// 3. Precast Assembly (2 Pillars, 2 Isolated Grout Footings, No Earth Plank)
 function WallAssembly() {
     const assemblyRef = useRef();
+    const timer = useMemo(() => new THREE.Timer(), []);
     const texture = useMemo(() => createConcreteTexture(), []);
 
     const materials = useMemo(
@@ -104,11 +105,7 @@ function WallAssembly() {
                 color: '#E2E2E2',
             }),
             groutFooting: new THREE.MeshStandardMaterial({
-                color: '#424242',
-                roughness: 0.95,
-            }),
-            ground: new THREE.MeshStandardMaterial({
-                color: '#A5A391',
+                color: '#383838',
                 roughness: 0.9,
             }),
             jointLine: new THREE.MeshStandardMaterial({
@@ -122,8 +119,8 @@ function WallAssembly() {
         [texture]
     );
 
-    const pillarsCount = 4;
-    const bayCount = pillarsCount - 1;
+    const pillarsCount = 2; // Fixed to 2 columns
+    const bayCount = pillarsCount - 1; // 1 bay
     const bayWidth = 1.8;
     const panelHeight = 0.3; // 6 panels * 0.3m = 1.8m (~6 feet above ground)
     const panelCount = 6;
@@ -133,7 +130,9 @@ function WallAssembly() {
     const totalLength = bayCount * bayWidth;
 
     // Gentle continuous rotation
-    useFrame((_, delta) => {
+    useFrame(() => {
+        timer.update();
+        const delta = timer.getDelta();
         if (assemblyRef.current) {
             assemblyRef.current.rotation.y += delta * 0.15;
         }
@@ -141,12 +140,7 @@ function WallAssembly() {
 
     return (
         <group ref={assemblyRef}>
-            {/* Dark Sub-ground Earth Layer */}
-            <mesh position={[0, -groutDepth / 2, 0]} material={materials.ground} receiveShadow>
-                <boxGeometry args={[totalLength + 1.2, groutDepth, 0.6]} />
-            </mesh>
-
-            {/* 4 Vertical Concrete H-Beam Columns + 2ft Grout Footings */}
+            {/* 2 Vertical Concrete H-Beam Columns + 2 Isolated Grout Footings ONLY */}
             {Array.from({ length: pillarsCount }).map((_, i) => {
                 const xPos = (i - (pillarsCount - 1) / 2) * bayWidth;
                 return (
@@ -156,15 +150,15 @@ function WallAssembly() {
                             <ColumnMesh material={materials.concrete} />
                         </group>
 
-                        {/* 2 feet Grout Footing Block (Below Ground Level) */}
-                        <mesh position={[0, -groutDepth / 2, 0]} material={materials.groutFooting} receiveShadow>
+                        {/* Isolated Grout Footing (1 per column) */}
+                        <mesh position={[0, -groutDepth / 2, 0]} material={materials.groutFooting} receiveShadow castShadow>
                             <boxGeometry args={[0.35, groutDepth, 0.35]} />
                         </mesh>
                     </group>
                 );
             })}
 
-            {/* 6 Horizontal Precast Wall Panels per Bay */}
+            {/* Horizontal Precast Wall Panels for 1 Bay */}
             {Array.from({ length: bayCount }).map((_, bIdx) => {
                 const bayX = (bIdx - (bayCount - 1) / 2) * bayWidth;
                 return (
@@ -187,40 +181,37 @@ function WallAssembly() {
 
             {/* --- Dimension Indicators & Text Labels --- */}
 
-            {/* 2 Feet Grout Label (Below Ground) */}
-            <group position={[totalLength / 2 + 0.45, -groutDepth / 2, 0]}>
+            {/* 2 Feet Grout Footings Label */}
+            <group position={[totalLength / 2 + 0.4, -groutDepth / 2, 0]}>
                 <Html center position={[0.2, 0, 0]}>
                     <div className="bg-red-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow whitespace-nowrap">
-                        2 FT GROUT (4 FOOTINGS)
+                        2 SEPARATE GROUT FOOTINGS (2 FT DEPTH)
                     </div>
                 </Html>
-                {/* Red Vertical Bracket Line */}
                 <mesh position={[0, 0, 0]} material={materials.dimensionLine}>
                     <boxGeometry args={[0.015, groutDepth, 0.015]} />
                 </mesh>
             </group>
 
-            {/* 6 Feet Panel Wall Label (Above Ground) */}
-            <group position={[totalLength / 2 + 0.45, (panelCount * panelHeight) / 2, 0]}>
+            {/* 6 Feet Panel Wall Label */}
+            <group position={[totalLength / 2 + 0.4, (panelCount * panelHeight) / 2, 0]}>
                 <Html center position={[0.2, 0, 0]}>
                     <div className="bg-blue-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow whitespace-nowrap">
                         6 FT WALL (6 PANELS)
                     </div>
                 </Html>
-                {/* Blue Vertical Bracket Line */}
                 <mesh position={[0, 0, 0]} material={materials.dimensionLine}>
                     <boxGeometry args={[0.015, panelCount * panelHeight, 0.015]} />
                 </mesh>
             </group>
 
-            {/* 6 Feet Panel Width Label */}
+            {/* Panel Width Label */}
             <group position={[0, panelCount * panelHeight + 0.12, 0.05]}>
                 <Html center position={[0, -0.08, 0]}>
                     <div className="bg-emerald-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded shadow whitespace-nowrap">
-                        6 FT PANEL WIDTH
+                        6 FT BAY WIDTH
                     </div>
                 </Html>
-                {/* Horizontal dimension line for one panel bay */}
                 <mesh position={[0, 0, 0]} material={materials.dimensionLine}>
                     <boxGeometry args={[bayWidth, 0.015, 0.015]} />
                 </mesh>
@@ -229,21 +220,18 @@ function WallAssembly() {
     );
 }
 
-// 4. Main Page Component
+// 4. Main Viewer Component
 export default function ColumnViewer() {
     return (
         <div className="w-full max-w-5xl mx-auto p-2 space-y-2 font-sans">
-
-            {/* 3D Canvas Container constrained inside frame */}
             <div className="w-full h-[450px] bg-[#f8fafc] rounded-xl overflow-hidden shadow-sm border border-slate-200 relative">
                 <div className="absolute top-3 left-3 z-10 bg-white/90 backdrop-blur-md px-3 py-1 rounded-md text-xs text-slate-700 font-mono border border-slate-200 shadow-sm">
-                    4 Pillars • 6 Panels per Bay • 2ft Grout Footing • Drag to rotate
+                    2 Pillars • 2 Isolated Grout Footings • Drag to rotate
                 </div>
 
-                <Canvas shadows camera={{ position: [0, -1.5, 8.5], fov: 42 }}>
+                <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, -0.5, 8], fov: 42 }}>
                     <color attach="background" args={['#f8fafc']} />
 
-                    {/* Lighting */}
                     <ambientLight intensity={0.85} />
                     <directionalLight
                         position={[6, 10, 6]}
@@ -255,7 +243,6 @@ export default function ColumnViewer() {
                     />
                     <directionalLight position={[-6, 4, -4]} intensity={0.4} color="#cbd5e1" />
 
-                    {/* Center fit ensures whole model stays inside viewport frame */}
                     <Center fit>
                         <WallAssembly />
                     </Center>
@@ -264,11 +251,9 @@ export default function ColumnViewer() {
                         enablePan={false}
                         minDistance={3}
                         maxDistance={10}
-                        maxPolarAngle={Math.PI / 2.02}
                     />
                 </Canvas>
             </div>
-
         </div>
     );
 }

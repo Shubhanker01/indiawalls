@@ -17,6 +17,7 @@ export default function AboutSection() {
                                 fill
                                 className="object-cover"
                                 sizes="(max-width: 1024px) 100vw, 40vw"
+                                loading='eager'
                             />
                             <div className="absolute inset-0 bg-linear-to-t from-slate-950/80 via-transparent to-transparent flex flex-col justify-end p-6 text-white">
                                 <p className="text-xl font-bold">Rohit Kumar Yadav</p>
@@ -40,7 +41,7 @@ export default function AboutSection() {
                         </p>
 
                         <p className="text-lg sm:text-xl text-[#1f4e5f] leading-8">
-                            Today, with over 2,000 satisfied clients and manufacturing plants across Kotkasim, Tapukala, Alwar, Ringur, Ramghar, Faridabad, Bahadurgarh, Palwal, Govindgarh, and Mundawar, we specialize in delivering relocatable, high-strength concrete walls engineered for rapid deployment.
+                            Today, with over 2,000 satisfied clients and manufacturing plants across Kotkasim, Tapukara, Alwar, Ringus, Ramgarh, Faridabad, Bahadurgarh, Palwal, Govindgarh, and Mundawar, we specialize in delivering relocatable, high-strength concrete walls engineered for rapid deployment.
                         </p>
                     </div>
                 </div>

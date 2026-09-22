@@ -2,10 +2,10 @@
 
 import React, { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, Center } from '@react-three/drei';
+import { OrbitControls, Center, Line } from '@react-three/drei';
 import * as THREE from 'three';
 
-// 1. Procedural Concrete Texture Generator (No external images required)
+// 1. Procedural Concrete Texture Generator
 function createConcreteTexture() {
     const canvas = document.createElement('canvas');
     canvas.width = 512;
@@ -33,34 +33,80 @@ function createConcreteTexture() {
     return texture;
 }
 
-// 2. The 3D Cement Plank Mesh
+// 2. The 3D Cement Plank Mesh with Wires on Both Sides
 function CementPlank() {
-    const meshRef = useRef(null);
+    const groupRef = useRef(null);
     const texture = useMemo(() => createConcreteTexture(), []);
+    const timer = useMemo(() => new THREE.Timer(), []);
 
-    // Scale dimensions in meters (Proportional to 6ft x 1ft x 2inch)
-    // Length: ~1.83m | Height: ~0.30m | Thickness: ~0.05m
+    // Dimensions in meters (6ft x 1ft x 2inch)
     const length = 1.828;
     const height = 0.304;
     const thickness = 0.050;
 
+    // Y-offsets for 3 horizontal wires (top, middle, bottom)
+    const wireYOffsets = [height * 0.28, 0, -height * 0.28];
+
+    // Z-offsets for front and back faces (+thickness/2 + offset, -thickness/2 - offset)
+    const zFront = thickness / 2 + 0.001;
+    const zBack = -(thickness / 2 + 0.001);
+
     // Slow auto-rotation
-    useFrame((_, delta) => {
-        if (meshRef.current) {
-            meshRef.current.rotation.y += delta * 0.2;
+    useFrame(() => {
+        timer.update();
+        const delta = timer.getDelta();
+        if (groupRef.current) {
+            groupRef.current.rotation.y += delta * 0.2;
         }
     });
 
     return (
-        <mesh ref={meshRef} castShadow receiveShadow>
-            <boxGeometry args={[length, height, thickness]} />
-            <meshStandardMaterial
-                map={texture}
-                roughness={0.85}
-                metalness={0.05}
-                color="#F2F2F2"
-            />
-        </mesh>
+        <group ref={groupRef}>
+            {/* Concrete Plank Mesh */}
+            <mesh castShadow receiveShadow>
+                <boxGeometry args={[length, height, thickness]} />
+                <meshStandardMaterial
+                    map={texture}
+                    roughness={0.85}
+                    metalness={0.05}
+                    color="#F2F2F2"
+                />
+            </mesh>
+
+            {/* Front Side Wires (3 Wires) */}
+            {wireYOffsets.map((yPos, index) => (
+                <Line
+                    key={`front-${index}`}
+                    points={[
+                        [-length / 2, yPos, zFront],
+                        [length / 2, yPos, zFront],
+                    ]}
+                    color="#1e40af"
+                    lineWidth={2}
+                    dashed
+                    dashScale={25}
+                    dashSize={0.6}
+                    gapSize={0.4}
+                />
+            ))}
+
+            {/* Back Side Wires (3 Wires) */}
+            {wireYOffsets.map((yPos, index) => (
+                <Line
+                    key={`back-${index}`}
+                    points={[
+                        [-length / 2, yPos, zBack],
+                        [length / 2, yPos, zBack],
+                    ]}
+                    color="#1e40af"
+                    lineWidth={2}
+                    dashed
+                    dashScale={25}
+                    dashSize={0.6}
+                    gapSize={0.4}
+                />
+            ))}
+        </group>
     );
 }
 
@@ -69,10 +115,10 @@ export default function CementPlankViewer() {
     return (
         <div className="w-full h-[350px] bg-slate-100 rounded-xl overflow-hidden shadow-lg relative">
             <div className="absolute top-3 left-3 z-10 bg-black/60 backdrop-blur-md px-3 py-1 rounded-md text-xs text-slate-200 font-mono border border-slate-700">
-                Interactive 3D • Drag to rotate / Scroll to zoom
+                Interactive 3D • 3 Wires (Both Sides)
             </div>
 
-            <Canvas shadows camera={{ position: [1.7, 1.25, 2.1], fov: 45 }}>
+            <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, 0, 2.5], fov: 45 }}>
                 <color attach="background" args={['#f8fafc']} />
 
                 {/* Lighting */}
@@ -80,8 +126,8 @@ export default function CementPlankViewer() {
                 <directionalLight position={[5, 8, 5]} intensity={1.2} castShadow />
                 <pointLight position={[-5, -2, -5]} intensity={0.3} />
 
-                {/* Center alignment */}
-                <Center top>
+                {/* Perfect Center Alignment */}
+                <Center>
                     <CementPlank />
                 </Center>
 

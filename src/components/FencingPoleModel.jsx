@@ -78,6 +78,7 @@ function YCrankPost({ position, height = 2.4, armLength = 0.45, material }) {
 // 3. Complete Security Fence Assembly
 function FenceAssembly() {
     const groupRef = useRef();
+    const timer = useMemo(() => new THREE.Timer(), []);
     const chainLinkTex = useMemo(() => createChainLinkTexture(), []);
 
     const materials = useMemo(
@@ -115,7 +116,9 @@ function FenceAssembly() {
     const armLength = 0.45;
 
     // Continuous background rotation
-    useFrame((_, delta) => {
+    useFrame(() => {
+        timer.update();
+        const delta = timer.getDelta();
         if (groupRef.current) {
             groupRef.current.rotation.y += delta * 0.12;
         }
@@ -200,7 +203,7 @@ export default function ViewFencingPole3D() {
                     Y-Crank Post System • Chain-Link & Barbed Wire
                 </div>
 
-                <Canvas shadows camera={{ position: [0, 2.2, 6.5], fov: 45 }}>
+                <Canvas shadows={{ type: THREE.PCFShadowMap }} camera={{ position: [0, 2.2, 6.5], fov: 45 }}>
                     <color attach="background" args={['#f8fafc']} />
 
                     {/* Studio Lighting Setup */}
