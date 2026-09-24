@@ -1,3 +1,7 @@
+'use client';
+
+import { useState } from 'react';
+import { motion } from 'framer-motion';
 import AnimatedSection from './AnimatedSection';
 
 const units = [
@@ -74,86 +78,141 @@ const units = [
 ];
 
 export default function ManufacturingUnits() {
+    const [activeIdx, setActiveIdx] = useState(2); // Default centered around a unit
+
     return (
-        <section className="py-20 border-y border-slate-200" id="locations">
+        <section className="py-20 border-y border-slate-200 overflow-hidden bg-slate-50" id="locations">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
 
                 {/* SECTION HEADER */}
-                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-14 space-y-3">
-                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200 mb-4">
+                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200 inline-block">
                         Factory Network
                     </span>
-                    <h2 className="text-4xl sm:text-5xl font-black text-slate-900 mt-4 leading-tight">
+                    <h2 className="text-4xl sm:text-5xl font-black text-slate-900 leading-tight">
                         Our Manufacturing Sites
                     </h2>
-                    <p className="text-lg sm:text-xl text-slate-700 leading-8">
-                        Our manufacturing units are strategically located across the following cities to ensure prompt precast production and rapid delivery:
+                    <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+                        Our manufacturing units are strategically located across key industrial zones to ensure rapid delivery.
                     </p>
-                    <p className="text-amber-700 text-sm sm:text-base font-medium">
-                        Site visit within two hours.
+                    <p className="text-amber-700 text-sm font-semibold">
+                        Site visit available within two hours.
                     </p>
                     <div className="flex flex-wrap justify-center gap-3 pt-2">
                         <a
                             href="tel:+919950711475"
-                            className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-amber-400"
+                            className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-amber-400 shadow-sm"
                         >
                             Call Now
                         </a>
                         <a
                             href="/contact"
-                            className="inline-flex items-center justify-center rounded-xl border border-slate-300 px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-amber-400 hover:text-amber-700"
+                            className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-amber-400 hover:text-amber-700 shadow-sm"
                         >
                             Enquire Now
                         </a>
                     </div>
                 </AnimatedSection>
 
-                {/* LOCATIONS GRID */}
-                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                    {units.map((unit, idx) => (
-                        <AnimatedSection
-                            key={idx}
-                            delay={0.15 + idx * 0.08}
-                            className="bg-white/90 border border-slate-200 rounded-2xl p-7 flex flex-col justify-between hover:border-amber-500/50 transition-transform duration-300 hover:-translate-y-1"
-                        >
-                            <div className="space-y-4">
-                                <div className="flex items-center justify-between">
-                                    <span className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center text-xl">
-                                        📍
-                                    </span>
-                                    <span className="text-[11px] font-mono font-medium text-amber-400 bg-amber-400/10 px-2.5 py-1 rounded-md border border-amber-400/20">
-                                        {unit.region}
-                                    </span>
-                                </div>
+                {/* SEMI-STACKED FAN DECK CONTAINER */}
+                <div className="relative w-full h-[460px] flex items-center justify-center">
+                    <div className="relative w-full max-w-md h-full flex items-center justify-center">
+                        {units.map((unit, idx) => {
+                            const offset = idx - activeIdx;
+                            const isActive = idx === activeIdx;
 
-                                <div>
-                                    <h3 className="text-2xl sm:text-3xl font-bold leading-tight text-slate-900 mb-3">
-                                        {unit.city}
-                                    </h3>
-                                    <p className="text-base sm:text-lg text-slate-700 leading-7">
-                                        {unit.address}
-                                    </p>
-                                </div>
-                            </div>
+                            // Limit stack rendering range to 3 units left and 3 units right for clean performance
+                            if (Math.abs(offset) > 3) return null;
 
-                            {/* GEO-LOCATION & MAP BUTTON */}
-                            <div className="pt-6 mt-6 border-t border-slate-200 space-y-3">
-                                <div className="flex items-center space-x-2 text-xs font-mono text-slate-600">
-                                    <span className="text-amber-500">🌐</span>
-                                    <span>{unit.geo}</span>
-                                </div>
+                            // Calculate bilateral offsets (negative for left stack, positive for right stack)
+                            const xOffset = offset * 110;
+                            const yOffset = Math.abs(offset) * 28;
+                            const rotation = offset * 6;
+                            const scale = isActive ? 1.05 : 1 - Math.abs(offset) * 0.08;
+                            const zIndex = 30 - Math.abs(offset);
+                            const opacity = isActive ? 1 : Math.max(0.35, 1 - Math.abs(offset) * 0.25);
 
-                                <a
-                                    href={unit.mapsUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="w-full inline-flex items-center justify-center space-x-2 bg-slate-100 hover:bg-amber-500 text-slate-700 hover:text-slate-950 text-xs font-bold py-2.5 px-4 rounded-xl transition duration-200"
+                            return (
+                                <motion.div
+                                    key={idx}
+                                    initial={false}
+                                    animate={{
+                                        x: xOffset,
+                                        y: yOffset,
+                                        rotate: rotation,
+                                        scale: scale,
+                                        zIndex: zIndex,
+                                        opacity: opacity,
+                                    }}
+                                    transition={{
+                                        type: 'spring',
+                                        stiffness: 240,
+                                        damping: 22,
+                                    }}
+                                    onClick={() => setActiveIdx(idx)}
+                                    className={`absolute w-full h-[360px] rounded-2xl p-7 border flex flex-col justify-between cursor-pointer select-none transition-shadow duration-300 ${isActive
+                                            ? 'bg-white border-amber-500 shadow-2xl ring-2 ring-amber-500/20'
+                                            : 'bg-slate-100 border-slate-300 shadow-md hover:bg-white'
+                                        }`}
                                 >
-                                    <span>Open in Google Maps</span>
-                                    <span>↗</span>
-                                </a>
-                            </div>
-                        </AnimatedSection>
+                                    {/* CARD HEADER */}
+                                    <div className="space-y-4">
+                                        <div className="flex items-center justify-between">
+                                            <span className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-600 flex items-center justify-center text-xl font-bold">
+                                                📍
+                                            </span>
+                                            <span className="text-xs font-mono font-medium text-amber-700 bg-amber-100/80 px-3 py-1 rounded-full border border-amber-200">
+                                                {unit.region}
+                                            </span>
+                                        </div>
+
+                                        <div>
+                                            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mb-2">
+                                                {unit.city}
+                                            </h3>
+                                            <p className="text-sm text-slate-600 leading-relaxed">
+                                                {unit.address}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    {/* CARD FOOTER */}
+                                    <div className="pt-4 border-t border-slate-200 space-y-3">
+                                        <div className="flex items-center space-x-2 text-xs font-mono text-slate-500">
+                                            <span className="text-amber-500">🌐</span>
+                                            <span>{unit.geo}</span>
+                                        </div>
+
+                                        <a
+                                            href={unit.mapsUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            onClick={(e) => e.stopPropagation()}
+                                            className="w-full inline-flex items-center justify-center space-x-2 bg-slate-900 hover:bg-amber-500 text-white hover:text-slate-950 text-xs font-bold py-2.5 px-4 rounded-xl transition duration-200 shadow-sm"
+                                        >
+                                            <span>Open in Google Maps</span>
+                                            <span>↗</span>
+                                        </a>
+                                    </div>
+                                </motion.div>
+                            );
+                        })}
+                    </div>
+                </div>
+
+                {/* BOTTOM NAVIGATION CHIPS / INDICATORS */}
+                <div className="flex flex-wrap justify-center gap-2 mt-8 max-w-4xl mx-auto">
+                    {units.map((unit, idx) => (
+                        <button
+                            key={idx}
+                            onClick={() => setActiveIdx(idx)}
+                            className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-all duration-200 ${activeIdx === idx
+                                    ? 'bg-slate-900 text-amber-400 border-slate-900 shadow'
+                                    : 'bg-white text-slate-600 border-slate-200 hover:border-amber-400 hover:text-amber-700'
+                                }`}
+                        >
+                            {unit.city.replace(' Unit', '')}
+                        </button>
                     ))}
                 </div>
 

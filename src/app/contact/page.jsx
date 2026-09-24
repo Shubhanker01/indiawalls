@@ -185,14 +185,18 @@ export default function ContactPage() {
                             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
                                 Height (Feet)
                             </label>
-                            <input
-                                type="number"
-                                name="runningHeight"
-                                min="0"
-                                step="0.01"
-                                placeholder="e.g. 6"
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
-                            />
+                            <select
+                                className="mt-2 block w-full rounded-lg border border-slate-300 px-4 py-3 text-base font-normal text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20"
+                                name="height"
+                                required
+                            >
+                                <option value="">Select height</option>
+                                {[5, 6, 7, 8, 9, 10].map((heightOption) => (
+                                    <option key={heightOption} value={heightOption}>
+                                        {heightOption}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div className="sm:col-span-2">

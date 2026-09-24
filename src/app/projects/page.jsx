@@ -70,7 +70,7 @@ export default function GalleryPage() {
         <div className="min-h-screen bg-slate-50 text-slate-800">
             <Navbar />
             {/* 1. Header Section */}
-            <section className="bg-slate-900 text-white pt-12 pb-16 px-4">
+            {/* <section className="bg-slate-900 text-white pt-12 pb-16 px-4">
                 <div className="max-w-7xl mx-auto text-center">
                     <span className="inline-block bg-yellow-500/20 text-yellow-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3 border border-yellow-500/30">
                         Our Portfolio
@@ -85,59 +85,8 @@ export default function GalleryPage() {
             </section>
 
             {/* 2. 9-Photo Project Grid */}
-            <section className="py-16 px-4 max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {projects.map((project) => (
-                        <div
-                            key={project.id}
-                            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-transform duration-300 flex flex-col justify-between group"
-                        >
-                            {/* Image Container */}
-                            <div>
-                                <div className="relative h-60 w-full overflow-hidden bg-slate-100">
-                                    <img
-                                        src={project.image}
-                                        alt={project.title}
-                                        className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                                    />
-                                    <div className="absolute top-3 left-3 bg-slate-900/80 backdrop-blur-md text-yellow-400 text-xs font-bold px-3 py-1 rounded-lg border border-slate-700">
-                                        {project.category}
-                                    </div>
-                                </div>
-
-                                {/* Content */}
-                                <div className="p-6">
-                                    <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-2 font-medium">
-                                        <svg className="w-4 h-4 text-yellow-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                                        </svg>
-                                        <span>{project.location}</span>
-                                    </div>
-                                    <h2 className="text-lg font-bold text-slate-900 mb-2 group-hover:text-yellow-600 transition">
-                                        {project.title}
-                                    </h2>
-                                    <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-                                        {project.description}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Card Footer */}
-                            <div className="px-6 pb-6 pt-2 border-t border-slate-100 flex justify-between items-center text-xs font-semibold text-slate-500">
-                                <span className="text-yellow-600 font-bold">100% Quality Execution</span>
-                                <Link
-                                    href="/contact"
-                                    className="text-slate-800 hover:text-yellow-600 transition flex items-center gap-1"
-                                >
-                                    Request Similar
-                                    <span>→</span>
-                                </Link>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
+            
+                           
 
             {/* 3. Call to Action Banner */}
             <section className="bg-slate-900 text-white py-14 px-4 border-t border-slate-800">

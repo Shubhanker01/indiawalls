@@ -28,7 +28,7 @@ export default function Navbar() {
                 {/* Logo */}
                 <Link
                     href="/"
-                    className="text-2xl font-extrabold tracking-tight text-slate-100 sm:text-3xl"
+                    className="text-2xl font-extrabold tracking-tight text-slate-100 sm:text-4xl"
                     onClick={closeMenu}
                 >
                     Rajasthan<span className="text-yellow-400">Walls</span>
@@ -44,9 +44,9 @@ export default function Navbar() {
                                 key={link.href}
                                 href={link.href}
                                 className={`transition-all duration-200 relative ${active
-                                        ? 'text-yellow-400 font-semibold'
-                                        : 'text-slate-100 hover:text-yellow-400'
-                                    }`}
+                                    ? 'text-yellow-400 font-semibold'
+                                    : 'text-slate-100 hover:text-yellow-400'
+                                    } text-xl`}
                                 aria-current={active ? 'page' : undefined}
                             >
                                 {link.label}
@@ -97,8 +97,8 @@ export default function Navbar() {
                                 href={link.href}
                                 onClick={closeMenu}
                                 className={`block px-4 py-2.5 rounded-lg font-medium text-base transition-all duration-200 ${active
-                                        ? 'text-yellow-400 bg-gray-800/60 font-semibold translate-x-1'
-                                        : 'text-slate-100 hover:text-yellow-400 hover:bg-gray-800/30 hover:translate-x-1'
+                                    ? 'text-yellow-400 bg-gray-800/60 font-semibold translate-x-1'
+                                    : 'text-slate-100 hover:text-yellow-400 hover:bg-gray-800/30 hover:translate-x-1'
                                     }`}
                                 aria-current={active ? 'page' : undefined}
                             >

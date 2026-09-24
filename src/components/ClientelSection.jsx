@@ -34,19 +34,21 @@ export default function ClienteleSection() {
                 <div className="absolute right-0 top-0 bottom-0 w-20 bg-linear-to-l from-white to-transparent z-10 pointer-events-none" />
 
                 {/* INFINITE SCROLL TRACK */}
-                <div className="flex space-x-12 sm:space-x-16 items-center animate-marquee whitespace-nowrap w-max">
+                <div className="flex gap-6 sm:gap-8 items-center animate-marquee whitespace-nowrap w-max">
                     {doubledClients.map((client, idx) => (
                         <div
                             key={idx}
-                            className="relative w-28 sm:w-40 h-28 sm:h-44 opacity-100 transition-all duration-300 shrink-0"
+                            className="relative flex w-36 sm:w-48 h-36 sm:h-40 shrink-0 items-center justify-center rounded-2xl bg-slate-100 p-5 sm:p-8 opacity-100 transition-all duration-300"
                         >
-                            <Image
-                                src={client.logo}
-                                alt={`${client.name} Logo`}
-                                fill
-                                className="object-contain"
-                                sizes="(min-width: 640px) 160px, 112px"
-                            />
+                            <div className="relative h-full w-full">
+                                <Image
+                                    src={client.logo}
+                                    alt={`${client.name} Logo`}
+                                    fill
+                                    className="object-contain"
+                                    sizes="(min-width: 640px) 160px, 112px"
+                                />
+                            </div>
                         </div>
                     ))}
                 </div>
