@@ -66,15 +66,17 @@ export default function Navbar() {
                 >
                     <div className="w-6 h-6 relative">
                         <span
-                            className={`absolute left-0 top-1/2 w-full h-0.5 bg-current rounded-full transition-transform duration-200 origin-center ${isOpen ? '-translate-y-1/2 rotate-45' : '-translate-y-1.75'
+                            className={`absolute left-0 top-1/2 w-full h-0.5 bg-current rounded-full transition-transform duration-200 origin-center ${isOpen ? 'translate-y-0 rotate-45' : '-translate-y-2'
                                 }`}
                         />
+                        {/* Middle Line */}
                         <span
                             className={`absolute left-0 top-1/2 w-full h-0.5 -translate-y-1/2 bg-current rounded-full transition-all duration-200 ${isOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'
                                 }`}
                         />
+                        {/* Bottom Line */}
                         <span
-                            className={`absolute left-0 top-1/2 w-full h-0.5 bg-current rounded-full transition-transform duration-200 origin-center ${isOpen ? '-translate-y-1/2 -rotate-45' : 'translate-y-1.75'
+                            className={`absolute left-0 top-1/2 w-full h-0.5 bg-current rounded-full transition-transform duration-200 origin-center ${isOpen ? 'translate-y-0 -rotate-45' : 'translate-y-2'
                                 }`}
                         />
                     </div>
@@ -84,7 +86,7 @@ export default function Navbar() {
             {/* Mobile Dropdown Drawer with Smooth Scale & Fade Animation */}
             <div
                 id="mobile-menu"
-                className={`md:hidden overflow-hidden transition-all duration-200 ease-in-out bg-gray-900 border-b border-gray-800 ${isOpen ? 'max-h-96 opacity-100 py-3' : 'max-h-0 opacity-0 py-0 border-none'
+                className={`md:hidden overflow-hidden transition-all duration-200 ease-in-out bg-gray-900 border-b border-gray-800 will-change-[transform,opacity] ${isOpen ? 'scale-y-100 opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-y-95 -translate-y-2 pointer-events-none absolute w-full'
                     }`}
             >
                 <div className="px-4 space-y-1">
