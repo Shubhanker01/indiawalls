@@ -141,18 +141,21 @@ export default function ManufacturingUnits() {
                                         y: yOffset,
                                         rotate: rotation,
                                         scale: scale,
-                                        zIndex: zIndex,
                                         opacity: opacity,
+                                    }}
+                                    style={{
+                                        zIndex: zIndex,
+                                        willChange: "transform, opacity"
                                     }}
                                     transition={{
                                         type: 'spring',
-                                        stiffness: 240,
-                                        damping: 22,
+                                        stiffness: 200,
+                                        damping: 25,
                                     }}
                                     onClick={() => setActiveIdx(idx)}
-                                    className={`absolute w-full h-[360px] rounded-2xl p-7 border flex flex-col justify-between cursor-pointer select-none transition-shadow duration-300 ${isActive
-                                            ? 'bg-white border-amber-500 shadow-2xl ring-2 ring-amber-500/20'
-                                            : 'bg-slate-100 border-slate-300 shadow-md hover:bg-white'
+                                    className={`absolute w-full h-[360px] rounded-2xl p-7 border flex flex-col justify-between cursor-pointer select-none ${isActive
+                                        ? 'bg-white border-amber-500 shadow-xl ring-2 ring-amber-500/20'
+                                        : 'bg-slate-100 border-slate-300 shadow-sm hover:bg-white'
                                         }`}
                                 >
                                     {/* CARD HEADER */}
@@ -207,8 +210,8 @@ export default function ManufacturingUnits() {
                             key={idx}
                             onClick={() => setActiveIdx(idx)}
                             className={`px-3 py-1.5 text-xs font-medium rounded-lg border transition-all duration-200 ${activeIdx === idx
-                                    ? 'bg-slate-900 text-amber-400 border-slate-900 shadow'
-                                    : 'bg-white text-slate-600 border-slate-200 hover:border-amber-400 hover:text-amber-700'
+                                ? 'bg-slate-900 text-amber-400 border-slate-900 shadow'
+                                : 'bg-white text-slate-600 border-slate-200 hover:border-amber-400 hover:text-amber-700'
                                 }`}
                         >
                             {unit.city.replace(' Unit', '')}
