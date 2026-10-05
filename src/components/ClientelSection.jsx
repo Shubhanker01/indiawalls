@@ -1,14 +1,19 @@
 import Image from 'next/image';
 
 const clients = [
-    { name: 'Tata', logo: '/images/clients/Tata.webp' },
-    { name: 'Adani', logo: '/images/clients/adani.webp' },
-    { name: 'One Group', logo: '/images/clients/OneGroup.webp' },
-    { name: 'Nagar Nigam', logo: '/images/clients/municipal.webp' },
-    { name: 'Indian Railways', logo: '/images/clients/IndianRailways.webp' },
-    { name: 'Humanity Ahead', logo: '/images/clients/HumanityAhead.webp' },
-    { name: 'Nagar Vikas', logo: '/images/clients/NagarVikas.webp' },
-    { name: 'Essel', logo: '/images/clients/Essel.webp' },
+    { name: 'Tata', logo: 'Tata.webp' },
+    { name: 'Adani', logo: 'adani.webp' },
+    { name: 'One Group', logo: 'OneGroup.webp' },
+    { name: 'Nagar Nigam', logo: 'municipal.webp' },
+    { name: 'Indian Railways', logo: 'IndianRailways.webp' },
+    { name: 'Humanity Ahead', logo: 'HumanityAhead.webp' },
+    { name: 'Nagar Vikas', logo: 'NagarVikas.webp' },
+    { name: 'Essel', logo: 'Essel.webp' },
+    { name: 'Aviana', logo: 'Aviana.jpg' },
+    { name: 'Bhaskar Jyoti', logo: 'Bhaskar%20Jyoti%20(India%20Pvt%20Ltd).png' },
+    { name: 'ats', logo: 'ats.png' },
+    { name: 'Bharta Construction', logo: 'Bharata%20Construction.png' },
+    { name: 'cosine power', logo: 'Cosine%20Power%20Ltd.jpg' },
 ];
 
 // Duplicate array for seamless endless scrolling loop
@@ -42,7 +47,7 @@ export default function ClienteleSection() {
                         >
                             <div className="relative h-full w-full">
                                 <Image
-                                    src={client.logo}
+                                    src={`${process.env.NEXT_PUBLIC_IMAGES}/${client.logo}`}
                                     alt={`${client.name} Logo`}
                                     fill
                                     className="object-contain"

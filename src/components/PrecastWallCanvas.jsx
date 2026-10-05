@@ -144,6 +144,11 @@ function ProceduralWallModel({ isVisible }) {
 }
 
 export default function PreCastWallCanvas() {
+    const [isCanvasReady, setIsCanvasReady] = useState(false);
+
+    useEffect(() => {
+        setIsCanvasReady(true);
+    }, []);
     const canvasRef = useRef();
     const [isVisible, setIsVisible] = useState(true);
 
@@ -161,6 +166,10 @@ export default function PreCastWallCanvas() {
 
         return () => observer.disconnect();
     }, []);
+
+    if (!isCanvasReady) {
+        return <div></div>
+    }
     return (
         <div className="precast-wall-pattern absolute inset-0 z-0 w-full h-full pointer-events-none" ref={canvasRef}>
             <Canvas camera={{ position: [0, 2, 7], fov: 42 }} dpr={[1, 1.5]} frameloop={isVisible ? 'always' : 'demand'} gl={{ antialias: false, powerPreference: 'low-power' }}>

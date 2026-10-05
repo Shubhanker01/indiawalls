@@ -9,32 +9,32 @@ const projects = [
     {
         title: 'Industrial Area, Chopanki, Bhiwadi',
         location: 'Bhiwadi, Rajasthan',
-        image: '/IndustrialAreaBhiwadi.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/IndustrialAreaBhiwadi.webp`,
     },
     {
-        title: 'Paver Block Installation, M.I.A Alwar',
+        title: 'Agriculture Wall, M.I.A Alwar',
         location: 'Alwar, Rajasthan',
-        image: '/MIAAlwar.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/MIAAlwar.webp`,
     },
     {
         title: 'Precast Boundary Wall, Sector 74',
         location: 'Gurugram, Haryana',
-        image: '/Gurugram.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/Gurugram.webp`,
     },
     {
         title: 'Compound Wall Project, Dayalpur',
         location: 'Faridabad, Haryana',
-        image: '/Dayalpur.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/Dayalpur.webp`,
     },
     {
         title: 'Mahwa, Near Sikandra',
         location: 'Dausa, Rajasthan',
-        image: '/Mahwa.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/Mahwa.webp`,
     },
     {
-        title: 'Alwar Infrastructure Project',
+        title: 'Alwar Plot Boundary Project',
         location: 'Alwar, Rajasthan',
-        image: '/Alwar.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/Alwar.webp`,
     },
 ];
 
@@ -71,7 +71,7 @@ export default function OurWorkAccordion() {
                                 }}
                                 transition={{
                                     type: 'spring',
-                                    stiffness: 250,
+                                    stiffness: 200,
                                     damping: 25,
                                 }}
                                 className={`relative rounded-2xl overflow-hidden cursor-pointer border border-slate-200/80 shadow-md transition-shadow duration-300 ${isActive ? 'shadow-2xl ring-2 ring-slate-900/10' : 'hover:shadow-lg'
@@ -91,8 +91,8 @@ export default function OurWorkAccordion() {
                                 {/* OVERLAY GRADIENT */}
                                 <div
                                     className={`absolute inset-0 transition-opacity duration-500 bg-gradient-to-t ${isActive
-                                            ? 'from-slate-950/85 via-slate-950/30 to-transparent opacity-100'
-                                            : 'from-slate-950/70 via-slate-950/20 to-transparent opacity-70'
+                                        ? 'from-slate-950/85 via-slate-950/30 to-transparent opacity-100'
+                                        : 'from-slate-950/70 via-slate-950/20 to-transparent opacity-70'
                                         }`}
                                 />
 

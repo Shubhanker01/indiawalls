@@ -30,7 +30,7 @@ const socialLinks = [
 
 const productLinks = [
     { name: 'Precast RCC Boundary Wall', href: '/products' },
-    { name: 'Folding Compound Wall', href: '/products' },
+    { name: 'Redimate Compound Wall', href: '/products' },
     { name: 'Interlocking Paver Blocks', href: '/products' },
     { name: 'Barbed Wire Fencing Poles', href: '/products' },
     { name: 'Designer Concrete Panels', href: '/products' },
@@ -56,7 +56,7 @@ export default function Footer() {
                             href="/"
                             className="inline-block text-2xl font-extrabold tracking-tight text-slate-100 sm:text-3xl"
                         >
-                            Rajasthan<span className="text-yellow-400">Walls</span>
+                            Rajasthan<span className="text-yellow-400">Walls.com</span>
                         </Link>
 
                         <p className="text-xs sm:text-sm leading-relaxed text-slate-200">

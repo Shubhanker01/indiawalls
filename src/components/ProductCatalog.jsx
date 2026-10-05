@@ -17,7 +17,7 @@ export default function ProductCatalog() {
                     <div className="h-56 bg-slate-200 relative">
                         {/* Replace with Next Image */}
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
-                            <Image src='/PreCastWallImage.webp' alt="Precase Wall Image" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
+                            <Image src={`${process.env.NEXT_PUBLIC_IMAGES}/PreCastWallImage.webp`} alt="Precase Wall Image" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
                         </div>
                     </div>
                     <div className="p-6">
@@ -34,7 +34,7 @@ export default function ProductCatalog() {
                 <AnimatedSection delay={0.23} className="bg-white/90 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
-                            <Image src='/DesignerStoneWalls.webp' alt="Designer Stone Walls" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
+                            <Image src={`${process.env.NEXT_PUBLIC_IMAGES}/DesignerStoneWalls.webp`} alt="Designer Stone Walls" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
                         </div>
                     </div>
                     <div className="p-6">
@@ -51,7 +51,7 @@ export default function ProductCatalog() {
                 <AnimatedSection delay={0.31} className="bg-white/90 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-transform duration-300 hover:-translate-y-1 group">
                     <div className="h-56 bg-slate-200 relative">
                         <div className="absolute inset-0 bg-slate-800 flex items-center justify-center text-slate-400 font-semibold">
-                            <Image src='/PaverBlocks.webp' alt="Paver Blocks" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
+                            <Image src={`${process.env.NEXT_PUBLIC_IMAGES}/PaverBlock%20Sols.jpg`} alt="Paver Blocks" fill sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"></Image>
                         </div>
                     </div>
                     <div className="p-6">

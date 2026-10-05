@@ -6,14 +6,15 @@ export default function AnimatedSection({ children, delay = 0, className = "" })
     return (
         <LazyMotion features={domAnimation}>
             <m.div
-                initial={{ opacity: 0, y: 40 }}
+                initial={{ opacity: 0, y: 18 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
+                viewport={{ once: true, margin: "-30px" }}
                 transition={{
-                    duration: 0.7,
+                    duration: 0.50,
                     delay: delay,
-                    ease: [0.21, 0.47, 0.32, 0.98],
+                    ease: [0.16, 1, 0.3, 1], // Custom fast-out spring ease
                 }}
+                style={{ willChange: "transform, opacity" }}
                 className={className}
             >
                 {children}

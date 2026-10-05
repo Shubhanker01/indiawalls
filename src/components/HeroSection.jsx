@@ -1,25 +1,14 @@
-'use client';
-
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
 
-const PrecastWallCanvas = dynamic(() => import('@/components/PrecastWallCanvas'), {
-    ssr: false
-});
+const PrecastWallCanvas = dynamic(() => import('@/components/PrecastWallCanvas'));
 
 export default function HeroSection() {
-    const [isCanvasReady, setIsCanvasReady] = useState(false);
-
-    useEffect(() => {
-        setIsCanvasReady(true);
-    }, []);
-
     return (
         <section className="relative bg-slate-100 text-slate-900 py-16 lg:py-20 px-4 sm:px-8 overflow-hidden min-h-145">
 
             {/* 1. 3D Rotating Dark Model Canvas */}
-            {isCanvasReady && <PrecastWallCanvas />}
+            <PrecastWallCanvas />
 
             {/* 2. Soft Light Gradient Overlay */}
             <div className="absolute inset-0 bg-linear-to-r from-slate-100/95 via-slate-100/70 to-transparent z-10 pointer-events-none" />

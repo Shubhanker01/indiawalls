@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import EstimateCalculator from '@/components/EstimateCalculator';
+import ProductRequirementsFields from '@/components/ProductRequirementsFields';
 
 export const metadata = {
     title: 'Contact Us | RajasthanWalls Infratech - Get Free Site Estimate',
@@ -157,55 +158,26 @@ export default function ContactPage() {
                             />
                         </div>
 
-                        <div>
-                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Product Category
-                            </label>
-                            <select className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition">
-                                <option>Precast Concrete Boundary Wall</option>
-                                <option>RCC Fencing Poles</option>
-                                <option>Chainlink Mesh Fencing</option>
-                                <option>Interlocking Paver Blocks</option>
-                                <option>Multiple / Turnkey Project</option>
-                            </select>
-                        </div>
+                        <ProductRequirementsFields />
 
-                        <div>
+                        <div className="sm:col-span-2">
                             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Approximate Area / Length
+                                Site Location
                             </label>
                             <input
                                 type="text"
-                                placeholder="e.g. 500 Running Feet"
+                                placeholder="Enter your project site location"
                                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
                             />
                         </div>
 
-                        <div>
-                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Height (Feet)
-                            </label>
-                            <select
-                                className="mt-2 block w-full rounded-lg border border-slate-300 px-4 py-3 text-base font-normal text-slate-900 outline-none transition focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/20"
-                                name="height"
-                                required
-                            >
-                                <option value="">Select height</option>
-                                {[5, 6, 7, 8, 9, 10].map((heightOption) => (
-                                    <option key={heightOption} value={heightOption}>
-                                        {heightOption}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
                         <div className="sm:col-span-2">
                             <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Site Location & Specific Requirements
+                                Specific Requirements
                             </label>
                             <textarea
                                 rows="4"
-                                placeholder="Specify delivery city/location, required wall height (e.g., 6ft or 8ft), or preferred installation schedule..."
+                                placeholder="Share any additional requirements, preferred installation schedule, or other project details..."
                                 className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
                             ></textarea>
                         </div>

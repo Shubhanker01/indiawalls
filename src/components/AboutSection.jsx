@@ -12,7 +12,7 @@ export default function AboutSection() {
                     <div className="lg:col-span-5 relative">
                         <div className="relative mx-auto max-w-md lg:max-w-none rounded-3xl overflow-hidden shadow-2xl border-4 border-slate-100 bg-slate-100 aspect-4/5">
                             <Image
-                                src="/CEO-768x1024.webp.bv.webp"
+                                src={`${process.env.NEXT_PUBLIC_IMAGES}/CEO-768x1024.webp.bv.webp`}
                                 alt="Rohit Kumar Yadav - Founder & CEO of Indiawalls Infratech"
                                 fill
                                 className="object-cover"
@@ -41,7 +41,7 @@ export default function AboutSection() {
                         </p>
 
                         <p className="text-lg sm:text-xl text-[#1f4e5f] leading-8">
-                            Today, with over 2,000 satisfied clients and manufacturing plants across Kotkasim, Tapukara, Alwar, Ringus, Ramgarh, Faridabad, Bahadurgarh, Palwal, Govindgarh, and Mundawar, we specialize in delivering relocatable, high-strength concrete walls engineered for rapid deployment.
+                            Today, with over 2,000 satisfied clients and manufacturing plants across NCR, Alwar, Bhiwadi, Gurugram, Bhadurgarh, Palwal, Ramgarh, Kotkasim, Ringus, Faridabad and Mathura we specialize in delivering relocatable, high-strength concrete walls engineered for rapid deployment.
                         </p>
                     </div>
                 </div>

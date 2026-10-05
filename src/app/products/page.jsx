@@ -11,29 +11,27 @@ export const dynamic = 'force-dynamic';
 const products = [
     {
         id: 1,
-        title: 'Precast Walls',
-        slug: 'precast-walls',
-        image: '/images/products/precast walls.webp',
-        imageBackground: 'bg-slate-900',
+        title: 'Boundary Walls',
+        slug: 'boundary-walls',
+        image: '/BoundaryWall Sols.webp',
         description:
             'Precast walls are durable concrete panels manufactured off-site and assembled quickly, reducing construction time and ensuring consistent quality. They offer design flexibility and improve site safety by minimizing on-site labor.',
         badge: 'Boundary Solutions',
     },
     {
         id: 2,
-        title: 'Paver Blocks',
-        slug: 'paver-blocks',
-        image: '/images/products/paver blocks.webp',
-        imageBackground: 'bg-white',
+        title: 'Paver Solutions',
+        slug: 'paver-solutions',
+        image: '/PaverBlock Sols.webp',
         description:
             'Paver blocks are sturdy, interlocking concrete units ideal for driveways, walkways, and patios. They provide easy installation, require minimal maintenance, and come in various shapes and colors, allowing for customized, visually appealing designs in outdoor spaces.',
         badge: 'Paving Solutions',
     },
     {
         id: 3,
-        title: 'Fencing Pole',
-        slug: 'fencing-pole',
-        image: '/images/products/Fencing pole.webp',
+        title: 'Fencing Solutions',
+        slug: 'fencing-solutions',
+        image: '/images/fencing poles/fencing pole.webp',
         description:
             'Fencing poles are sturdy vertical supports used to hold fencing materials in place, providing security and boundary definition for properties. Typically made from metal, wood, or concrete, they are durable, easy to install, and can accommodate various fencing styles.',
         badge: 'Structural Support',

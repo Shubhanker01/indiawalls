@@ -11,7 +11,7 @@ export const blogPosts = [
         category: 'Industry Insights',
         date: 'May 12, 2026',
         readTime: '4 min read',
-        image: '/images/blogs/Best-Boundary-Wall-Solutions-for-Solar-Plants-and-Industrial-Projects.png',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/Best-Boundary-Wall-Solutions-for-Solar-Plants-and-Industrial-Projects.png`,
         slug: 'precast-vs-brick-boundary-wall-comparison',
     },
     {
@@ -22,7 +22,7 @@ export const blogPosts = [
         category: 'Engineering',
         date: 'Apr 28, 2026',
         readTime: '6 min read',
-        image: '/images/blogs/How-Precast-Walls-Save-Time-and-Add-Strength.png',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/How-Precast-Walls-Save-Time-and-Add-Strength.png`,
         slug: 'how-precast-walls-build-faster-and-stronger',
     },
     {
@@ -33,7 +33,7 @@ export const blogPosts = [
         category: 'Installation Guide',
         date: 'Mar 15, 2026',
         readTime: '5 min read',
-        image: '/images/blogs/Which-Interlocking-Paver-Blocks-Last-the-Longest-3.png.bv.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/Which-Interlocking-Paver-Blocks-Last-the-Longest-3.png.bv.webp`,
         slug: 'interlocking-paver-block-manufacturer-alwar-rajasthan',
     },
 ];
