@@ -13,7 +13,7 @@ const products = [
         id: 1,
         title: 'Boundary Walls',
         slug: 'boundary-walls',
-        image: '/BoundaryWall Sols.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/BoundaryWall%20Sols.webp`,
         description:
             'Precast walls are durable concrete panels manufactured off-site and assembled quickly, reducing construction time and ensuring consistent quality. They offer design flexibility and improve site safety by minimizing on-site labor.',
         badge: 'Boundary Solutions',
@@ -22,7 +22,7 @@ const products = [
         id: 2,
         title: 'Paver Solutions',
         slug: 'paver-solutions',
-        image: '/PaverBlock Sols.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/PaverBlock%20Sols.webp`,
         description:
             'Paver blocks are sturdy, interlocking concrete units ideal for driveways, walkways, and patios. They provide easy installation, require minimal maintenance, and come in various shapes and colors, allowing for customized, visually appealing designs in outdoor spaces.',
         badge: 'Paving Solutions',
