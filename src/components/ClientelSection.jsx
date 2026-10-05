@@ -14,6 +14,8 @@ const clients = [
     { name: 'ats', logo: 'ats.png' },
     { name: 'Bharta Construction', logo: 'Bharata%20Construction.png' },
     { name: 'cosine power', logo: 'Cosine%20Power%20Ltd.jpg' },
+    { name: 'Modi Groups', logo: 'modi%20groups.jpg' },
+    { name: 'DCC Infra', logo: 'dcc_infra.jpg' },
 ];
 
 // Duplicate array for seamless endless scrolling loop
@@ -43,7 +45,7 @@ export default function ClienteleSection() {
                     {doubledClients.map((client, idx) => (
                         <div
                             key={idx}
-                            className="relative flex w-36 sm:w-48 h-36 sm:h-40 shrink-0 items-center justify-center rounded-2xl bg-slate-100 p-5 sm:p-8 opacity-100 transition-all duration-300"
+                            className="relative flex w-36 sm:w-48 h-36 sm:h-40 shrink-0 items-center justify-center rounded-2xl bg-slate-100 p-5 sm:p-8 opacity-100 transition-all duration-450"
                         >
                             <div className="relative h-full w-full">
                                 <Image

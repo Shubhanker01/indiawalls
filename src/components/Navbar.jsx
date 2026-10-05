@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
@@ -13,15 +14,27 @@ const navLinks = [
 ];
 
 const socialLinks = [
-    { name: 'Facebook', href: 'https://www.facebook.com/indiawallsofficial/' },
-    { name: 'Instagram', href: 'https://www.instagram.com/indiawallsofficial/' },
-    { name: 'YouTube', href: 'https://www.youtube.com/channel/UCKtbPe4q1zKgwNjKLMLK-RQ' },
+    {
+        name: 'Facebook',
+        href: 'https://www.facebook.com/indiawallsofficial/',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/facebook.webp`,
+    },
+    {
+        name: 'Instagram',
+        href: 'https://www.instagram.com/indiawallsofficial/',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/instagram.webp`,
+    },
+    {
+        name: 'YouTube',
+        href: 'https://www.youtube.com/channel/UCKtbPe4q1zKgwNjKLMLK-RQ',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/youtube.webp`,
+    },
 ];
 
 function SocialIcons({ className = '' }) {
     return (
         <div className={className}>
-            {socialLinks.map(({ name, href }) => (
+            {socialLinks.map(({ name, href, icon }) => (
                 <a
                     key={name}
                     href={href}
@@ -30,24 +43,13 @@ function SocialIcons({ className = '' }) {
                     aria-label={name}
                     className="text-slate-100 transition-colors hover:text-yellow-400"
                 >
-                    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        {name === 'Facebook' && (
-                            <path d="M13.5 21v-8.2h2.8l.4-3.2h-3.2V7.5c0-.9.3-1.5 1.6-1.5h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.3H7.3v3.2h2.8V21h3.4Z" />
-                        )}
-                        {name === 'Instagram' && (
-                            <>
-                                <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" strokeWidth="2" />
-                                <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" strokeWidth="2" />
-                                <circle cx="17.5" cy="6.5" r="1.2" />
-                            </>
-                        )}
-                        {name === 'YouTube' && (
-                            <>
-                                <path d="M23 7.1a3 3 0 0 0-2.1-2.1C19 4.5 12 4.5 12 4.5s-7 0-8.9.5A3 3 0 0 0 1 7.1 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.9 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.9 31 31 0 0 0-.5-4.9Z" />
-                                <path d="m9.8 15.5 5.9-3.5-5.9-3.5v7Z" fill="#111827" />
-                            </>
-                        )}
-                    </svg>
+                    <Image
+                        src={icon}
+                        alt={`${name} Logo`}
+                        width={24}
+                        height={24}
+                        className="object-contain"
+                    />
                 </a>
             ))}
         </div>
