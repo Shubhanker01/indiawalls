@@ -4,27 +4,27 @@ const socialLinks = [
     {
         name: 'Facebook',
         href: 'https://www.facebook.com/indiawallsofficial/',
-        icon: 'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTqwU52rqoMpbjhqrlJnyHG1TW_3INcsbijzOwnqeFCUAbjflzve8S-Kyz8rsg6auLGXZwtqTKUDJe8b6o',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/facebook.webp`,
     },
     {
         name: 'Instagram',
         href: 'https://www.instagram.com/indiawallsofficial/',
-        icon: 'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcRHGSZ45SNiRtUmm9h5ktd96Flhz6cqZynRNLdpP9a-jl3Hz-IhUqQqO8wkWm77W9MxWQevYWpvNTuHkWc',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/instagram.webp`,
     },
     {
         name: 'LinkedIn',
         href: 'https://linkedin.com/company/indiawalls',
-        icon: 'https://encrypted-tbn0.gstatic.com/licensed-image?q=tbn:ANd9GcSk0Mz3VQXhV9Uk8VBYLd9bhZL5t8uO68oF-kJi79ylTBQEvAF5lQbGIrFQJQPqqtcArLg2pDUP5SOP0rg',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/linkedin.png`,
     },
     {
         name: 'YouTube',
         href: 'https://www.youtube.com/channel/UCKtbPe4q1zKgwNjKLMLK-RQ',
-        icon: 'https://encrypted-tbn3.gstatic.com/licensed-image?q=tbn:ANd9GcTY6V4898uUDwst1DMJ-lyJr4tkab2pRF9DuGrpoogUPUoBlpgTElt4D4212o8IJsLD7_cEmYemSVNgEnM',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/youtube.webp`,
     },
     {
         name: 'WhatsApp',
         href: 'https://wa.me/917820879777',
-        icon: 'https://encrypted-tbn2.gstatic.com/licensed-image?q=tbn:ANd9GcSd9nNIBxHTxdnCyWyRIBfpTJfayy_saxhi3N1oNKcQlJkCothKfAkK21WZo1SoG9SgJOepoZljt5i7IwA',
+        icon: `${process.env.NEXT_PUBLIC_IMAGES}/whatsapp.png`,
     },
 ];
 

@@ -82,7 +82,7 @@
 
 .home-wall-background {
   background-color: rgb(241 245 249);
-  background-image: url("/PrecastWallPatternImage.webp");
+  background-image: url("https://fwjjzcnfnfzpdpfhohjp.supabase.co/storage/v1/object/public/RajasthanWalls-Images/PrecastWallPatternImage.webp");
   background-position: center top;
   background-repeat: no-repeat;
   background-size: 100% auto;
@@ -226,5 +226,4 @@
   background-size: 54px 28px;
   background-repeat: repeat-x;
 }
-
 
