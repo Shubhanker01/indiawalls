@@ -1,117 +1,59 @@
-import UnitsDeck from './UnitsDeck';
+import { Clock } from 'lucide-react';
+import UnitsExplorer from './UnitsExplorer';
 import AnimatedSection from './AnimatedSection';
 
+// ⚠️ lat/lng below are APPROXIMATE town-centre coordinates.
+// Replace each with the exact factory location: in Google Maps, right-click the
+// factory pin and click the coordinates at the top of the menu to copy them.
+// (Govindgarh in particular: double-check, there is more than one place with that name.)
 const units = [
-    {
-        city: 'Kotkasim Unit',
-        region: 'Rajasthan',
-        address: 'Kotkasim industrial area, Rajasthan',
-        geo: 'Kotkasim, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Kotkasim,Rajasthan',
-    },
-    {
-        city: 'Tapukara Unit',
-        region: 'Rajasthan',
-        address: 'Tapukara industrial area, Rajasthan',
-        geo: 'Tapukara, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Tapukara,Rajasthan',
-    },
-    {
-        city: 'Alwar Unit',
-        region: 'Rajasthan',
-        address: 'Alwar industrial area, Rajasthan',
-        geo: 'Alwar, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Alwar,Rajasthan',
-    },
-    {
-        city: 'Ringus Unit',
-        region: 'Rajasthan',
-        address: 'Ringus industrial area, Rajasthan',
-        geo: 'Ringus, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Ringus,Rajasthan',
-    },
-    {
-        city: 'Ramgarh Unit',
-        region: 'Rajasthan',
-        address: 'Ramgarh industrial area, Rajasthan',
-        geo: 'Ramgarh, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Ramgarh,Rajasthan',
-    },
-    {
-        city: 'Faridabad Unit',
-        region: 'Haryana / NCR Zone',
-        address: 'Faridabad industrial area, Haryana',
-        geo: 'Faridabad, Haryana',
-        mapsUrl: 'https://maps.google.com/?q=Faridabad,Haryana',
-    },
-    {
-        city: 'Bahadurgarh Unit',
-        region: 'Haryana / NCR Zone',
-        address: 'Bahadurgarh industrial area, Haryana',
-        geo: 'Bahadurgarh, Haryana',
-        mapsUrl: 'https://maps.google.com/?q=Bahadurgarh,Haryana',
-    },
-    {
-        city: 'Palwal Unit',
-        region: 'Haryana / NCR Zone',
-        address: 'Palwal industrial area, Haryana',
-        geo: 'Palwal, Haryana',
-        mapsUrl: 'https://maps.google.com/?q=Palwal,Haryana',
-    },
-    {
-        city: 'Govindgarh Unit',
-        region: 'Rajasthan',
-        address: 'Govindgarh industrial area, Rajasthan',
-        geo: 'Govindgarh, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Govindgarh,Rajasthan',
-    },
-    {
-        city: 'Mundawar Unit',
-        region: 'Rajasthan',
-        address: 'Mundawar industrial area, Rajasthan',
-        geo: 'Mundawar, Rajasthan',
-        mapsUrl: 'https://maps.google.com/?q=Mundawar,Rajasthan',
-    },
+    { city: 'Kotkasim Unit', region: 'Rajasthan', address: 'Kotkasim industrial area', lat: 27.70, lng: 76.63 },
+    { city: 'Tapukara Unit', region: 'Rajasthan', address: 'Tapukara industrial area', lat: 28.08, lng: 76.86 },
+    { city: 'Alwar Unit', region: 'Rajasthan', address: 'Alwar industrial area', lat: 27.553, lng: 76.634 },
+    { city: 'Ringus Unit', region: 'Rajasthan', address: 'Ringus industrial area', lat: 27.37, lng: 75.57 },
+    { city: 'Ramgarh Unit', region: 'Rajasthan', address: 'Ramgarh industrial area', lat: 27.57, lng: 76.87 },
+    { city: 'Govindgarh Unit', region: 'Rajasthan', address: 'Govindgarh industrial area', lat: 27.22, lng: 75.83 },
+    { city: 'Mundawar Unit', region: 'Rajasthan', address: 'Mundawar industrial area', lat: 27.97, lng: 76.45 },
+    { city: 'Faridabad Unit', region: 'Haryana / NCR Zone', address: 'Faridabad industrial area', lat: 28.409, lng: 77.318 },
+    { city: 'Bahadurgarh Unit', region: 'Haryana / NCR Zone', address: 'Bahadurgarh industrial area', lat: 28.693, lng: 76.935 },
+    { city: 'Palwal Unit', region: 'Haryana / NCR Zone', address: 'Palwal industrial area', lat: 28.149, lng: 77.332 },
 ];
 
+const PHONE = '+919950711475';
+
 export default function ManufacturingUnits() {
-
     return (
-        <section className="py-20 border-y border-slate-200 overflow-hidden" id="locations">
-            <div className="max-w-7xl mx-auto px-4 sm:px-8">
-
-                {/* SECTION HEADER */}
-                <AnimatedSection delay={0.05} className="text-center max-w-2xl mx-auto mb-12 space-y-3">
-                    <span className="text-xs font-bold text-amber-700 uppercase tracking-widest bg-amber-50 px-3.5 py-1.5 rounded-full border border-amber-200 inline-block">
-                        Factory Network
-                    </span>
-                    <h2 className="text-4xl sm:text-5xl font-black text-slate-900 leading-tight">
+        <section className="border-y border-slate-200 bg-slate-50 py-20" id="locations">
+            <div className="mx-auto max-w-7xl px-4 sm:px-8">
+                <AnimatedSection delay={0.05} className="mx-auto mb-12 max-w-2xl text-center">
+                    <h2 className="text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl">
                         Our Manufacturing Sites
                     </h2>
-                    <p className="text-base sm:text-lg text-slate-700 leading-relaxed">
+                    <div className="mx-auto mt-5 h-1.5 w-16 rounded-full bg-yellow-400" aria-hidden="true" />
+                    <p className="mt-6 text-base leading-relaxed text-slate-600 text-balance sm:text-lg">
                         Our manufacturing units are strategically located across key industrial zones to ensure rapid delivery.
                     </p>
-                    <p className="text-amber-700 text-sm font-semibold">
-                        Site visit available within two hours.
+                    <p className="mt-5 inline-flex items-center gap-2 rounded-full bg-slate-900 px-4 py-2 text-sm font-bold text-yellow-400">
+                        <Clock size={16} aria-hidden="true" />
+                        Site visit available within two hours
                     </p>
-                    <div className="flex flex-wrap justify-center gap-3 pt-2">
+                    <div className="flex flex-wrap justify-center gap-3 pt-6">
                         <a
-                            href="tel:+919950711475"
-                            className="inline-flex items-center justify-center rounded-xl bg-amber-500 px-5 py-2.5 text-sm font-bold text-slate-950 transition hover:bg-amber-400 shadow-sm"
+                            href={`tel:${PHONE}`}
+                            className="inline-flex items-center justify-center rounded-lg bg-yellow-400 px-6 py-3 text-sm font-bold text-slate-900 transition hover:bg-yellow-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                         >
                             Call Now
                         </a>
                         <a
                             href="/contact"
-                            className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-bold text-slate-700 transition hover:border-amber-400 hover:text-amber-700 shadow-sm"
+                            className="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                         >
                             Enquire Now
                         </a>
                     </div>
                 </AnimatedSection>
 
-                <UnitsDeck units={units} />
-
+                <UnitsExplorer units={units} phone={PHONE} />
             </div>
         </section>
     );
