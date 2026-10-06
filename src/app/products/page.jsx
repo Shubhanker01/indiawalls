@@ -2,12 +2,68 @@ import { readFile } from 'node:fs/promises';
 import path from 'node:path';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
-import ProductCementPlank from "@/components/ProductCementPlank"
-import ColumnProductPage from '@/components/ColumnProductPage';
-import CompoundWallPage from '@/components/CompoundWallPage';
 
 export const dynamic = 'force-dynamic';
 
+// Set NEXT_PUBLIC_WHATSAPP_NUMBER in .env (country code, no + or spaces). If unset, the WhatsApp button is hidden.
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+
+// One theme per section, applied in order (and repeated if you add more products).
+// Class names are written out in full so Tailwind can detect them.
+const themes = [
+    {
+        // Light concrete
+        section: 'bg-slate-100',
+        title: 'text-slate-900',
+        body: 'text-slate-600',
+        chip: 'bg-white text-slate-700 border-slate-200',
+        badge: 'bg-slate-900 text-yellow-300',
+        primary: 'bg-slate-900 text-white hover:bg-slate-700 focus-visible:outline-slate-900',
+        secondary: 'border-slate-400 text-slate-900 hover:border-slate-900 focus-visible:outline-slate-900',
+    },
+    {
+        // Warm sand
+        section: 'bg-amber-50',
+        title: 'text-slate-900',
+        body: 'text-slate-700',
+        chip: 'bg-white text-amber-900 border-amber-200',
+        badge: 'bg-slate-900 text-yellow-300',
+        primary: 'bg-slate-900 text-white hover:bg-slate-700 focus-visible:outline-slate-900',
+        secondary: 'border-amber-300 text-slate-900 hover:border-slate-900 focus-visible:outline-slate-900',
+    },
+    {
+        // Dark navy
+        section: 'bg-slate-900',
+        title: 'text-white',
+        body: 'text-slate-300',
+        chip: 'bg-slate-800 text-slate-200 border-slate-700',
+        badge: 'bg-yellow-400 text-slate-900',
+        primary: 'bg-yellow-400 text-slate-900 hover:bg-yellow-300 focus-visible:outline-white',
+        secondary: 'border-slate-500 text-white hover:border-white focus-visible:outline-white',
+    },
+    {
+        // Cool steel grey
+        section: 'bg-zinc-200',
+        title: 'text-slate-900',
+        body: 'text-slate-700',
+        chip: 'bg-white text-slate-700 border-zinc-300',
+        badge: 'bg-slate-900 text-yellow-300',
+        primary: 'bg-slate-900 text-white hover:bg-slate-700 focus-visible:outline-slate-900',
+        secondary: 'border-zinc-400 text-slate-900 hover:border-slate-900 focus-visible:outline-slate-900',
+    },
+    {
+        // Deep green (landscaping)
+        section: 'bg-emerald-900',
+        title: 'text-white',
+        body: 'text-emerald-100',
+        chip: 'bg-emerald-800 text-emerald-50 border-emerald-600',
+        badge: 'bg-yellow-400 text-slate-900',
+        primary: 'bg-yellow-400 text-slate-900 hover:bg-yellow-300 focus-visible:outline-white',
+        secondary: 'border-emerald-400 text-white hover:border-white focus-visible:outline-white',
+    },
+];
+
+// `specs` are short chips: edit them to your real sizes, finishes, etc.
 const products = [
     {
         id: 1,
@@ -15,7 +71,8 @@ const products = [
         slug: 'boundary-walls',
         image: `${process.env.NEXT_PUBLIC_IMAGES}/BoundaryWall%20Sols.webp`,
         description:
-            'Precast walls are durable concrete panels manufactured off-site and assembled quickly, reducing construction time and ensuring consistent quality. They offer design flexibility and improve site safety by minimizing on-site labor.',
+            'Durable precast concrete panels made off-site and assembled quickly, cutting construction time and keeping quality consistent.',
+        specs: ['Factory-made panels', 'Fast installation', 'Design flexibility', 'Less on-site labour'],
         badge: 'Boundary Solutions',
     },
     {
@@ -24,7 +81,8 @@ const products = [
         slug: 'paver-solutions',
         image: `${process.env.NEXT_PUBLIC_IMAGES}/PaverBlock%20Sols.webp`,
         description:
-            'Paver blocks are sturdy, interlocking concrete units ideal for driveways, walkways, and patios. They provide easy installation, require minimal maintenance, and come in various shapes and colors, allowing for customized, visually appealing designs in outdoor spaces.',
+            'Sturdy interlocking concrete units for driveways, walkways, and patios. Easy to install and low on maintenance.',
+        specs: ['Interlocking', 'Low maintenance', 'Many shapes & colours', 'Driveways & walkways'],
         badge: 'Paving Solutions',
     },
     {
@@ -33,26 +91,35 @@ const products = [
         slug: 'fencing-solutions',
         image: '/images/fencing poles/fencing pole.webp',
         description:
-            'Fencing poles are sturdy vertical supports used to hold fencing materials in place, providing security and boundary definition for properties. Typically made from metal, wood, or concrete, they are durable, easy to install, and can accommodate various fencing styles.',
+            'Sturdy vertical poles that hold fencing in place, giving your property security and a clear boundary.',
+        specs: ['Durable', 'Easy to install', 'Fits many fencing styles'],
         badge: 'Structural Support',
     },
     {
         id: 4,
-        title: 'Chainlink/Concertina Wire',
+        title: 'Chainlink / Concertina Wire',
         slug: 'chainlink-concertina-wire',
         image: '/images/products/chainlink.webp', // Replace with your local asset path
         description:
-            'Chainlink and concertina wire are popular fencing materials used for security purposes. Chainlink is a woven metal mesh that provides a strong, flexible barrier, commonly used for residential, industrial, and sports facility fencing. Concertina wire, often used in high-security areas, consists of coiled razor or barbed wire that creates a formidable obstacle, deterring unauthorized access. Both materials are durable, cost-effective, and easy to install.',
+            'Woven chainlink mesh for homes, industry, and sports grounds, plus coiled concertina wire for high-security perimeters.',
+        specs: ['Chainlink mesh', 'Concertina coil', 'Cost-effective', 'Easy to install'],
         badge: 'Perimeter Security',
+    },
+    {
+        id: 5,
+        title: 'Landscaping',
+        slug: 'landscaping',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/jan-canty-KcQuXaHCSPE-unsplash.jpg`,
+        description:
+            'Outdoor finishing that completes your site: paved pathways, garden edging, and green spaces designed to match your boundary.',
+        specs: ['Paved pathways', 'Garden edging', 'Matched to your boundary'], // TODO: replace with your real services
+        badge: 'Outdoor Spaces',
     },
 ];
 
 async function getUploadedProducts() {
     try {
-        const uploadsFile = await readFile(
-            path.join(process.cwd(), 'src', 'data', 'uploads.json'),
-            'utf8'
-        );
+        const uploadsFile = await readFile(path.join(process.cwd(), 'src', 'data', 'uploads.json'), 'utf8');
         const uploads = JSON.parse(uploadsFile);
         return Array.isArray(uploads) ? uploads : [];
     } catch {
@@ -60,157 +127,193 @@ async function getUploadedProducts() {
     }
 }
 
+function whatsappLink(name) {
+    const text = encodeURIComponent(`Hi, I'd like a quote for ${name}.`);
+    return `https://wa.me/${WHATSAPP}?text=${text}`;
+}
+
 export default async function ProductsPage() {
     const uploadedProducts = await getUploadedProducts();
 
     return (
-        <div className="min-h-screen precast-wall-pattern text-slate-800 flex flex-col justify-between">
+        <div className="flex min-h-screen flex-col text-slate-800">
             <Navbar />
-            {/* Top Banner */}
-            <section className="bg-slate-900 text-white py-14 px-4 sm:px-6 lg:px-8 text-center border-b border-slate-800">
-                <div className="max-w-4xl mx-auto">
-                    <span className="text-yellow-400 font-semibold text-sm tracking-widest uppercase">
-                        RajasthanWall Portfolio
-                    </span>
-                    <h1 className="text-4xl sm:text-5xl font-extrabold mt-2 tracking-tight">
-                        Our Products
-                    </h1>
-                    <p className="mt-3 text-slate-300 text-base max-w-xl mx-auto">
-                        High-durability precast RCC panels, interlocking pavers, and perimeter security fencing manufactured in Alwar, Rajasthan.
+
+            {/* Top banner */}
+            <section className="border-b border-slate-800 bg-slate-900 px-4 py-14 text-center text-white sm:px-6 lg:px-8">
+                <div className="mx-auto max-w-4xl">
+                    <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl">Our Products</h1>
+                    <div className="mx-auto mt-5 h-1.5 w-16 rounded-full bg-yellow-400" aria-hidden="true" />
+                    <p className="mx-auto mt-5 max-w-xl text-base text-slate-300 text-balance">
+                        High-durability precast RCC panels, interlocking pavers, and perimeter security fencing
+                        manufactured in Alwar, Rajasthan.
                     </p>
                 </div>
             </section>
 
-            {/* Main Content & Product Cards */}
-            <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 grow">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {/* Sticky quick-jump bar (pure anchor links, no JS) */}
+            <nav
+                aria-label="Product categories"
+                className="sticky top-20 z-20 border-b border-slate-200 bg-white/95 backdrop-blur"
+            >
+                <ul className="mx-auto flex max-w-7xl gap-2 overflow-x-auto px-4 py-3 sm:px-6 lg:px-8">
                     {products.map((item) => (
-                        <div
-                            key={item.id}
-                            className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between"
-                        >
-                            {/* Product Image linked to single product route */}
-                            <Link
-                                href={`/products/${item.slug}`}
-                                className={`block relative h-56 ${item.imageBackground || 'bg-slate-100'} overflow-hidden group`}
+                        <li key={item.id} className="shrink-0">
+                            <a
+                                href={`#${item.slug}`}
+                                className="inline-block rounded-full border border-slate-300 px-4 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900"
                             >
-                                <img
-                                    src={item.image}
-                                    alt={item.title}
-                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                />
-                                <span className="absolute top-4 right-4 bg-slate-900/80 backdrop-blur-md text-yellow-300 text-xs font-semibold px-3 py-1 rounded-full border border-slate-700">
-                                    {item.badge}
-                                </span>
-                            </Link>
+                                {item.title}
+                            </a>
+                        </li>
+                    ))}
+                    {uploadedProducts.length > 0 && (
+                        <li className="shrink-0">
+                            <a
+                                href="#latest"
+                                className="inline-block rounded-full border border-slate-300 px-4 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900"
+                            >
+                                Latest additions
+                            </a>
+                        </li>
+                    )}
+                </ul>
+            </nav>
 
-                            <div className="p-8 flex-1 flex flex-col justify-between">
-                                <div>
-                                    {/* Linked Heading */}
-                                    <h2 className="text-2xl font-bold text-slate-900 mb-3">
+            <main className="grow">
+                {products.map((item, index) => {
+                    const t = themes[index % themes.length];
+                    const imageRight = index % 2 === 1;
+
+                    return (
+                        <section
+                            key={item.id}
+                            id={item.slug}
+                            className={`${t.section} scroll-mt-36 px-4 py-14 sm:px-6 lg:flex lg:min-h-[85svh] lg:items-center lg:px-8 lg:py-20`}
+                        >
+                            <div className="mx-auto grid w-full max-w-7xl items-center gap-8 lg:grid-cols-2 lg:gap-16">
+                                {/* Image: always first on mobile, alternates sides on desktop */}
+                                <Link
+                                    href={`/products/${item.slug}`}
+                                    className={`group relative block aspect-[4/3] overflow-hidden rounded-2xl bg-slate-200 shadow-xl ${imageRight ? 'lg:order-2' : 'lg:order-1'
+                                        }`}
+                                >
+                                    <img
+                                        src={item.image}
+                                        alt={item.title}
+                                        loading={index === 0 ? 'eager' : 'lazy'}
+                                        decoding="async"
+                                        className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                                    />
+                                </Link>
+
+                                {/* Text */}
+                                <div className={imageRight ? 'lg:order-1' : 'lg:order-2'}>
+                                    <span className={`inline-block rounded-full px-3 py-1 text-xs font-bold ${t.badge}`}>
+                                        {item.badge}
+                                    </span>
+                                    <h2 className={`mt-4 text-3xl font-extrabold leading-tight sm:text-4xl ${t.title}`}>
+                                        {item.title}
+                                    </h2>
+                                    <div className="mt-4 h-1.5 w-12 rounded-full bg-yellow-400" aria-hidden="true" />
+                                    <p className={`mt-5 text-lg leading-relaxed ${t.body}`}>{item.description}</p>
+
+                                    <ul className="mt-6 flex flex-wrap gap-2">
+                                        {item.specs.map((spec) => (
+                                            <li
+                                                key={spec}
+                                                className={`rounded-md border px-3 py-1.5 text-sm font-medium ${t.chip}`}
+                                            >
+                                                {spec}
+                                            </li>
+                                        ))}
+                                    </ul>
+
+                                    <div className="mt-8 flex flex-wrap items-center gap-3">
+                                        <Link
+                                            href="/contact"
+                                            className={`inline-flex items-center justify-center rounded-lg px-6 py-3 text-sm font-bold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${t.primary}`}
+                                        >
+                                            Send Enquiry
+                                        </Link>
+                                        {WHATSAPP && (
+                                            <a
+                                                href={whatsappLink(item.title)}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`inline-flex items-center justify-center rounded-lg border px-6 py-3 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${t.secondary}`}
+                                            >
+                                                WhatsApp Quote
+                                            </a>
+                                        )}
                                         <Link
                                             href={`/products/${item.slug}`}
-                                            className="hover:text-yellow-600 transition-colors duration-200 flex items-center justify-between group"
+                                            className={`px-2 py-3 text-sm font-semibold underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 ${t.title}`}
                                         >
-                                            <span>{item.title}</span>
-                                            <span className="text-slate-400 group-hover:text-yellow-600 group-hover:translate-x-1 transition-all duration-200 text-lg">
-                                                →
-                                            </span>
+                                            View details →
                                         </Link>
-                                    </h2>
-
-                                    <p className="text-slate-600 text-base leading-relaxed mb-6">
-                                        {item.description}
-                                    </p>
-                                </div>
-
-                                <div className="pt-4 border-t border-slate-100">
-                                    <Link
-                                        href="/contact"
-                                        className="w-full bg-slate-900 hover:bg-yellow-400 hover:text-gray-800 text-white font-medium py-3 rounded-xl text-sm transition-colors duration-200 flex items-center justify-center gap-2 shadow-sm"
-                                    >
-                                        <span>Send Enquiry</span>
-                                        <span className="text-xs">→</span>
-                                    </Link>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        </section>
+                    );
+                })}
 
                 {uploadedProducts.length > 0 && (
-                    <section className="mt-16">
-                        <div className="mb-8">
-                            <p className="text-yellow-600 font-semibold text-sm tracking-widest uppercase">
-                                Latest additions
-                            </p>
-                            <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900">
-                                Updated products
-                            </h2>
-                        </div>
+                    <section id="latest" className="scroll-mt-36 bg-white px-4 py-16 sm:px-6 lg:px-8">
+                        <div className="mx-auto max-w-7xl">
+                            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Latest additions</h2>
+                            <div className="mt-4 mb-10 h-1.5 w-12 rounded-full bg-yellow-400" aria-hidden="true" />
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                            {uploadedProducts.map((item) => (
-                                <article
-                                    key={item.id}
-                                    className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:-translate-y-1 transition-transform duration-300"
-                                >
-                                    <div className="h-56 bg-slate-100 overflow-hidden">
-                                        <img
-                                            src={item.imageUrl}
-                                            alt={item.imageName || item.projectName}
-                                            loading="lazy"
-                                            decoding="async"
-                                            fetchPriority="low"
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </div>
-
-                                    <div className="p-8">
-                                        <h3 className="text-2xl font-bold text-slate-900 mb-3">
-                                            {item.projectName}
-                                        </h3>
-                                        <dl className="space-y-2 text-sm text-slate-600">
-                                            <div>
-                                                <dt className="font-semibold text-slate-900">Client</dt>
-                                                <dd>{item.clientName}</dd>
-                                            </div>
-                                            <div>
-                                                <dt className="font-semibold text-slate-900">Location</dt>
-                                                <dd>{item.location}</dd>
-                                            </div>
-                                            <div>
-                                                <dt className="font-semibold text-slate-900">Requirements</dt>
-                                                <dd>{item.requirements}</dd>
-                                            </div>
-                                        </dl>
-                                    </div>
-                                </article>
-                            ))}
+                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+                                {uploadedProducts.map((item) => (
+                                    <article
+                                        key={item.id}
+                                        className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
+                                    >
+                                        <div className="h-56 overflow-hidden bg-slate-100">
+                                            <img
+                                                src={item.imageUrl}
+                                                alt={item.imageName || item.projectName}
+                                                loading="lazy"
+                                                decoding="async"
+                                                fetchPriority="low"
+                                                className="h-full w-full object-cover"
+                                            />
+                                        </div>
+                                        <div className="p-8">
+                                            <h3 className="mb-3 text-2xl font-bold text-slate-900">{item.projectName}</h3>
+                                            <dl className="space-y-2 text-sm text-slate-600">
+                                                <div>
+                                                    <dt className="font-semibold text-slate-900">Client</dt>
+                                                    <dd>{item.clientName}</dd>
+                                                </div>
+                                                <div>
+                                                    <dt className="font-semibold text-slate-900">Location</dt>
+                                                    <dd>{item.location}</dd>
+                                                </div>
+                                                <div>
+                                                    <dt className="font-semibold text-slate-900">Requirements</dt>
+                                                    <dd>{item.requirements}</dd>
+                                                </div>
+                                            </dl>
+                                        </div>
+                                    </article>
+                                ))}
+                            </div>
                         </div>
                     </section>
                 )}
             </main>
-            <ProductCementPlank></ProductCementPlank>
-            <div className="mt-12">
-                <ColumnProductPage />
-            </div>
-            <div className='mt-12 mb-12'>
-                <CompoundWallPage />
-            </div>
-            {/* Footer Details */}
-            <footer className="bg-slate-900 text-slate-400 text-md py-8 border-t border-slate-800">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-center sm:text-left">
+
+            {/* Footer */}
+            <footer className="border-t border-slate-800 bg-slate-900 py-8 text-md text-slate-400">
+                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center sm:flex-row sm:px-6 sm:text-left lg:px-8">
                     <div>
                         <p className="font-semibold text-slate-300">RajasthanWall Manufacturing Unit</p>
-                        <p className="mt-1">
-                            Near Gyan Sagar, Alampur, Kotkasim, Rajasthan.
-                        </p>
+                        <p className="mt-1">Near Gyan Sagar, Alampur, Kotkasim, Rajasthan.</p>
                     </div>
-                    <p className="text-slate-500">
-                        Copyright © 2026
-                        RajasthanWall. All Rights Reserved.
-                    </p>
+                    <p className="text-slate-500">Copyright © 2026 RajasthanWall. All Rights Reserved.</p>
                 </div>
             </footer>
         </div>

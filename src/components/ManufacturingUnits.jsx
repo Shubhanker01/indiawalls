@@ -19,7 +19,7 @@ const PHONE = '+919950711475';
 
 export default function ManufacturingUnits() {
     return (
-        <section className="border-y border-slate-200 bg-slate-50 py-20" id="locations">
+        <section className="border-y border-slate-200 py-20" id="locations">
             <div className="mx-auto max-w-7xl px-4 sm:px-8">
                 <AnimatedSection delay={0.05} className="mx-auto mb-12 max-w-2xl text-center">
                     <h2 className="text-4xl font-extrabold leading-tight text-slate-900 sm:text-5xl">

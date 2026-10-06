@@ -5,8 +5,6 @@ import Image from 'next/image';
 import { ArrowDown, ClipboardList, Ruler, Factory, Wrench, ShieldCheck } from 'lucide-react';
 import AnimatedSection from './AnimatedSection';
 
-// Add an `image` filename (stored in NEXT_PUBLIC_IMAGES) to any step to show a photo
-// on the empty side of the timeline. Without it, a large step number is shown instead.
 const processSteps = [
     {
         step: '01',
@@ -115,8 +113,8 @@ function ProcessRow({ item, index, isLast }) {
             {/* Card */}
             <div
                 className={`row-start-1 col-start-2 ${cardPlacement} ${isLast ? '' : 'mb-14'} rounded-2xl border border-slate-200 bg-white p-6 sm:p-7 shadow-sm transition-all duration-700 ease-out motion-reduce:transition-none ${seen
-                        ? 'translate-x-0 translate-y-0 opacity-100'
-                        : `translate-y-6 opacity-0 md:translate-y-0 ${hiddenShift}`
+                    ? 'translate-x-0 translate-y-0 opacity-100'
+                    : `translate-y-6 opacity-0 md:translate-y-0 ${hiddenShift}`
                     }`}
             >
                 <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-xl bg-slate-900 text-yellow-400">
@@ -126,12 +124,12 @@ function ProcessRow({ item, index, isLast }) {
                 <p className="text-base leading-7 text-slate-600">{item.description}</p>
             </div>
 
-            {/* Opposite side: photo if provided, otherwise a large step number (desktop only) */}
+            {/* Opposite side: photo if provided, otherwise blank (desktop only) */}
             <div
                 className={`row-start-1 hidden md:flex ${fillerPlacement} ${isLast ? '' : 'mb-14'} items-center justify-center`}
                 aria-hidden={item.image ? undefined : 'true'}
             >
-                {item.image ? (
+                {item.image && (
                     <div
                         className={`relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-200 transition-opacity duration-700 delay-300 motion-reduce:transition-none ${seen ? 'opacity-100' : 'opacity-0'
                             }`}
@@ -144,13 +142,6 @@ function ProcessRow({ item, index, isLast }) {
                             className="object-cover"
                         />
                     </div>
-                ) : (
-                    <span
-                        className={`select-none text-[9rem] font-black leading-none text-slate-100 transition-opacity duration-700 delay-300 motion-reduce:transition-none ${seen ? 'opacity-100' : 'opacity-0'
-                            }`}
-                    >
-                        {item.step}
-                    </span>
                 )}
             </div>
         </div>
@@ -159,7 +150,7 @@ function ProcessRow({ item, index, isLast }) {
 
 export default function ProjectProcess() {
     return (
-        <section className="border-y border-slate-200 bg-white py-20" id="how-it-works">
+        <section className="border-y py-20" id="how-it-works">
             <div className="mx-auto max-w-5xl px-4 sm:px-8">
                 <AnimatedSection delay={0.05} className="mx-auto mb-16 max-w-2xl text-center">
                     <h2 className="text-3xl font-extrabold text-slate-900 sm:text-4xl">
