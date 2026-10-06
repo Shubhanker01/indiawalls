@@ -42,7 +42,7 @@ function ResetButton({ bounds, onReset }) {
                 onReset();
                 map.fitBounds(bounds, { padding: [40, 40] });
             }}
-            className="absolute right-3 top-3 z-[1000] rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-900 shadow-md transition hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900"
+            className="absolute right-3 top-3 z-1000 rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-900 shadow-md transition hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900"
         >
             Show all units
         </button>
@@ -60,10 +60,8 @@ export default function UnitsMap({ units, active, onSelect, onReset }) {
             className="h-full w-full"
         >
             <TileLayer
-                url={`https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png?key=${process.env.NEXT_PUBLIC_CARTO_API_KEY}`}
-                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
-                subdomains="abcd"
-                maxZoom={19}
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
             {units.map((u, i) => {

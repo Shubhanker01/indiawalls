@@ -2,10 +2,6 @@ import { Clock } from 'lucide-react';
 import UnitsExplorer from './UnitsExplorer';
 import AnimatedSection from './AnimatedSection';
 
-// ⚠️ lat/lng below are APPROXIMATE town-centre coordinates.
-// Replace each with the exact factory location: in Google Maps, right-click the
-// factory pin and click the coordinates at the top of the menu to copy them.
-// (Govindgarh in particular: double-check, there is more than one place with that name.)
 const units = [
     { city: 'Kotkasim Unit', region: 'Rajasthan', address: 'Kotkasim industrial area', lat: 27.70, lng: 76.63 },
     { city: 'Tapukara Unit', region: 'Rajasthan', address: 'Tapukara industrial area', lat: 28.08, lng: 76.86 },

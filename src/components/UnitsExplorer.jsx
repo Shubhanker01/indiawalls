@@ -33,12 +33,12 @@ export default function UnitsExplorer({ units, phone }) {
     return (
         <div className="grid gap-6 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
             {/* Map (first on mobile, right on desktop) */}
-            <div className="isolate order-1 h-[340px] overflow-hidden rounded-2xl border border-slate-200 shadow-sm sm:h-[420px] lg:order-2 lg:h-[600px]">
+            <div className="isolate order-1 h-85 overflow-hidden rounded-2xl border border-slate-200 shadow-sm sm:h-105 lg:order-2 lg:h-150">
                 <UnitsMap units={units} active={active} onSelect={selectFromMap} onReset={() => setActive(null)} />
             </div>
 
             {/* Unit list */}
-            <div className="order-2 space-y-6 lg:order-1 lg:h-[600px] lg:overflow-y-auto lg:pr-2">
+            <div className="order-2 space-y-6 lg:order-1 lg:h-150 lg:overflow-y-auto lg:pr-2">
                 {groups.map(([region, items]) => (
                     <div key={region}>
                         <h3 className="mb-3 text-sm font-bold text-slate-500">
@@ -76,7 +76,7 @@ export default function UnitsExplorer({ units, phone }) {
                                         <div className="flex gap-2 px-4 pb-4">
                                             <a
                                                 href={`tel:${phone}`}
-                                                className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
+                                                className="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-2 text-sm font-semibold text-white transition hover:bg-slate-700 focus-visible:outline-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                                             >
                                                 <Phone size={14} aria-hidden="true" /> Call
                                             </a>
