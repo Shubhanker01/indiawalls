@@ -31,7 +31,7 @@ export default function ProductCementPlank() {
                     </div>
                     <div className="flex justify-between border-b border-slate-200 pb-2">
                         <span className="text-slate-700">Height:</span>
-                        <span className="text-slate-800 font-semibold">1 Foot (300mm)</span>
+                        <span className="text-slate-800 font-semibold">1 Feet (300mm)</span>
                     </div>
                     <div className="flex justify-between border-b border-slate-200 pb-2">
                         <span className="text-slate-700">Width / Thickness:</span>

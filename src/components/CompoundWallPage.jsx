@@ -47,7 +47,7 @@ export default function CompoundWallPage() {
                             </tr>
                             <tr>
                                 <td className="py-2.5 px-4 font-medium text-slate-700">Panel Height / Thickness</td>
-                                <td className="py-2.5 px-4 font-mono text-slate-800">1 Foot (300mm) / 2 Inches (50mm)</td>
+                                <td className="py-2.5 px-4 font-mono text-slate-800">1 Feet (300mm) / 2 Inches (50mm)</td>
                             </tr>
                             <tr>
                                 <td className="py-2.5 px-4 font-medium text-slate-700">Column Dimension</td>
