@@ -106,7 +106,7 @@ const products = [
 ];
 
 
-export default async function ProductsPage() {
+export default function ProductsPage() {
 
     return (
         <div className="flex min-h-screen flex-col text-slate-800">
