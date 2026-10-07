@@ -1,5 +1,3 @@
-import { readFile } from 'node:fs/promises';
-import path from 'node:path';
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 
@@ -14,7 +12,6 @@ const themes = [
         chip: 'bg-white text-slate-700 border-slate-200',
         badge: 'bg-slate-900 text-yellow-300',
         primary: 'bg-slate-900 text-white hover:bg-slate-700 focus-visible:outline-slate-900',
-        secondary: 'border-slate-400 text-slate-900 hover:border-slate-900 focus-visible:outline-slate-900',
     },
     {
         // Warm sand
@@ -24,7 +21,6 @@ const themes = [
         chip: 'bg-white text-amber-900 border-amber-200',
         badge: 'bg-slate-900 text-yellow-300',
         primary: 'bg-slate-900 text-white hover:bg-slate-700 focus-visible:outline-slate-900',
-        secondary: 'border-amber-300 text-slate-900 hover:border-slate-900 focus-visible:outline-slate-900',
     },
     {
         // Dark navy
@@ -34,7 +30,6 @@ const themes = [
         chip: 'bg-slate-800 text-slate-200 border-slate-700',
         badge: 'bg-yellow-400 text-slate-900',
         primary: 'bg-yellow-400 text-slate-900 hover:bg-yellow-300 focus-visible:outline-white',
-        secondary: 'border-slate-500 text-white hover:border-white focus-visible:outline-white',
     },
     {
         // Cool steel grey
@@ -44,7 +39,6 @@ const themes = [
         chip: 'bg-white text-slate-700 border-zinc-300',
         badge: 'bg-slate-900 text-yellow-300',
         primary: 'bg-slate-900 text-white hover:bg-slate-700 focus-visible:outline-slate-900',
-        secondary: 'border-zinc-400 text-slate-900 hover:border-slate-900 focus-visible:outline-slate-900',
     },
     {
         // Deep green (landscaping)
@@ -54,7 +48,6 @@ const themes = [
         chip: 'bg-emerald-800 text-emerald-50 border-emerald-600',
         badge: 'bg-yellow-400 text-slate-900',
         primary: 'bg-yellow-400 text-slate-900 hover:bg-yellow-300 focus-visible:outline-white',
-        secondary: 'border-emerald-400 text-white hover:border-white focus-visible:outline-white',
     },
 ];
 
@@ -112,23 +105,8 @@ const products = [
     },
 ];
 
-async function getUploadedProducts() {
-    try {
-        const uploadsFile = await readFile(path.join(process.cwd(), 'src', 'data', 'uploads.json'), 'utf8');
-        const uploads = JSON.parse(uploadsFile);
-        return Array.isArray(uploads) ? uploads : [];
-    } catch {
-        return [];
-    }
-}
-
-function whatsappLink(name) {
-    const text = encodeURIComponent(`Hi, I'd like a quote for ${name}.`);
-    return `https://wa.me/${WHATSAPP}?text=${text}`;
-}
 
 export default async function ProductsPage() {
-    const uploadedProducts = await getUploadedProducts();
 
     return (
         <div className="flex min-h-screen flex-col text-slate-800">
@@ -231,16 +209,6 @@ export default async function ProductsPage() {
                                         >
                                             Send Enquiry
                                         </Link>
-                                        {WHATSAPP && (
-                                            <a
-                                                href={whatsappLink(item.title)}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className={`inline-flex items-center justify-center rounded-lg border px-6 py-3 text-sm font-semibold transition focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 ${t.secondary}`}
-                                            >
-                                                WhatsApp Quote
-                                            </a>
-                                        )}
                                         <Link
                                             href={`/products/${item.slug}`}
                                             className={`px-2 py-3 text-sm font-semibold underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 ${t.title}`}
