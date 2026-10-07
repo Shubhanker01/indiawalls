@@ -140,16 +140,7 @@ export default async function ProductsPage() {
                             </a>
                         </li>
                     ))}
-                    {uploadedProducts.length > 0 && (
-                        <li className="shrink-0">
-                            <a
-                                href="#latest"
-                                className="inline-block rounded-full border border-slate-300 px-4 py-1.5 text-sm font-semibold text-slate-700 transition hover:border-slate-900 hover:text-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900"
-                            >
-                                Latest additions
-                            </a>
-                        </li>
-                    )}
+
                 </ul>
             </nav>
 
@@ -221,52 +212,6 @@ export default async function ProductsPage() {
                         </section>
                     );
                 })}
-
-                {uploadedProducts.length > 0 && (
-                    <section id="latest" className="scroll-mt-36 bg-white px-4 py-16 sm:px-6 lg:px-8">
-                        <div className="mx-auto max-w-7xl">
-                            <h2 className="text-3xl font-extrabold tracking-tight text-slate-900">Latest additions</h2>
-                            <div className="mt-4 mb-10 h-1.5 w-12 rounded-full bg-yellow-400" aria-hidden="true" />
-
-                            <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-                                {uploadedProducts.map((item) => (
-                                    <article
-                                        key={item.id}
-                                        className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
-                                    >
-                                        <div className="h-56 overflow-hidden bg-slate-100">
-                                            <img
-                                                src={item.imageUrl}
-                                                alt={item.imageName || item.projectName}
-                                                loading="lazy"
-                                                decoding="async"
-                                                fetchPriority="low"
-                                                className="h-full w-full object-cover"
-                                            />
-                                        </div>
-                                        <div className="p-8">
-                                            <h3 className="mb-3 text-2xl font-bold text-slate-900">{item.projectName}</h3>
-                                            <dl className="space-y-2 text-sm text-slate-600">
-                                                <div>
-                                                    <dt className="font-semibold text-slate-900">Client</dt>
-                                                    <dd>{item.clientName}</dd>
-                                                </div>
-                                                <div>
-                                                    <dt className="font-semibold text-slate-900">Location</dt>
-                                                    <dd>{item.location}</dd>
-                                                </div>
-                                                <div>
-                                                    <dt className="font-semibold text-slate-900">Requirements</dt>
-                                                    <dd>{item.requirements}</dd>
-                                                </div>
-                                            </dl>
-                                        </div>
-                                    </article>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-                )}
             </main>
 
             {/* Footer */}
