@@ -5,11 +5,6 @@ import Link from 'next/link';
 
 export const dynamic = 'force-dynamic';
 
-// Set NEXT_PUBLIC_WHATSAPP_NUMBER in .env (country code, no + or spaces). If unset, the WhatsApp button is hidden.
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
-
-// One theme per section, applied in order (and repeated if you add more products).
-// Class names are written out in full so Tailwind can detect them.
 const themes = [
     {
         // Light concrete
@@ -89,7 +84,7 @@ const products = [
         id: 3,
         title: 'Fencing Solutions',
         slug: 'fencing-solutions',
-        image: '/images/fencing poles/fencing pole.webp',
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/fencing%20pole.webp`,
         description:
             'Sturdy vertical poles that hold fencing in place, giving your property security and a clear boundary.',
         specs: ['Durable', 'Easy to install', 'Fits many fencing styles'],
@@ -99,7 +94,7 @@ const products = [
         id: 4,
         title: 'Chainlink / Concertina Wire',
         slug: 'chainlink-concertina-wire',
-        image: '/images/products/chainlink.webp', // Replace with your local asset path
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/chainlink%20concreta%20wire.webp`,
         description:
             'Woven chainlink mesh for homes, industry, and sports grounds, plus coiled concertina wire for high-security perimeters.',
         specs: ['Chainlink mesh', 'Concertina coil', 'Cost-effective', 'Easy to install'],
