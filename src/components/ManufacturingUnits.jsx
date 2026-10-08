@@ -3,16 +3,16 @@ import UnitsExplorer from './UnitsExplorer';
 import AnimatedSection from './AnimatedSection';
 
 const units = [
-    { city: 'Kotkasim Unit', region: 'Rajasthan', address: 'Kotkasim industrial area', lat: 27.70, lng: 76.63 },
-    { city: 'Tapukara Unit', region: 'Rajasthan', address: 'Tapukara industrial area', lat: 28.08, lng: 76.86 },
-    { city: 'Alwar Unit', region: 'Rajasthan', address: 'Alwar industrial area', lat: 27.553, lng: 76.634 },
-    { city: 'Ringus Unit', region: 'Rajasthan', address: 'Ringus industrial area', lat: 27.37, lng: 75.57 },
-    { city: 'Ramgarh Unit', region: 'Rajasthan', address: 'Ramgarh industrial area', lat: 27.57, lng: 76.87 },
-    { city: 'Govindgarh Unit', region: 'Rajasthan', address: 'Govindgarh industrial area', lat: 27.22, lng: 75.83 },
-    { city: 'Mundawar Unit', region: 'Rajasthan', address: 'Mundawar industrial area', lat: 27.97, lng: 76.45 },
-    { city: 'Faridabad Unit', region: 'Haryana / NCR Zone', address: 'Faridabad industrial area', lat: 28.409, lng: 77.318 },
-    { city: 'Bahadurgarh Unit', region: 'Haryana / NCR Zone', address: 'Bahadurgarh industrial area', lat: 28.693, lng: 76.935 },
-    { city: 'Palwal Unit', region: 'Haryana / NCR Zone', address: 'Palwal industrial area', lat: 28.149, lng: 77.332 },
+    { city: 'Kotkasim Unit', region: 'Rajasthan', address: 'Kotkasim industrial area', lat: 27.70, lng: 76.63, mapsUrl: 'https://maps.google.com/?q=Kotkasim,Rajasthan' },
+    { city: 'Tapukara Unit', region: 'Rajasthan', address: 'Tapukara industrial area', lat: 28.1069973, lng: 76.8005187, mapsUrl: 'https://maps.google.com/?q=Tapukara,Rajasthan' },
+    { city: 'Alwar Unit', region: 'Rajasthan', address: 'Alwar industrial area', lat: 27.553, lng: 76.634, mapsUrl: 'https://maps.google.com/?q=Alwar,Rajasthan' },
+    { city: 'Ringus Unit', region: 'Rajasthan', address: 'Ringus industrial area', lat: 27.37, lng: 75.57, mapsUrl: 'https://maps.google.com/?q=Ringus,Rajasthan' },
+    { city: 'Ramgarh Unit', region: 'Rajasthan', address: 'Ramgarh industrial area', lat: 27.57, lng: 76.87, mapsUrl: 'https://maps.google.com/?q=Ramgarh,Rajasthan' },
+    { city: 'Govindgarh Unit', region: 'Rajasthan', address: 'Govindgarh industrial area', lat: 27.22, lng: 75.83, mapsUrl: 'https://maps.google.com/?q=Govindgarh,Rajasthan' },
+    { city: 'Mundawar Unit', region: 'Rajasthan', address: 'Mundawar industrial area', lat: 27.97, lng: 76.45, mapsUrl: 'https://maps.google.com/?q=Mundawar,Rajasthan' },
+    { city: 'Faridabad Unit', region: 'Haryana / NCR Zone', address: 'Faridabad industrial area', lat: 28.409, lng: 77.318, mapsUrl: 'https://maps.google.com/?q=Faridabad,Haryana' },
+    { city: 'Bahadurgarh Unit', region: 'Haryana / NCR Zone', address: 'Bahadurgarh industrial area', lat: 28.693, lng: 76.935, mapsUrl: 'https://maps.google.com/?q=Bahadurgarh,Haryana' },
+    { city: 'Palwal Unit', region: 'Haryana / NCR Zone', address: 'Palwal industrial area', lat: 28.149, lng: 77.332, mapsUrl: 'https://maps.google.com/?q=Palwal,Haryana' },
 ];
 
 const PHONE = '+919950711475';

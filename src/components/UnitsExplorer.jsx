@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { MapPin, Phone, Navigation } from 'lucide-react';
+import { MapPin, Phone } from 'lucide-react';
 
 // Leaflet touches `window`, so it must only load in the browser
 const UnitsMap = dynamic(() => import('./UnitsMap'), {
@@ -81,12 +81,12 @@ export default function UnitsExplorer({ units, phone }) {
                                                 <Phone size={14} aria-hidden="true" /> Call
                                             </a>
                                             <a
-                                                href={`https://www.google.com/maps/dir/?api=1&destination=${unit.lat},${unit.lng}`}
+                                                href={unit.mapsUrl || `https://www.google.com/maps?q=${unit.lat},${unit.lng}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"
                                             >
-                                                <Navigation size={14} aria-hidden="true" /> Directions
+                                                <MapPin size={14} aria-hidden="true" /> Open in Google Maps
                                             </a>
                                         </div>
                                     </li>
