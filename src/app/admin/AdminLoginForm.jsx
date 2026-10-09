@@ -19,12 +19,16 @@ export default function AdminLoginForm({ callbackUrl }) {
         setIsLoading(true);
 
         try {
-            await loginAdmin({ email, password });
-            const destination =
-                callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//')
-                    ? callbackUrl
-                    : '/admin/form-panel';
-            router.push(destination);
+            const res = await loginAdmin({ email, password });
+            console.log(res)
+            if (res.data.ok === true) {
+                const destination =
+                    callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//')
+                        ? callbackUrl
+                        : '/mfa/setup';
+                router.push(destination);
+            }
+
         } catch (requestError) {
             setError(requestError.response?.data?.error || 'Unable to sign in. Please try again.');
         } finally {

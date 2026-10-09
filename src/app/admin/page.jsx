@@ -8,7 +8,7 @@ export default async function LoginPage({ searchParams }) {
     const callbackUrl =
         typeof requestedCallbackUrl === 'string' && requestedCallbackUrl.startsWith('/')
             ? requestedCallbackUrl
-            : '/admin/form-panel';
+            : '/mfa/setup';
 
     return <AdminLoginForm callbackUrl={callbackUrl} />;
 }

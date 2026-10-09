@@ -45,8 +45,14 @@ export async function POST(request) {
         // Return a generic error message to prevent user enumeration
         return NextResponse.json({ error: 'Invalid email or password.' }, { status: 401 });
     }
+    const { data: aal, error: aalError } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel()
+    let nextStep = 'done'
+    if (aalError) {
+        return NextResponse.json({ error: 'Internal server error occured' }, { status: 500 });
+    }
+    if (aal?.nextLevel === 'aal1') {
+        nextStep = 'mfa-setup'
+    }
 
-
-
-    return getResponse();
+    return getResponse(NextResponse.json({ ok: true, nextStep }));
 }
