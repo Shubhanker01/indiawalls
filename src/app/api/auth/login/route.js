@@ -53,6 +53,9 @@ export async function POST(request) {
     if (aal?.nextLevel === 'aal1') {
         nextStep = 'mfa-setup'
     }
+    else if (aal?.nextLevel === 'aal2') {
+        nextStep = 'mfa'
+    }
 
     return getResponse(NextResponse.json({ ok: true, nextStep }));
 }

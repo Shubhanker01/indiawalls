@@ -20,12 +20,17 @@ export default function AdminLoginForm({ callbackUrl }) {
 
         try {
             const res = await loginAdmin({ email, password });
-            console.log(res)
             if (res.data.ok === true) {
-                const destination =
+                const callback =
                     callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//')
                         ? callbackUrl
-                        : '/mfa/setup';
+                        : '/admin/form-panel';
+                const destination =
+                    res.data.nextStep === 'mfa'
+                        ? '/mfa'
+                        : res.data.nextStep === 'mfa-setup'
+                            ? '/mfa/setup'
+                            : callback;
                 router.push(destination);
             }
 

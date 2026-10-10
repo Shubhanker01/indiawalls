@@ -27,6 +27,11 @@ export async function POST(request) {
     });
 
     if (error) {
+        console.error('MFA enroll failed:', {
+            message: error.message,
+            code: error.code,
+            status: error.status,
+        });
         return NextResponse.json({ error: 'Could not start enrollment.' }, { status: 400 });
     }
 

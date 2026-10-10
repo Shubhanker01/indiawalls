@@ -38,7 +38,5 @@ export async function POST(request) {
         return NextResponse.json({ error: 'Invalid code. Try again.' }, { status: 401 });
     }
 
-    const result = NextResponse.json({ ok: true });
-    getResponse().cookies.getAll().forEach((c) => result.cookies.set(c));
-    return result;
+    return getResponse();
 }
