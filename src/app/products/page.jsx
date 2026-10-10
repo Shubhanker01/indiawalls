@@ -2,8 +2,6 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 import { getProducts, imageSrc } from '@/lib/products';
 
-export const dynamic = 'force-dynamic';
-
 const themes = [
     {
         // Light concrete
