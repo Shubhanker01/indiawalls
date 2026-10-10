@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "seed:products": "node --env-file=.env.local scripts/seed-products.mjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.95",
@@ -23,6 +24,7 @@
     "framer-motion": "^13.1.1",
     "leaflet": "^1.9.4",
     "lucide-react": "^1.40.0",
+    "mongoose": "^9.11.1",
     "next": "16.3.3",
     "qrcode.react": "^4.2.0",
     "react": "19.2.8",

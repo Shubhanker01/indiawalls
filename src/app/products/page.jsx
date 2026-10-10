@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
+import { getProducts, imageSrc } from '@/lib/products';
 
 export const dynamic = 'force-dynamic';
 
@@ -51,62 +52,8 @@ const themes = [
     },
 ];
 
-// `specs` are short chips: edit them to your real sizes, finishes, etc.
-const products = [
-    {
-        id: 1,
-        title: 'Boundary Walls',
-        slug: 'boundary-walls',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/BoundaryWall%20Sols.webp`,
-        description:
-            'Durable precast concrete panels made off-site and assembled quickly, cutting construction time and keeping quality consistent.',
-        specs: ['Factory-made panels', 'Fast installation', 'Design flexibility', 'Less on-site labour'],
-        badge: 'Boundary Solutions',
-    },
-    {
-        id: 2,
-        title: 'Paver Solutions',
-        slug: 'paver-solutions',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/PaverBlock%20Sols.webp`,
-        description:
-            'Sturdy interlocking concrete units for driveways, walkways, and patios. Easy to install and low on maintenance.',
-        specs: ['Interlocking', 'Low maintenance', 'Many shapes & colours', 'Driveways & walkways'],
-        badge: 'Paving Solutions',
-    },
-    {
-        id: 3,
-        title: 'Fencing Solutions',
-        slug: 'fencing-solutions',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/fencing%20pole.webp`,
-        description:
-            'Sturdy vertical poles that hold fencing in place, giving your property security and a clear boundary.',
-        specs: ['Durable', 'Easy to install', 'Fits many fencing styles'],
-        badge: 'Structural Support',
-    },
-    {
-        id: 4,
-        title: 'Chainlink / Concertina Wire',
-        slug: 'chainlink-concertina-wire',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/chainlink%20concreta%20wire.webp`,
-        description:
-            'Woven chainlink mesh for homes, industry, and sports grounds, plus coiled concertina wire for high-security perimeters.',
-        specs: ['Chainlink mesh', 'Concertina coil', 'Cost-effective', 'Easy to install'],
-        badge: 'Perimeter Security',
-    },
-    {
-        id: 5,
-        title: 'Landscaping',
-        slug: 'landscaping',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/jan-canty-KcQuXaHCSPE-unsplash.jpg`,
-        description:
-            'Outdoor finishing that completes your site: paved pathways, garden edging, and green spaces designed to match your boundary.',
-        specs: ['Paved pathways', 'Garden edging', 'Matched to your boundary'], // TODO: replace with your real services
-        badge: 'Outdoor Spaces',
-    },
-];
-
-
-export default function ProductsPage() {
+export default async function ProductsPage() {
+    const products = await getProducts();
 
     return (
         <div className="flex min-h-screen flex-col text-slate-800">
@@ -145,7 +92,11 @@ export default function ProductsPage() {
             </nav>
 
             <main className="grow">
-                {products.map((item, index) => {
+                {products.length === 0 ? (
+                    <p className="mx-auto max-w-7xl px-4 py-16 text-center text-slate-600 sm:px-6 lg:px-8">
+                        No products are available right now.
+                    </p>
+                ) : products.map((item, index) => {
                     const t = themes[index % themes.length];
                     const imageRight = index % 2 === 1;
 
@@ -163,7 +114,7 @@ export default function ProductsPage() {
                                         }`}
                                 >
                                     <img
-                                        src={item.image}
+                                        src={imageSrc(item.image)}
                                         alt={item.title}
                                         loading={index === 0 ? 'eager' : 'lazy'}
                                         decoding="async"
