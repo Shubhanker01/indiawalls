@@ -7,7 +7,7 @@ const products = [
     {
         title: 'Boundary Walls',
         slug: 'boundary-walls',
-        image: 'BoundaryWall%20Sols.webp',
+        image: '/boundary-wall-images/precast-compound-wall-500x500.webp',
         description:
             'Durable precast concrete panels made off-site and assembled quickly, cutting construction time and keeping quality consistent.',
         specs: ['Factory-made panels', 'Fast installation', 'Design flexibility', 'Less on-site labour'],
