@@ -49,14 +49,14 @@ const projects = [
         order: 4,
     },
     {
-        title: 'Farmland Agricultural Boundary Fence',
-        slug: 'farmland-agricultural-boundary-fence',
-        category: 'Fencing Poles',
+        title: 'Farmland Agricultural Boundary Wall',
+        slug: 'farmland-agricultural-boundary-wall',
+        category: 'Boundary Walls',
         location: 'Alwar, Rajasthan',
-        image: '/fencing%20pole.webp',
+        image: '/farmland%20agriculture%20boundary.webp',
         gallery: [],
         description:
-            'Precast RCC poles combined with 7-line barbed wire setup to protect agricultural crops against cattle entry.',
+            'Agriculture boundary wall to protect farmland from trespassers and animals, with precase concrete pannels for long term durability.',
         order: 5,
     },
     {
@@ -64,7 +64,7 @@ const projects = [
         slug: 'residential-society-boundary-wall',
         category: 'Precast Walls',
         location: 'Noida Extension, UP',
-        image: '/boundary-wall-images/precast-compound-wall-500x500.webp',
+        image: '/residential%20society%20boundary%20wall.webp',
         gallery: [],
         description:
             'Decorative textured precast concrete panels designed for rapid installation with an elegant architectural look.',
