@@ -29,6 +29,7 @@ const ProjectSchema = new Schema(
 
         location: { type: String, required: true, trim: true },
         description: { type: String, trim: true },
+        longDescription: { type: String, trim: true, default: '' },
 
         image: { type: String, required: true, trim: true }, // cover image shown on the projects grid
         gallery: { type: [ImageSchema], default: [] }, // optional extra photos for this project

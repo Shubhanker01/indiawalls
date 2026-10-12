@@ -8,18 +8,22 @@ const initialFormData = {
     type: '',
     location: '',
     description: '',
+    longDescription: '',
 };
 
 export default function FormPanelPage() {
     const [formData, setFormData] = useState(initialFormData);
     const [imageFile, setImageFile] = useState(null);
     const [imagePreview, setImagePreview] = useState('');
+    const [galleryFiles, setGalleryFiles] = useState([]);
+    const [galleryPreviews, setGalleryPreviews] = useState([]);
     const [state, setState] = useState({
         error: '',
         success: false,
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const imageInputRef = useRef(null);
+    const galleryInputRef = useRef(null);
 
     const handleChange = (event) => {
         const { name, value } = event.target;
@@ -34,13 +38,24 @@ export default function FormPanelPage() {
         setImagePreview(URL.createObjectURL(file));
     };
 
+    const handleGalleryChange = (event) => {
+        const files = Array.from(event.target.files || []);
+        setGalleryFiles(files);
+        setGalleryPreviews(files.map((file) => URL.createObjectURL(file)));
+    };
+
     const resetForm = () => {
         setFormData(initialFormData);
         setImageFile(null);
         setImagePreview('');
+        setGalleryFiles([]);
+        setGalleryPreviews([]);
 
         if (imageInputRef.current) {
             imageInputRef.current.value = '';
+        }
+        if (galleryInputRef.current) {
+            galleryInputRef.current.value = '';
         }
     };
 
@@ -54,7 +69,9 @@ export default function FormPanelPage() {
         uploadData.append('type', formData.type);
         uploadData.append('location', formData.location);
         uploadData.append('description', formData.description);
+        uploadData.append('longDescription', formData.longDescription);
         uploadData.append('image', imageFile);
+        galleryFiles.forEach((file) => uploadData.append('gallery', file));
 
         try {
             await uploadProduct(uploadData);
@@ -76,6 +93,12 @@ export default function FormPanelPage() {
         };
     }, [imagePreview]);
 
+    useEffect(() => {
+        return () => {
+            galleryPreviews.forEach((preview) => URL.revokeObjectURL(preview));
+        };
+    }, [galleryPreviews]);
+
     return (
         <main className="min-h-screen bg-slate-950 px-4 py-12 text-slate-100 sm:px-6">
             <div className="mx-auto max-w-2xl">
@@ -87,7 +110,7 @@ export default function FormPanelPage() {
                         Project Details
                     </h1>
                     <p className="mt-2 text-sm text-slate-400">
-                        Add a title, location, description, and image for a project.
+                        Add the details and images for a project.
                     </p>
                 </div>
 
@@ -150,6 +173,17 @@ export default function FormPanelPage() {
                     </label>
 
                     <label className="block text-sm font-medium text-slate-300">
+                        Project description detail
+                        <textarea
+                            name="longDescription"
+                            rows="6"
+                            value={formData.longDescription}
+                            onChange={handleChange}
+                            className="mt-2 w-full resize-y rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-yellow-500"
+                        />
+                    </label>
+
+                    <label className="block text-sm font-medium text-slate-300">
                         Project image
                         <input
                             name="image"
@@ -169,6 +203,32 @@ export default function FormPanelPage() {
                                 alt={imageFile?.name || 'Selected product preview'}
                                 className="h-48 w-full object-cover"
                             />
+                        </div>
+                    )}
+
+                    <label className="block text-sm font-medium text-slate-300">
+                        Project gallery
+                        <input
+                            name="gallery"
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            ref={galleryInputRef}
+                            onChange={handleGalleryChange}
+                            className="mt-2 block w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-yellow-600 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-yellow-500"
+                        />
+                    </label>
+
+                    {galleryPreviews.length > 0 && (
+                        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                            {galleryPreviews.map((preview, index) => (
+                                <img
+                                    key={preview}
+                                    src={preview}
+                                    alt={`Project gallery preview ${index + 1}: ${galleryFiles[index]?.name || ''}`}
+                                    className="h-32 w-full rounded-lg object-cover"
+                                />
+                            ))}
                         </div>
                     )}
 

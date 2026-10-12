@@ -121,7 +121,7 @@ export default function ProjectsGrid({ projects }) {
                     if (e.target === dialogRef.current) dialogRef.current.close(); // click on the backdrop
                 }}
                 aria-label={openProject ? `${openProject.title} photos` : 'Project photos'}
-                className="m-auto max-h-[90vh] w-[min(92vw,64rem)] overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-0 text-white shadow-2xl backdrop:bg-slate-950/80"
+                className="m-auto max-h-[90vh] w-[min(94vw,80rem)] overflow-y-auto rounded-2xl border border-slate-700 bg-slate-900 p-0 text-white shadow-2xl backdrop:bg-slate-950/80"
             >
                 {openProject && (
                     <div className="p-6">
@@ -139,7 +139,7 @@ export default function ProjectsGrid({ projects }) {
                                 <X size={20} aria-hidden="true" />
                             </button>
                         </div>
-                        <ul className="grid gap-4 sm:grid-cols-2">
+                        <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                             {openProject.gallery.map((g) => (
                                 <li key={g.src} className="overflow-hidden rounded-xl border border-slate-700 bg-slate-800">
                                     <img
@@ -147,7 +147,7 @@ export default function ProjectsGrid({ projects }) {
                                         alt={g.alt || openProject.title}
                                         loading="lazy"
                                         decoding="async"
-                                        className="aspect-[4/3] w-full object-cover"
+                                        className="aspect-[4/3] max-h-56 w-full object-cover"
                                     />
                                     {g.caption && <p className="p-3 text-sm text-slate-300">{g.caption}</p>}
                                 </li>

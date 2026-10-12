@@ -51,7 +51,9 @@ export async function POST(request) {
     const type = formData.get('type')?.toString().trim();
     const location = formData.get('location')?.toString().trim();
     const description = formData.get('description')?.toString().trim();
+    const longDescription = formData.get('longDescription')?.toString().trim() || '';
     const image = formData.get('image');
+    const galleryFiles = formData.getAll('gallery');
 
     if (!title || !type || !location || !description || !(image instanceof File)) {
         return NextResponse.json(
@@ -60,26 +62,59 @@ export async function POST(request) {
         );
     }
 
-    const ext = EXT_BY_TYPE[image.type];
-    if (!ext) {
-        return NextResponse.json({ error: 'Only JPG, PNG or WebP images are allowed.' }, { status: 400 });
-    }
-    if (image.size > MAX_BYTES) {
-        return NextResponse.json({ error: 'Image must be 4 MB or smaller.' }, { status: 413 });
+    const allImages = [image, ...galleryFiles];
+    for (const file of allImages) {
+        if (!(file instanceof File)) {
+            return NextResponse.json({ error: 'Invalid project gallery image.' }, { status: 400 });
+        }
+        if (!EXT_BY_TYPE[file.type]) {
+            return NextResponse.json({ error: 'Only JPG, PNG or WebP images are allowed.' }, { status: 400 });
+        }
+        if (file.size > MAX_BYTES) {
+            return NextResponse.json({ error: 'Each image must be 4 MB or smaller.' }, { status: 413 });
+        }
     }
 
-    // 1) Upload to Supabase Storage
-    const imagePath = `${FOLDER}/${randomUUID()}.${ext}`;
-    const { error: uploadError } = await supabaseAdmin.storage
-        .from(BUCKET)
-        .upload(imagePath, Buffer.from(await image.arrayBuffer()), {
-            contentType: image.type,
-            cacheControl: '31536000',
-            upsert: false,
-        });
+    const uploadedPaths = [];
+    let imagePath;
+    const gallery = [];
+    const cleanupUploads = async () => {
+        if (uploadedPaths.length === 0) return;
+        try {
+            const { error } = await supabaseAdmin.storage.from(BUCKET).remove(uploadedPaths);
+            if (error) console.error('Storage cleanup failed:', error.message);
+        } catch (error) {
+            console.error('Storage cleanup failed:', error.message);
+        }
+    };
 
-    if (uploadError) {
-        console.error('Storage upload failed:', uploadError.message);
+    try {
+        for (const [index, file] of allImages.entries()) {
+            const storagePath = `${FOLDER}/${randomUUID()}.${EXT_BY_TYPE[file.type]}`;
+            const { error: uploadError } = await supabaseAdmin.storage
+                .from(BUCKET)
+                .upload(storagePath, Buffer.from(await file.arrayBuffer()), {
+                    contentType: file.type,
+                    cacheControl: '31536000',
+                    upsert: false,
+                });
+
+            if (uploadError) {
+                console.error('Storage upload failed:', uploadError.message);
+                await cleanupUploads();
+                return NextResponse.json({ error: 'Image upload failed.' }, { status: 500 });
+            }
+
+            uploadedPaths.push(storagePath);
+            if (index === 0) {
+                imagePath = storagePath;
+            } else {
+                gallery.push({ src: storagePath, alt: `${title} project photo ${index}` });
+            }
+        }
+    } catch (error) {
+        console.error('Storage upload failed:', error.message);
+        await cleanupUploads();
         return NextResponse.json({ error: 'Image upload failed.' }, { status: 500 });
     }
 
@@ -93,13 +128,15 @@ export async function POST(request) {
             category: type,
             location,
             description,
+            longDescription,
             image: imagePath, // path only; lib code prefixes NEXT_PUBLIC_IMAGES
+            gallery,
             order: 0,
             published: true,
         });
     } catch (err) {
         console.error('Saving project failed:', err.message);
-        await supabaseAdmin.storage.from(BUCKET).remove([imagePath]).catch(() => { }); // don't leave an orphan file
+        await cleanupUploads();
         return NextResponse.json({ error: 'Project data could not be saved.' }, { status: 500 });
     }
 
@@ -115,6 +152,7 @@ export async function POST(request) {
                 type,
                 location,
                 description,
+                longDescription,
                 imageName: image.name,
                 imageUrl: pub.publicUrl,
                 createdBy: user.id,

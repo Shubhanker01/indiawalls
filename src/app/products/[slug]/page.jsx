@@ -255,24 +255,28 @@ export default async function ProductDetailPage({ params }) {
 
             {/* Gallery */}
             {detail?.gallery?.length > 0 && (
-                <section className="mx-auto max-w-7xl px-4 py-16">
-                    <h2 className="mb-8 text-center text-2xl font-extrabold text-slate-900 sm:text-3xl">Project photos</h2>
-                    <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                        {detail.gallery.map((img) => (
-                            <li key={img.src} className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-                                <div className="aspect-4/3 overflow-hidden bg-slate-100">
-                                    <img
-                                        src={assetSrc(img.src)}
-                                        alt={img.alt || product.title}
-                                        loading="lazy"
-                                        decoding="async"
-                                        className="h-full w-full object-cover"
-                                    />
-                                </div>
-                                {img.caption && <p className="p-3 text-sm text-slate-600">{img.caption}</p>}
-                            </li>
-                        ))}
-                    </ul>
+                <section className="bg-white px-4 py-12 sm:py-16">
+                    <div className="mx-auto max-w-6xl">
+                        <h2 className="mb-8 text-center text-2xl font-extrabold text-slate-900 sm:text-3xl">
+                            More image gallery
+                        </h2>
+                        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                            {detail.gallery.map((img) => (
+                                <li key={img.src} className="min-w-0 overflow-hidden rounded-xl border border-slate-200">
+                                    <div className="aspect-[4/3] overflow-hidden">
+                                        <img
+                                            src={assetSrc(img.src)}
+                                            alt={img.alt || product.title}
+                                            loading="lazy"
+                                            decoding="async"
+                                            className="h-full w-full object-cover"
+                                        />
+                                    </div>
+                                    {img.caption && <p className="p-3 text-sm text-slate-600">{img.caption}</p>}
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </section>
             )}
 

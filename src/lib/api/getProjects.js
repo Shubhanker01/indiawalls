@@ -2,7 +2,7 @@ import dbConnect from '@/lib/dbConnect.js';
 import Project from '@/models/Project.mjs';
 import { assetSrc } from '@/lib/api/getProductDetails.js';
 
-const FIELDS = 'title slug category productSlug location description image gallery';
+const FIELDS = 'title slug category productSlug location description longDescription image gallery';
 
 function toProjectData({ _id, image, gallery = [], ...rest }) {
     return {
