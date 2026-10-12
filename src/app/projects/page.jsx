@@ -1,5 +1,9 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import ProjectsGrid from '@/components/ProjectsGrid';
+import { getProjects } from '@/lib/api/getProjects';
+
+export const revalidate = 3600;
 
 export const metadata = {
     title: 'Project Gallery & Completed Works | Indiawalls Infratech',
@@ -7,104 +11,59 @@ export const metadata = {
         'Explore our portfolio of completed precast boundary walls, RCC fencing poles, chainlink fencing, and paver block installations across industrial, commercial, and residential sites.',
 };
 
-const projects = [
-    {
-        id: 1,
-        title: 'Industrial Factory Boundary Wall',
-        category: 'Precast Walls',
-        location: 'Bhiwadi Industrial Zone, Rajasthan',
-        image: '/PreCastWallImage.webp',
-        description:
-            '1,200 running feet of 8ft high precast concrete boundary wall with heavy reinforcement for long-term perimeter security.',
-    },
-    {
-        id: 2,
-        title: 'Solar Power Plant Boundary Fencing',
-        category: 'Fencing Poles',
-        location: 'Bhadla, Rajasthan',
-        image: '/images/fencing poles/fencing pole.webp',
-        description:
-            'Installation of 8ft RCC pre-stressed fencing poles with pre-drilled wire slots across a 15-acre solar farm perimeter.',
-    },
-    {
-        id: 3,
-        title: 'High-Density GI Chainlink Perimeter',
-        category: 'Chainlink',
-        location: 'Gurugram Commercial Hub',
-        image: '/images/fencing poles/chainlink.webp',
-        description:
-            'Heavy-zinc hot-dip galvanized chainlink mesh fence installed on custom steel posts for low wind-resistance and high visibility.',
-    },
-    {
-        id: 4,
-        title: 'Heavy Vehicle Interlocking Paver Driveway',
-        category: 'Paver Blocks',
-        location: 'Logistics Park, Haryana',
-        image: '/PaverBlocks.webp',
-        description:
-            '80mm zig-zag heavy-duty interlocking paver block installation engineered for heavy freight truck movement and high loads.',
-    },
-    {
-        id: 5,
-        title: 'Farmland Agricultural Boundary Fence',
-        category: 'Fencing Poles',
-        location: 'Alwar, Rajasthan',
-        image: '/Alwar.webp',
-        description:
-            'Precast RCC poles combined with 7-line barbed wire setup to protect agricultural crops against cattle entry.',
-    },
-    {
-        id: 6,
-        title: 'Residential Society Boundary Wall',
-        category: 'Precast Walls',
-        location: 'Noida Extension, UP',
-        image: '/PreCastWallImage.webp',
-        description:
-            'Decorative textured precast concrete panels designed for rapid installation with an elegant architectural look.',
-    },
+export default async function ProjectsPage() {
+    const projects = await getProjects();
 
-];
-
-export default function GalleryPage() {
     return (
-        <div className="min-h-screen bg-slate-50 text-slate-800">
+        <div className="min-h-screen bg-slate-100 text-slate-800">
             <Navbar />
-            {/* 1. Header Section */}
-            {/* <section className="bg-slate-900 text-white pt-12 pb-16 px-4">
-                <div className="max-w-7xl mx-auto text-center">
-                    <span className="inline-block bg-yellow-500/20 text-yellow-300 text-xs font-semibold uppercase tracking-widest px-3 py-1 rounded-full mb-3 border border-yellow-500/30">
-                        Our Portfolio
-                    </span>
-                    <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
-                        Completed Project Gallery
-                    </h1>
-                    <p className="text-slate-300 text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
-                        Take a look at our recent on-site installations across industrial sites, commercial complexes, farmland boundaries, and infrastructure projects.
+
+            {/* Header */}
+            <section className="border-b-4 border-yellow-400 bg-slate-900 px-4 pb-16 pt-12 text-white">
+                <div className="mx-auto max-w-4xl text-center">
+                    <h1 className="text-3xl font-extrabold tracking-tight sm:text-5xl">Completed Project Gallery</h1>
+                    <div className="mx-auto mt-5 h-1.5 w-16 rounded-full bg-yellow-400" aria-hidden="true" />
+                    <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-slate-300 text-balance sm:text-lg">
+                        Take a look at our recent on-site installations across industrial sites, commercial complexes,
+                        farmland boundaries, and infrastructure projects.
                     </p>
                 </div>
             </section>
 
-            {/* 2. 9-Photo Project Grid */}
-            
-                           
+            {/* Projects: a light, plain background so the dark cards stand out */}
+            <section id="projects" className="mx-auto max-w-7xl scroll-mt-24 px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
+                {projects.length > 0 ? (
+                    <ProjectsGrid projects={projects} />
+                ) : (
+                    <p className="py-16 text-center text-lg text-slate-600">
+                        Projects are being updated. Please check back soon, or{' '}
+                        <Link href="/contact" className="font-semibold underline">
+                            contact us
+                        </Link>
+                        .
+                    </p>
+                )}
+            </section>
 
-            {/* 3. Call to Action Banner */}
-            <section className="bg-slate-900 text-white py-14 px-4 border-t border-slate-800">
-                <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-2xl sm:text-3xl font-bold mb-3">Have a Project in Mind?</h2>
-                    <p className="text-slate-400 text-base sm:text-lg mb-8">
-                        Get site-specific recommendations, material estimates, and competitive factory rates for your site boundary.
+            {/* Call to action */}
+            <section className="bg-slate-900 px-4 py-16 text-white">
+                <div className="mx-auto max-w-4xl text-center">
+                    <h2 className="text-2xl font-extrabold sm:text-3xl">Have a Project in Mind?</h2>
+                    <div className="mx-auto mt-4 h-1.5 w-12 rounded-full bg-yellow-400" aria-hidden="true" />
+                    <p className="mx-auto mt-5 mb-8 max-w-2xl text-base text-slate-300 text-balance sm:text-lg">
+                        Get site-specific recommendations, material estimates, and competitive factory rates for your site
+                        boundary.
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Link
                             href="/contact"
-                            className="bg-yellow-600 hover:bg-yellow-500 text-white font-semibold px-6 py-3.5 rounded-xl shadow-lg transition duration-200 text-sm sm:text-base"
+                            className="rounded-lg bg-yellow-400 px-6 py-3.5 text-sm font-bold text-slate-900 transition hover:bg-yellow-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-base"
                         >
                             Get Free Site Estimate
                         </Link>
                         <a
-                            href="tel:9950711475"
-                            className="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-6 py-3.5 rounded-xl transition duration-200 text-sm sm:text-base flex items-center gap-2"
+                            href="tel:+919950711475"
+                            className="rounded-lg border border-slate-600 px-6 py-3.5 text-sm font-semibold text-white transition hover:border-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-base"
                         >
                             Call +91 9950711475
                         </a>

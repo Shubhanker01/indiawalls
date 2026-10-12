@@ -19,7 +19,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }) {
-    const { slug } = await params; // params is a Promise in Next.js 15+
+    const { slug } = await params; 
     const [product, detail] = await Promise.all([getProductBySlug(slug), getProductDetail(slug)]);
     if (!product) return { title: 'Product not found | RajasthanWall' };
     return {

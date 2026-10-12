@@ -9,7 +9,7 @@ const projects = [
     {
         title: 'Industrial Area, Chopanki, Bhiwadi',
         location: 'Bhiwadi, Rajasthan',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/IndustrialAreaBhiwadi.webp`,
+        image: `${process.env.NEXT_PUBLIC_IMAGES}/another-precast-project.webp`,
     },
     {
         title: 'Agriculture Wall, M.I.A Alwar',

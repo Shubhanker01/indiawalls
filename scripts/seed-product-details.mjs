@@ -230,7 +230,7 @@ const details = [
             title: 'High-Strength Interlocking Paver Blocks',
             intro:
                 'Factory-pressed heavy-duty concrete paver blocks engineered for extreme vehicular load, all-weather durability, and rapid installation across commercial driveways, petrol pumps, and public walkways.',
-            image: { src: '/paver-blocks/designer-interlocking-paver-blocks.jpg', alt: 'Heavy Duty Interlocking Concrete Paver Blocks' },
+            image: { src: '/paver-blocks/emilie-PCEYPtW3vN8-unsplash%20(1).jpg', alt: 'Heavy Duty Interlocking Concrete Paver Blocks' },
             captions: ['Hydraulic Vibration Pressed', 'M-30 to M-50 Grade'],
             ctaLabel: 'Request Price List',
         },
