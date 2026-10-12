@@ -1,11 +1,8 @@
 'use client';
 import { Suspense, useState } from 'react';
-import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 function MfaVerify() {
-    const router = useRouter();
-
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -15,8 +12,12 @@ function MfaVerify() {
         setError('');
         setLoading(true);
         try {
-            await axios.post('/api/auth/mfa/verify', { code });
-            router.push('/admin/form-panel');
+            const { data } = await axios.post('/api/auth/mfa/verify', { code });
+            if (data?.ok !== true) {
+                setError('Verification could not be completed. Try again.');
+                return;
+            }
+            window.location.replace('/admin/form-panel');
         } catch (e) {
             setError(e.response?.data?.error || 'Invalid code. Try again.');
             setCode('');

@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { MapPin, Images, X } from 'lucide-react';
+import { MapPin, Images, X, ArrowRight } from 'lucide-react';
 
 export default function ProjectsGrid({ projects }) {
     const [category, setCategory] = useState('All');
@@ -44,7 +44,7 @@ export default function ProjectsGrid({ projects }) {
                     return (
                         <li
                             key={p.id}
-                            className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-lg shadow-slate-900/15 transition-all duration-300 hover:-translate-y-1 hover:border-yellow-400/60 motion-reduce:translate-y-0 motion-reduce:transition-none"
+                            className="group flex flex-col overflow-hidden rounded-2xl border border-slate-800 bg-slate-900 shadow-lg shadow-slate-900/15 transition-all duration-300 hover:-translate-y-2 hover:border-yellow-400/60 motion-reduce:translate-y-0 motion-reduce:transition-none"
                         >
                             <div className="relative aspect-[4/3] overflow-hidden bg-slate-800">
                                 <img
@@ -52,7 +52,7 @@ export default function ProjectsGrid({ projects }) {
                                     alt={p.title}
                                     loading="lazy"
                                     decoding="async"
-                                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105 motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+                                    className="block h-full w-full object-cover"
                                 />
                                 {/* fades the photo into the dark card body */}
                                 <div
@@ -72,6 +72,15 @@ export default function ProjectsGrid({ projects }) {
                                 </p>
                                 {p.description && (
                                     <p className="mt-4 text-base leading-relaxed text-slate-300">{p.description}</p>
+                                )}
+                                {p.slug && (
+                                    <Link
+                                        href={`/projects/${p.slug}`}
+                                        className="mt-4 inline-flex w-fit items-center gap-2 text-sm font-semibold text-yellow-300 transition hover:text-yellow-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-yellow-400"
+                                    >
+                                        View details
+                                        <ArrowRight size={16} aria-hidden="true" />
+                                    </Link>
                                 )}
 
                                 {(hasGallery || p.productSlug) && (

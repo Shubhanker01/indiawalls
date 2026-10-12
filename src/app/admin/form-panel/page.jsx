@@ -4,10 +4,10 @@ import { useEffect, useRef, useState } from 'react';
 import { uploadProduct } from '@/lib/api/products';
 
 const initialFormData = {
-    projectName: '',
-    clientName: '',
+    title: '',
+    type: '',
     location: '',
-    requirements: '',
+    description: '',
 };
 
 export default function FormPanelPage() {
@@ -50,14 +50,15 @@ export default function FormPanelPage() {
         setIsSubmitting(true);
 
         const uploadData = new FormData();
-        uploadData.append('projectName', formData.projectName);
-        uploadData.append('clientName', formData.clientName);
+        uploadData.append('title', formData.title);
+        uploadData.append('type', formData.type);
         uploadData.append('location', formData.location);
-        uploadData.append('requirements', formData.requirements);
+        uploadData.append('description', formData.description);
         uploadData.append('image', imageFile);
 
         try {
             await uploadProduct(uploadData);
+            resetForm();
             setState({ error: '', success: true });
         } catch (requestError) {
             setState({
@@ -75,12 +76,6 @@ export default function FormPanelPage() {
         };
     }, [imagePreview]);
 
-    useEffect(() => {
-        if (state.success || state.error) {
-            resetForm();
-        }
-    }, [state]);
-
     return (
         <main className="min-h-screen bg-slate-950 px-4 py-12 text-slate-100 sm:px-6">
             <div className="mx-auto max-w-2xl">
@@ -89,10 +84,10 @@ export default function FormPanelPage() {
                         Admin Panel
                     </p>
                     <h1 className="mt-2 text-3xl font-bold tracking-tight">
-                        Product Specification
+                        Project Details
                     </h1>
                     <p className="mt-2 text-sm text-slate-400">
-                        Add the details for a new project specification.
+                        Add a title, location, description, and image for a project.
                     </p>
                 </div>
 
@@ -106,34 +101,32 @@ export default function FormPanelPage() {
                         </p>
                     )}
 
-                    <div className="grid gap-6 sm:grid-cols-2">
-                        <label className="text-sm font-medium text-slate-300">
-                            Project name
-                            <input
-                                name="projectName"
-                                type="text"
-                                required
-                                value={formData.projectName}
-                                onChange={handleChange}
-                                className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-yellow-500"
-                            />
-                        </label>
-
-                        <label className="text-sm font-medium text-slate-300">
-                            Client name
-                            <input
-                                name="clientName"
-                                type="text"
-                                required
-                                value={formData.clientName}
-                                onChange={handleChange}
-                                className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-yellow-500"
-                            />
-                        </label>
-                    </div>
+                    <label className="block text-sm font-medium text-slate-300">
+                        Title
+                        <input
+                            name="title"
+                            type="text"
+                            required
+                            value={formData.title}
+                            onChange={handleChange}
+                            className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-yellow-500"
+                        />
+                    </label>
 
                     <label className="block text-sm font-medium text-slate-300">
-                        Site location
+                        Type
+                        <input
+                            name="type"
+                            type="text"
+                            required
+                            value={formData.type}
+                            onChange={handleChange}
+                            className="mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-yellow-500"
+                        />
+                    </label>
+
+                    <label className="block text-sm font-medium text-slate-300">
+                        Location
                         <input
                             name="location"
                             type="text"
@@ -145,19 +138,19 @@ export default function FormPanelPage() {
                     </label>
 
                     <label className="block text-sm font-medium text-slate-300">
-                        Project requirements
+                        Description
                         <textarea
-                            name="requirements"
+                            name="description"
                             rows="5"
                             required
-                            value={formData.requirements}
+                            value={formData.description}
                             onChange={handleChange}
                             className="mt-2 w-full resize-y rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition focus:border-yellow-500"
                         />
                     </label>
 
                     <label className="block text-sm font-medium text-slate-300">
-                        Product image
+                        Project image
                         <input
                             name="image"
                             type="file"
@@ -184,12 +177,12 @@ export default function FormPanelPage() {
                         disabled={isSubmitting}
                         className="w-full rounded-xl bg-yellow-600 px-4 py-3 text-sm font-semibold text-white transition hover:bg-yellow-500 sm:w-auto"
                     >
-                        {isSubmitting ? 'Uploading...' : 'Save specification'}
+                        {isSubmitting ? 'Uploading...' : 'Save project'}
                     </button>
 
                     {state.success && (
                         <p className="text-sm text-emerald-400" role="status">
-                            Specification submitted successfully.
+                            Project submitted successfully.
                         </p>
                     )}
                 </form>

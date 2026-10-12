@@ -7,7 +7,7 @@ const projects = [
     {
         title: 'Industrial Factory Boundary Wall',
         slug: 'industrial-factory-boundary-wall',
-        category: 'Precast Walls',
+        category: 'Precast Boundary Walls',
         location: 'Bhiwadi Industrial Zone, Rajasthan',
         image: '/boundary-wall-images/precast-compound-wall-500x500.webp',
         gallery: [], // optional. e.g. { src: '/images/projects/bhiwadi-1.webp', alt: 'Wall during installation' }
@@ -18,7 +18,7 @@ const projects = [
     {
         title: 'Solar Power Plant Boundary Fencing',
         slug: 'solar-power-plant-boundary-fencing',
-        category: 'Fencing Poles',
+        category: 'Complete Security Walls',
         location: 'Bhadla, Rajasthan',
         image: '/fencing%20pole.webp',
         gallery: [],
@@ -29,7 +29,7 @@ const projects = [
     {
         title: 'High-Density GI Chainlink Perimeter',
         slug: 'high-density-gi-chainlink-perimeter',
-        category: 'Chainlink',
+        category: 'Complete Security Walls',
         location: 'Gurugram Commercial Hub',
         image: '/chainlink%20concreta%20wire.webp',
         gallery: [],
@@ -51,7 +51,7 @@ const projects = [
     {
         title: 'Farmland Agricultural Boundary Wall',
         slug: 'farmland-agricultural-boundary-wall',
-        category: 'Boundary Walls',
+        category: 'Precast Boundary Walls',
         location: 'Alwar, Rajasthan',
         image: '/farmland%20agriculture%20boundary.webp',
         gallery: [],
@@ -62,7 +62,7 @@ const projects = [
     {
         title: 'Residential Society Boundary Wall',
         slug: 'residential-society-boundary-wall',
-        category: 'Precast Walls',
+        category: 'Precast Boundary Walls',
         location: 'Noida Extension, UP',
         image: '/residential%20society%20boundary%20wall.webp',
         gallery: [],
