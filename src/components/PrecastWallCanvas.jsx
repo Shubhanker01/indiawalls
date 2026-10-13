@@ -3,7 +3,6 @@
 import React, { useRef, useLayoutEffect, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { WavePlankWorker } from './WavePlankWorker';
 
 // 1. Move materials OUTSIDE component scope so they are never recreated
 const CONCRETE_PLANK_MAT = new THREE.MeshStandardMaterial({
@@ -48,6 +47,33 @@ function ProceduralWallModel({ isVisible }) {
             ),
         [bayCount, bayWidth]
     );
+
+    // Single shared geometry worker calculation for all 4 bays
+    const [waveGeometry, setWaveGeometry] = useState(null);
+
+    useEffect(() => {
+        const worker = new Worker(
+            new URL('../workers/geometry.worker.js', import.meta.url),
+            { type: 'module' }
+        );
+
+        worker.onmessage = (e) => {
+            const { position, normal } = e.data;
+            const bg = new THREE.BufferGeometry();
+            bg.setAttribute('position', new THREE.BufferAttribute(position, 3));
+            bg.setAttribute('normal', new THREE.BufferAttribute(normal, 3));
+            setWaveGeometry(bg);
+            worker.terminate();
+        };
+
+        worker.postMessage({
+            width: bayWidth - 0.08,
+            height: plankHeight + 0.08,
+            thickness: plankThickness,
+        });
+
+        return () => worker.terminate();
+    }, [bayWidth, plankHeight, plankThickness]);
 
     // 2. Batched InstancedMesh transformations (Reduces 50+ draw calls to 3)
     useLayoutEffect(() => {
@@ -125,20 +151,16 @@ function ProceduralWallModel({ isVisible }) {
                 />
             </instancedMesh>
 
-            {/* Top Wave Planks calculated via Off-Thread Worker */}
-            {bayPositions.map((bayX) => (
-                <group
-                    key={bayX}
-                    position={[bayX, plankCount * plankHeight + 0.12, -plankThickness / 2]}
-                >
-                    <WavePlankWorker
-                        width={bayWidth - 0.08}
-                        height={plankHeight + 0.08}
-                        thickness={plankThickness}
+            {/* Top Wave Planks rendered with single shared BufferGeometry */}
+            {waveGeometry &&
+                bayPositions.map((bayX) => (
+                    <mesh
+                        key={bayX}
+                        geometry={waveGeometry}
                         material={CONCRETE_PLANK_MAT}
+                        position={[bayX, plankCount * plankHeight + 0.12, -plankThickness / 2]}
                     />
-                </group>
-            ))}
+                ))}
         </group>
     );
 }

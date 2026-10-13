@@ -13,7 +13,7 @@ const ImageSchema = new Schema(
 
 const ProjectSchema = new Schema(
     {
-        title: { type: String, required: true, trim: true },
+        title: { type: String, required: true, unique: true, trim: true },
         slug: {
             type: String,
             required: false,
@@ -39,5 +39,7 @@ const ProjectSchema = new Schema(
     },
     { timestamps: true }
 );
+
+ProjectSchema.index({ published: 1, order: 1 });
 
 export default mongoose.models.Project || mongoose.model('Project', ProjectSchema);

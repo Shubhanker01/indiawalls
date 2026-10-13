@@ -1,19 +1,19 @@
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 const ProductCementPlank = dynamic(() => import('@/components/ProductCementPlank'));
 const ColumnProductPage = dynamic(() => import('@/components/ColumnProductPage'));
 const CompoundWallPage = dynamic(() => import('@/components/CompoundWallPage'));
 
 export const metadata = {
-    title: 'Product Specifications & 3D Models | Indiawalls',
+    title: 'Product Specifications & 3D Models | Rajasthanwalls Infratech',
     description:
         'Explore detailed specifications and interactive 3D models for precast cement panels, RCC columns, and compound walls.',
 };
 
-
-const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER;
+const WHATSAPP = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '917820879777';
 
 // Labels for the quick-jump bar. Edit these to match each product's actual title.
 const specSections = [
@@ -101,15 +101,7 @@ export default function SpecificationsPage() {
                 </section>
             </main>
 
-            <footer className="border-t border-slate-800 bg-slate-900 py-8 text-md text-slate-400">
-                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center sm:flex-row sm:px-6 sm:text-left lg:px-8">
-                    <div>
-                        <p className="font-semibold text-slate-300">RajasthanWall Manufacturing Unit</p>
-                        <p className="mt-1">Near Gyan Sagar, Alampur, Kotkasim, Rajasthan.</p>
-                    </div>
-                    <p className="text-slate-500">Copyright © 2026 RajasthanWall. All Rights Reserved.</p>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

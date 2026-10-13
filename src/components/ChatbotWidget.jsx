@@ -20,7 +20,7 @@ export default function ChatbotWidget() {
                                 🤖
                             </div>
                             <div>
-                                <h3 className="font-bold text-sm text-white leading-none">Indiawalls Assistant</h3>
+                                <h3 className="font-bold text-sm text-white leading-none">Rajasthanwalls Assistant</h3>
                                 <span className="text-[10px] text-yellow-400 font-medium">Online | Instant Help</span>
                             </div>
                         </div>

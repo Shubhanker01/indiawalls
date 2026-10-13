@@ -2,43 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import AnimatedSection from './AnimatedSection';
 
-export const blogPosts = [
-    {
-        id: 1,
-        title: 'Precast Concrete vs. Traditional Brick Boundary Walls: Cost & Speed Comparison',
-        excerpt:
-            'Discover why industrial park developers in Rajasthan and NCR are switching to precast RCC walls to cut installation timelines by 50% and lower overall project budgets.',
-        category: 'Industry Insights',
-        date: 'May 12, 2026',
-        readTime: '4 min read',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/Best-Boundary-Wall-Solutions-for-Solar-Plants-and-Industrial-Projects.png`,
-        slug: 'precast-vs-brick-boundary-wall-comparison',
-    },
-    {
-        id: 2,
-        title: 'How High-Tensile Prestressed Steel Strands Increase Boundary Wall Durability',
-        excerpt:
-            'Learn about the structural engineering behind prestressed RCC panels and why high-density concrete resists monsoon weathering, cracking, and severe impact.',
-        category: 'Engineering',
-        date: 'Apr 28, 2026',
-        readTime: '6 min read',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/How-Precast-Walls-Save-Time-and-Add-Strength.png`,
-        slug: 'how-precast-walls-build-faster-and-stronger',
-    },
-    {
-        id: 3,
-        title: 'Which Interlocking Paver Blocks Last the Longest?',
-        excerpt:
-            'Step-by-step checklist for civil contractors: soil excavation, post-hole alignment, and foundation grouting required before erecting precast RCC posts.',
-        category: 'Installation Guide',
-        date: 'Mar 15, 2026',
-        readTime: '5 min read',
-        image: `${process.env.NEXT_PUBLIC_IMAGES}/Which-Interlocking-Paver-Blocks-Last-the-Longest-3.png.bv.webp`,
-        slug: 'interlocking-paver-block-manufacturer-alwar-rajasthan',
-    },
-];
-
-export default function BlogSection() {
+export default function BlogSection({ blogPosts = [] }) {
     return (
         <section className="py-20 border-b border-slate-200" id="blog">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
@@ -60,10 +24,10 @@ export default function BlogSection() {
 
                 {/* BLOG CARDS GRID */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {blogPosts.map((post) => (
+                    {blogPosts.map((post, index) => (
                         <AnimatedSection
-                            key={post.id}
-                            delay={0.15 + (post.id - 1) * 0.08}
+                            key={post._id || post.slug}
+                            delay={0.15 + index * 0.08}
                             className="bg-white/90 border border-slate-200 rounded-2xl overflow-hidden hover:shadow-lg hover:border-slate-300 transition-all duration-300 flex flex-col justify-between group"
                         >
                             <div>
@@ -73,6 +37,7 @@ export default function BlogSection() {
                                         src={post.image}
                                         alt={post.title}
                                         fill
+                                        unoptimized
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         className=" group-hover:scale-105 transition-transform duration-300"
                                     />

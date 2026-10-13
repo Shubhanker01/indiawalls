@@ -4,11 +4,13 @@ import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 export async function POST(request) {
     const response = NextResponse.json({ ok: true, nextStep: 'mfa-setup' });
-    const { supabase } = createSupabaseServerClient({ request, response });
+    const { supabase, getResponse } = createSupabaseServerClient({ request, response });
 
     // Must already be signed in (AAL1)
-    const { data: { user } } = await supabase.auth.getUser();
-    console.log(user)
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
     if (!user) {
         return NextResponse.json({ error: 'Not authenticated.' }, { status: 401 });
     }
@@ -39,7 +41,8 @@ export async function POST(request) {
         ok: true,
         factorId: data.id,
         qrCode: data.totp.qr_code, // SVG data URL, use as <img src>
-        secret: data.totp.secret,  // manual-entry fallback
+        secret: data.totp.secret, // manual-entry fallback
     });
-    return result;
+
+    return getResponse(result);
 }

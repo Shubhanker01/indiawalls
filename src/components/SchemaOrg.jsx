@@ -1,11 +1,13 @@
 export default function SchemaOrg() {
+    const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://rajasthanwalls.in';
+
     const localBusinessSchema = {
         '@context': 'https://schema.org',
         '@type': 'LocalBusiness',
-        name: 'Indiawalls Infratech Private Limited',
-        image: 'https://indiawalls.in/logo.png',
-        '@id': 'https://indiawalls.in',
-        url: 'https://indiawalls.in',
+        name: 'Rajasthanwalls Infratech Private Limited',
+        image: `${siteUrl}/logo.png`,
+        '@id': siteUrl,
+        url: siteUrl,
         telephone: '+919950711475',
         priceRange: '₹₹',
         address: {
@@ -32,6 +34,9 @@ export default function SchemaOrg() {
             'Palwal',
             'Govindgarh',
             'Mundawar',
+            'Bhiwadi',
+            'Gurugram',
+            'Delhi NCR',
         ],
     };
 

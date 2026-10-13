@@ -1,12 +1,12 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import EstimateCalculator from '@/components/EstimateCalculator';
-import ProductRequirementsFields from '@/components/ProductRequirementsFields';
+import ContactInquiryForm from '@/components/ContactInquiryForm';
 
 export const metadata = {
-    title: 'Contact Us | Rajasthan Wall Infratech - Get Free Site Estimate',
+    title: 'Contact Us | Rajasthanwalls Infratech - Get Free Site Estimate',
     description:
-        'Get in touch with Indiawalls Infratech for factory quotes on precast boundary walls, RCC fencing poles, chainlink mesh, and paver blocks. Call +91 9950711475.',
+        'Get in touch with Rajasthanwalls Infratech for factory quotes on precast boundary walls, RCC fencing poles, chainlink mesh, and paver blocks. Call +91 9950711475.',
 };
 
 const contactDetails = [
@@ -29,7 +29,7 @@ const contactDetails = [
         ),
         title: 'WhatsApp Inquiry',
         value: '+91 7820879777',
-        href: 'https://wa.me/917820879777?text=Hi%20Indiawalls,%20I%20want%20to%20get%20a%20quote%20for%20my%20boundary%20project.',
+        href: 'https://wa.me/917820879777?text=Hi%20Rajasthanwalls,%20I%20want%20to%20get%20a%20quote%20for%20my%20boundary%20project.',
         actionText: 'Chat on WhatsApp',
     },
     {
@@ -39,8 +39,8 @@ const contactDetails = [
             </svg>
         ),
         title: 'Email Sales Desk',
-        value: 'info@indiawalls.in',
-        href: 'mailto:info@indiawalls.in',
+        value: 'info@rajasthanwalls.in',
+        href: 'mailto:info@rajasthanwalls.in',
         actionText: 'Send Email',
     },
     {
@@ -51,7 +51,7 @@ const contactDetails = [
             </svg>
         ),
         title: 'Main Office',
-        value: 'Indiawalls Infratech, Industrial Area, Rajasthan / NCR, India',
+        value: 'Rajasthanwalls Infratech, Industrial Area, Rajasthan / NCR, India',
         href: '#map-section',
         actionText: 'View Location',
     },
@@ -133,64 +133,7 @@ export default function ContactPage() {
                         </p>
                     </div>
 
-                    <form className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Your Full Name *
-                            </label>
-                            <input
-                                type="text"
-                                required
-                                placeholder="e.g. Rahul Sharma"
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Phone / Mobile Number *
-                            </label>
-                            <input
-                                type="tel"
-                                required
-                                placeholder="+91 9876543210"
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
-                            />
-                        </div>
-
-                        <ProductRequirementsFields />
-
-                        <div className="sm:col-span-2">
-                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Site Location
-                            </label>
-                            <input
-                                type="text"
-                                placeholder="Enter your project site location"
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
-                            />
-                        </div>
-
-                        <div className="sm:col-span-2">
-                            <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-2">
-                                Specific Requirements
-                            </label>
-                            <textarea
-                                rows="4"
-                                placeholder="Share any additional requirements, preferred installation schedule, or other project details..."
-                                className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-slate-800 text-sm focus:outline-none focus:border-yellow-500 transition"
-                            ></textarea>
-                        </div>
-
-                        <div className="sm:col-span-2">
-                            <button
-                                type="button"
-                                className="w-full bg-yellow-600 hover:bg-yellow-500 text-white font-bold py-4 rounded-xl shadow-lg transition duration-200 text-base"
-                            >
-                                Submit Inquiry
-                            </button>
-                        </div>
-                    </form>
+                    <ContactInquiryForm />
                 </div>
 
                 {/* Business Hours & Direct Info (5 cols) */}

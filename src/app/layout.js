@@ -15,8 +15,10 @@ const montserrat = Montserrat({
   display: 'swap',
   variable: '--font-montserrat',
 });
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://rajasthanwalls.in';
+
 export const metadata = {
-  metadataBase: new URL('https://rajasthanwalls.in'),
+  metadataBase: new URL(siteUrl),
   title: {
     default: 'Rajasthanwalls | Precast Boundary Wall & RCC Wall Manufacturer',
     template: '%s | Rajasthanwalls Infratech',
@@ -39,7 +41,7 @@ export const metadata = {
   openGraph: {
     title: 'Rajasthanwalls | Precast Boundary Wall Manufacturer',
     description: 'Custom precast concrete walls for land security & construction projects across Delhi NCR & Rajasthan.',
-    url: 'https://rajasthanwalls.in',
+    url: siteUrl,
     siteName: 'Rajasthanwalls Infratech',
     locale: 'en_IN',
     type: 'website',

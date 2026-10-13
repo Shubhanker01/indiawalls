@@ -4,6 +4,7 @@ import Header from "@/components/Header";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import AnimatedSection from "@/components/AnimatedSection";
+import { getPublishedBlogs, getPublishedTestimonials } from '@/lib/content';
 
 const ProductCatalog = dynamic(() => import("@/components/ProductCatalog"));
 const WhyUsSection = dynamic(() => import("@/components/WhyUsSection"));
@@ -35,7 +36,12 @@ const Footer = dynamic(
 const BlogSection = dynamic(
   () => import("@/components/BlogSection")
 )
-export default function Home() {
+
+export default async function Home() {
+  const [blogPosts, testimonials] = await Promise.all([
+    getPublishedBlogs(3),
+    getPublishedTestimonials(),
+  ]);
   return (
     <>
       <SpeedInsights />
@@ -60,9 +66,9 @@ export default function Home() {
           <AnimatedSection delay={0.1}>
             <AboutSection />
           </AnimatedSection>
-          <TestimonialsSection />
+          <TestimonialsSection testimonials={testimonials} />
 
-          <BlogSection />
+          <BlogSection blogPosts={blogPosts} />
           <FaqSection />
         </main>
         {/* 5. FOOTER */}

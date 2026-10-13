@@ -4,7 +4,7 @@ import Link from 'next/link';
 export const metadata = {
     title: 'Why Choose Us | Rajasthan Wall Infratech - Precast & Fencing Leader',
     description:
-        'Discover why developers, industrial parks, and government bodies trust Indiawalls Infratech for high-tensile precast boundary walls, RCC fencing poles, and paver blocks.',
+        'Discover why developers, industrial parks, and government bodies trust Rajasthanwalls Infratech for high-tensile precast boundary walls, RCC fencing poles, and paver blocks.',
 };
 
 const keyDifferentiators = [
@@ -193,7 +193,7 @@ export default function WhyUsPage() {
                     <div className="relative rounded-2xl overflow-hidden border border-slate-700 shadow-2xl h-80 sm:h-96">
                         <img
                             src={`${process.env.NEXT_PUBLIC_IMAGES}/quality%20control%20(1).webp`}
-                            alt="Indiawalls Factory Quality Inspection"
+                            alt="Rajasthanwalls Factory Quality Inspection"
                             className="w-full h-full object-cover"
                         />
                     </div>

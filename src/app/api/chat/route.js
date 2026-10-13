@@ -1,19 +1,63 @@
 // app/api/chat/route.js
 export async function POST(req) {
-    const { query, session_id } = await req.json();
-
-    // Basic validation
-    if (!query || typeof query !== "string" || query.length > 2000) {
-        return Response.json({ error: "Invalid query" }, { status: 400 });
+    let body;
+    try {
+        body = await req.json();
+    } catch {
+        return Response.json({ error: 'Invalid JSON body.' }, { status: 400 });
     }
 
-    const res = await fetch(`${process.env.RAG_API_URL}/api/query` || `${process.env.RAG_API_FALLBACK_URL}/api/query`, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ query, session_id }),
-    });
-    const data = await res.json();
-    return Response.json({ answer: data.answer });
+    const { query, session_id } = body || {};
+
+    // 1. Input validation & length limits
+    if (!query || typeof query !== 'string' || query.trim().length === 0 || query.length > 2000) {
+        return Response.json({ error: 'Query must be a non-empty string under 2000 characters.' }, { status: 400 });
+    }
+
+    // 2. Sanitize session_id to prevent injection and DoS
+    const sanitizedSessionId =
+        typeof session_id === 'string'
+            ? session_id.replace(/[^a-zA-Z0-9_-]/g, '').slice(0, 64)
+            : `web_${Date.now()}`;
+
+    // 3. Resolve base URL correctly (preventing truthy undefined/api/query strings)
+    const rawBaseUrl = process.env.RAG_API_URL || process.env.RAG_API_FALLBACK_URL;
+    const baseUrl = rawBaseUrl ? rawBaseUrl.replace(/\/+$/, '') : null;
+
+    if (!baseUrl) {
+        return Response.json({
+            answer: 'Thank you for reaching out to RajasthanWalls! Our technical assistant is currently operating in offline mode. Please call our sales team directly at +91 9950711475 or message us on WhatsApp (+91 7820879777) for an immediate quote.',
+        });
+    }
+
+    const targetUrl = `${baseUrl}/api/query`;
+
+    try {
+        const upstreamResponse = await fetch(targetUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                query: query.trim(),
+                session_id: sanitizedSessionId,
+            }),
+            signal: AbortSignal.timeout(15000), // 15-second request timeout
+        });
+
+        if (!upstreamResponse.ok) {
+            console.error(`RAG API upstream responded with status ${upstreamResponse.status}`);
+            return Response.json({
+                answer: 'Hamara AI assistant abhi busy hai. Precast boundary wall aur RCC quotes ke liye kripya hamari sales team ko +91 9950711475 par call karein.',
+            });
+        }
+
+        const data = await upstreamResponse.json();
+        return Response.json({ answer: data.answer || 'Thank you for your inquiry.' });
+    } catch (err) {
+        console.error('RAG assistant proxy request failed:', err.message);
+        return Response.json({
+            answer: 'Maaf kijiye, abhi connect karne mein samasya aa rahi hai. Kripya thodi der baad prayas karein ya hamare WhatsApp (+91 7820879777) par contact karein.',
+        });
+    }
 }

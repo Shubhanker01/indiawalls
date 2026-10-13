@@ -1,5 +1,6 @@
 import Link from 'next/link';
-import Image from 'next/image'
+import Image from 'next/image';
+
 const socialLinks = [
     {
         name: 'Facebook',
@@ -29,19 +30,20 @@ const socialLinks = [
 ];
 
 const productLinks = [
-    { name: 'Precast RCC Boundary Wall', href: '/products' },
-    { name: 'Redimate Compound Wall', href: '/products' },
-    { name: 'Interlocking Paver Blocks', href: '/products' },
-    { name: 'Barbed Wire Fencing Poles', href: '/products' },
-    { name: 'Designer Concrete Panels', href: '/products' },
+    { name: 'Precast RCC Boundary Wall', href: '/products/boundary-walls' },
+    { name: 'Redimate Compound Wall', href: '/products/boundary-walls' },
+    { name: 'Interlocking Paver Blocks', href: '/products/paver-solutions' },
+    { name: 'Barbed Wire Fencing Poles', href: '/products/fencing-solutions' },
+    { name: 'Designer Concrete Panels', href: '/products/landscaping' },
 ];
 
 const quickLinks = [
-    { name: 'About Us', href: '#about' },
-    { name: 'Why Choose Us', href: '#why-us' },
-    { name: 'Our Work', href: '#our-work' },
-    { name: 'Manufacturing Units', href: '#locations' },
-    { name: 'FAQs', href: '#faq' },
+    { name: 'About Us', href: '/#about' },
+    { name: 'Why Choose Us', href: '/#why-us' },
+    { name: 'Our Work', href: '/#our-work' },
+    { name: 'Manufacturing Units', href: '/#locations' },
+    { name: 'FAQs', href: '/#faq' },
+    { name: 'Articles & Blog', href: '/blog' },
 ];
 
 export default function Footer() {
@@ -60,7 +62,7 @@ export default function Footer() {
                         </Link>
 
                         <p className="text-xs sm:text-sm leading-relaxed text-slate-200">
-                            Rajasthan Wall Infratech Private Limited is a leading manufacturer of high-strength precast RCC boundary walls, folding compound walls, and interlocking paver blocks serving industrial and commercial sites across Rajasthan and Delhi NCR.
+                            Rajasthanwalls Infratech Private Limited is a leading manufacturer of high-strength precast RCC boundary walls, folding compound walls, and interlocking paver blocks serving industrial and commercial sites across Rajasthan and Delhi NCR.
                         </p>
 
                         {/* SOCIAL MEDIA LINKS */}
@@ -141,8 +143,8 @@ export default function Footer() {
                             </p>
                             <p className="flex items-center space-x-3">
                                 <span className="text-amber-500">✉️</span>
-                                <a href="mailto:info@indiawalls.in" className="hover:text-amber-400 transition">
-                                    info@indiawalls.in
+                                <a href="mailto:info@rajasthanwalls.in" className="hover:text-amber-400 transition">
+                                    info@rajasthanwalls.in
                                 </a>
                             </p>
                         </div>
@@ -152,10 +154,10 @@ export default function Footer() {
 
                 {/* BOTTOM COPYRIGHT STRIP */}
                 <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-200 space-y-4 sm:space-y-0">
-                    <p>© {new Date().getFullYear()} Rajasthan Wall Infratech Private Limited. All rights reserved.</p>
+                    <p>© {new Date().getFullYear()} Rajasthanwalls Infratech Private Limited. All rights reserved.</p>
                     <div className="flex space-x-6">
-                        <Link href="#privacy" className="hover:text-slate-400 transition">Privacy Policy</Link>
-                        <Link href="#terms" className="hover:text-slate-400 transition">Terms of Service</Link>
+                        <Link href="/contact" className="hover:text-slate-400 transition">Contact Support</Link>
+                        <Link href="/#about" className="hover:text-slate-400 transition">About Company</Link>
                     </div>
                 </div>
 

@@ -9,7 +9,8 @@
     "lint": "eslint",
     "seed:products": "node --env-file=.env.local scripts/seed-products.mjs",
     "seed:product-details": "node --env-file=.env.local scripts/seed-product-details.mjs",
-    "seed:projects": "node --env-file=.env.local scripts/seed-projects.mjs"
+    "seed:projects": "node --env-file=.env.local scripts/seed-projects.mjs",
+    "seed:content": "node --env-file=.env.local scripts/seed-content.mjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.95",

@@ -4,9 +4,8 @@ import ProjectsGrid from '@/components/ProjectsGrid';
 import { getProjects } from '@/lib/api/getProjects';
 
 export const revalidate = 3600;
-export const dynamic = 'force-dynamic';
 export const metadata = {
-    title: 'Project Gallery & Completed Works | Indiawalls Infratech',
+    title: 'Project Gallery & Completed Works | Rajasthanwalls Infratech',
     description:
         'Explore our portfolio of completed precast boundary walls, RCC fencing poles, chainlink fencing, and paver block installations across industrial, commercial, and residential sites.',
 };

@@ -3,7 +3,9 @@ import { NextResponse } from 'next/server';
 
 export function createSupabaseServerClient({ request, response, updateRequestCookies = false }) {
     let currentResponse = response;
-    const SHORT_EXPIRY_SECONDS = 1800;
+    // Default 7-day session lifetime to prevent abrupt 30-minute lockouts
+    const DEFAULT_EXPIRY_SECONDS = 7 * 24 * 60 * 60;
+
     const supabase = createServerClient(
         process.env.SUPABASE_URL,
         process.env.SUPABASE_ANON_KEY,
@@ -22,11 +24,11 @@ export function createSupabaseServerClient({ request, response, updateRequestCoo
                         const isProduction = process.env.NODE_ENV === 'production';
                         const updatedOptions = {
                             ...options,
-                            httpOnly: isProduction,
+                            httpOnly: true, // Prevent XSS theft across all environments
                             secure: isProduction,
                             sameSite: 'lax',
                             path: '/',
-                            maxAge: SHORT_EXPIRY_SECONDS
+                            maxAge: options?.maxAge ?? DEFAULT_EXPIRY_SECONDS,
                         };
                         currentResponse.cookies.set(name, value, updatedOptions);
                     });
@@ -37,6 +39,12 @@ export function createSupabaseServerClient({ request, response, updateRequestCoo
 
     return {
         supabase,
-        getResponse: () => currentResponse,
+        getResponse: (customResponse) => {
+            if (customResponse) {
+                currentResponse.cookies.getAll().forEach((cookie) => customResponse.cookies.set(cookie));
+                return customResponse;
+            }
+            return currentResponse;
+        },
     };
 }

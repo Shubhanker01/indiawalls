@@ -1,7 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
+import { supabaseAdmin } from '@/lib/supabase/admin';
+import { verifyAdminRole, validateImageMagicBytes } from '@/lib/security/rbac';
 import dbConnect from '@/lib/dbConnect';
 import Project from '@/models/Project.mjs';
 
@@ -11,10 +12,6 @@ const MAX_BYTES = 4 * 1024 * 1024;
 const EXT_BY_TYPE = { 'image/jpeg': 'jpg', 'image/png': 'png', 'image/webp': 'webp' };
 const BUCKET = process.env.SUPABASE_BUCKET || 'images';
 const FOLDER = 'projects';
-
-const supabaseAdmin = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY, {
-    auth: { persistSession: false },
-});
 
 const slugify = (s) =>
     s
@@ -36,9 +33,19 @@ export async function POST(request) {
         return NextResponse.json({ error: 'Authentication is required.' }, { status: 401 });
     }
 
-    // Optional hardening: require the MFA-verified session (aal2) like your admin pages do.
+    // 1. Strict RBAC: Verify admin role (app_metadata / user_metadata / allowlist)
+    if (!verifyAdminRole(user)) {
+        return NextResponse.json(
+            { error: 'Forbidden: Admin role or authorization required.' },
+            { status: 403 }
+        );
+    }
+
+    // 2. Multi-Factor Assurance: Require MFA-verified session (AAL2)
     const { data: aal } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-    if (aal?.currentLevel !== 'aal2') return NextResponse.json({ error: 'MFA required.' }, { status: 403 });
+    if (aal?.currentLevel !== 'aal2') {
+        return NextResponse.json({ error: 'MFA verification required (AAL2).' }, { status: 403 });
+    }
 
     let formData;
     try {
@@ -63,6 +70,9 @@ export async function POST(request) {
     }
 
     const allImages = [image, ...galleryFiles];
+    const imageBuffers = [];
+
+    // 3. Insecure File Upload & MIME Spoofing Defense: Validate size, extension & magic bytes
     for (const file of allImages) {
         if (!(file instanceof File)) {
             return NextResponse.json({ error: 'Invalid project gallery image.' }, { status: 400 });
@@ -73,6 +83,15 @@ export async function POST(request) {
         if (file.size > MAX_BYTES) {
             return NextResponse.json({ error: 'Each image must be 4 MB or smaller.' }, { status: 413 });
         }
+
+        const buffer = Buffer.from(await file.arrayBuffer());
+        if (!validateImageMagicBytes(buffer, file.type)) {
+            return NextResponse.json(
+                { error: `File "${file.name}" failed binary signature verification (magic bytes spoofing detected).` },
+                { status: 400 }
+            );
+        }
+        imageBuffers.push({ file, buffer });
     }
 
     const uploadedPaths = [];
@@ -89,11 +108,11 @@ export async function POST(request) {
     };
 
     try {
-        for (const [index, file] of allImages.entries()) {
+        for (const [index, { file, buffer }] of imageBuffers.entries()) {
             const storagePath = `${FOLDER}/${randomUUID()}.${EXT_BY_TYPE[file.type]}`;
             const { error: uploadError } = await supabaseAdmin.storage
                 .from(BUCKET)
-                .upload(storagePath, Buffer.from(await file.arrayBuffer()), {
+                .upload(storagePath, buffer, {
                     contentType: file.type,
                     cacheControl: '31536000',
                     upsert: false,
@@ -118,7 +137,7 @@ export async function POST(request) {
         return NextResponse.json({ error: 'Image upload failed.' }, { status: 500 });
     }
 
-    // 2) Save the record in MongoDB (replaces uploads.json)
+    // 4. Save record to MongoDB
     let project;
     try {
         await dbConnect();
@@ -129,7 +148,7 @@ export async function POST(request) {
             location,
             description,
             longDescription,
-            image: imagePath, // path only; lib code prefixes NEXT_PUBLIC_IMAGES
+            image: imagePath,
             gallery,
             order: 0,
             published: true,

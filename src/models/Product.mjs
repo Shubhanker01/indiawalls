@@ -23,4 +23,6 @@ const ProductSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+ProductSchema.index({ published: 1, order: 1 });
+
 export default mongoose.models.Product || mongoose.model('Product', ProductSchema);

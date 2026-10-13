@@ -1,33 +1,6 @@
 import AnimatedSection from './AnimatedSection';
 
-const testimonials = [
-    {
-        name: 'Rajesh Sharma',
-        role: 'Site Manager, Industrial Park',
-        location: 'Bhiwadi',
-        rating: 5,
-        quote:
-            'The precast RCC compound wall installation was fast and seamless. They completed 1,000 running feet in under 5 days, saving us significant labor costs compared to traditional brick masonry.',
-    },
-    {
-        name: 'Vikram Singh',
-        role: 'Commercial Plot Owner',
-        location: 'Alwar',
-        rating: 5,
-        quote:
-            'Outstanding quality and alignment. The precast panels and posts are very sturdy, and the team ensured precise boundary demarcation without any material wastage on site.',
-    },
-    {
-        name: 'Amit Patel',
-        role: 'Civil Infrastructure Contractor',
-        location: 'Gurugram',
-        rating: 5,
-        quote:
-            'We sourced both boundary walls and heavy-duty paver blocks for our logistics yard. Prompt delivery from their factory unit and excellent structural finishing.',
-    },
-];
-
-export default function TestimonialsSection() {
+export default function TestimonialsSection({ testimonials = [] }) {
     return (
         <section className="py-20 border-y border-slate-200" id="testimonials">
             <div className="max-w-7xl mx-auto px-4 sm:px-8">
@@ -49,7 +22,7 @@ export default function TestimonialsSection() {
                 <div className="grid md:grid-cols-3 gap-8">
                     {testimonials.map((item, idx) => (
                         <AnimatedSection
-                            key={idx}
+                            key={item._id || `${item.name}-${idx}`}
                             delay={0.15 + idx * 0.08}
                             className="bg-white/90 border border-slate-200 rounded-2xl p-8 sm:p-10 flex flex-col justify-between shadow-sm hover:shadow-md transition-transform duration-300 hover:-translate-y-1"
                         >

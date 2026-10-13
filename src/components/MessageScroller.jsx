@@ -25,16 +25,28 @@ export default function MessageAttachmentDemo({ messages, setMessages }) {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [input, setInput] = useState('');
+    const sessionIdRef = useRef(null);
+
+    useEffect(() => {
+        if (!sessionIdRef.current) {
+            sessionIdRef.current = `web_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+        }
+    }, []);
+
+    const formatCurrentTime = () =>
+        new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
     const sendMessage = async (e) => {
         e.preventDefault();
         if (!input.trim()) return;
 
+        const currentTime = formatCurrentTime();
         const userMsg = {
             id: Date.now().toString(),
-            sender: "user",
+            sender: 'user',
             text: input,
             timestamp: new Date(),
+            time: currentTime,
         };
 
         setMessages((prev) => [...prev, userMsg]);
@@ -44,30 +56,32 @@ export default function MessageAttachmentDemo({ messages, setMessages }) {
         try {
             const { data } = await axios.post('/api/chat', {
                 query: input.trim(),
-                session_id: `web_${Math.random().toString(36).substring(2, 9)}`
+                session_id: sessionIdRef.current || `web_${Date.now()}`,
             });
             const botMsg = {
                 id: (Date.now() + 1).toString(),
-                sender: "bot",
+                sender: 'bot',
                 text: data.answer,
                 timestamp: new Date(),
+                time: formatCurrentTime(),
             };
 
             setMessages((prev) => [...prev, botMsg]);
         } catch (err) {
-            setError(err.message || "Could not connect to AI server.");
+            setError(err.message || 'Could not connect to AI server.');
             const fallbackMsg = {
                 id: (Date.now() + 1).toString(),
-                sender: "bot",
-                text: "Maaf kijiye, server se connect karne mein samasya aayi. Kripya thodi der baad prayas karein.",
+                sender: 'bot',
+                text: 'Maaf kijiye, server se connect karne mein samasya aayi. Kripya thodi der baad prayas karein.',
                 timestamp: new Date(),
+                time: formatCurrentTime(),
             };
             setMessages((prev) => [...prev, fallbackMsg]);
         } finally {
             setIsLoading(false);
         }
         setInput('');
-    }
+    };
 
 
     const messageEndRef = useRef(null)

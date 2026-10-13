@@ -1,24 +1,20 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { blogPosts } from '@/data/blogs';
+import { getPublishedBlogBySlug } from '@/lib/content';
 
 // ⚡ Static Site Generation (SSG) for instant mobile loading & 90+ Lighthouse score
-export async function generateStaticParams() {
-    return blogPosts.map((post) => ({
-        slug: post.slug,
-    }));
-}
+export const dynamic = 'force-dynamic';
 
 // ⚡ Automated SEO Metadata per blog post
 export async function generateMetadata({ params }) {
     const { slug } = await params;
-    const post = blogPosts.find((b) => b.slug === slug);
+    const post = await getPublishedBlogBySlug(slug);
 
     if (!post) return { title: 'Post Not Found' };
 
     return {
-        title: `${post.title} | Indiawalls Infratech`,
+        title: `${post.title} | Rajasthanwalls Infratech`,
         description: post.excerpt,
         openGraph: {
             title: post.title,
@@ -29,7 +25,7 @@ export async function generateMetadata({ params }) {
 
 export default async function DynamicBlogPostPage({ params }) {
     const { slug } = await params;
-    const post = blogPosts.find((b) => b.slug === slug);
+    const post = await getPublishedBlogBySlug(slug);
 
     if (!post) {
         notFound();
@@ -78,6 +74,7 @@ export default async function DynamicBlogPostPage({ params }) {
                         src={post.image}
                         alt={post.title}
                         fill
+                        unoptimized
                         priority
                         sizes="(max-width: 1200px) 100vw, 900px"
                     />
