@@ -2,7 +2,7 @@ import Navbar from '@/components/Navbar';
 import Link from 'next/link';
 
 export const metadata = {
-    title: 'Why Choose Us | RajasthanWalls Infratech - Precast & Fencing Leader',
+    title: 'Why Choose Us | Rajasthan Wall Infratech - Precast & Fencing Leader',
     description:
         'Discover why developers, industrial parks, and government bodies trust Indiawalls Infratech for high-tensile precast boundary walls, RCC fencing poles, and paver blocks.',
 };
@@ -54,7 +54,7 @@ const ComparisonTable = () => (
                 <thead>
                     <tr className="bg-slate-900 text-white">
                         <th className="py-4 px-6 font-semibold">Feature / Parameter</th>
-                        <th className="py-4 px-6 font-semibold text-yellow-400">RajasthanWalls Precast Solutions</th>
+                        <th className="py-4 px-6 font-semibold text-yellow-400">Rajasthan Wall Precast Solutions</th>
                         <th className="py-4 px-6 font-semibold text-slate-400">Traditional Brick Boundary Wall</th>
                     </tr>
                 </thead>
@@ -102,7 +102,7 @@ export default function WhyUsPage() {
                         Uncompromising Excellence
                     </span>
                     <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
-                        Why RajasthanWalls?
+                        Why Rajasthan Wall?
                     </h1>
                     <p className="text-slate-300 text-base sm:text-lg max-w-3xl mx-auto leading-relaxed">
                         We are redefining boundary infrastructure across India by blending advanced precast engineering, high-tensile steel reinforcement, and direct-from-factory cost efficiency.
@@ -192,7 +192,7 @@ export default function WhyUsPage() {
 
                     <div className="relative rounded-2xl overflow-hidden border border-slate-700 shadow-2xl h-80 sm:h-96">
                         <img
-                            src="/IndustrialAreaBhiwadi.webp"
+                            src={`${process.env.NEXT_PUBLIC_IMAGES}/quality%20control%20(1).webp`}
                             alt="Indiawalls Factory Quality Inspection"
                             className="w-full h-full object-cover"
                         />

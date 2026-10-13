@@ -4,7 +4,7 @@ import EstimateCalculator from '@/components/EstimateCalculator';
 import ProductRequirementsFields from '@/components/ProductRequirementsFields';
 
 export const metadata = {
-    title: 'Contact Us | RajasthanWalls Infratech - Get Free Site Estimate',
+    title: 'Contact Us | Rajasthan Wall Infratech - Get Free Site Estimate',
     description:
         'Get in touch with Indiawalls Infratech for factory quotes on precast boundary walls, RCC fencing poles, chainlink mesh, and paver blocks. Call +91 9950711475.',
 };
@@ -81,7 +81,7 @@ export default function ContactPage() {
                         Get Direct Factory Rates
                     </span>
                     <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4">
-                        Contact RajasthanWalls Infratech
+                        Contact Rajasthan Wall Infratech
                     </h1>
                     <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto leading-relaxed">
                         Need a site survey, custom product dimensions, or direct factory pricing for your project? Connect with our technical team today.
