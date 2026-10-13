@@ -19,10 +19,15 @@ export function createSupabaseServerClient({ request, response, updateRequestCoo
                     }
 
                     cookiesToSet.forEach(({ name, value, options }) => {
+                        const isProduction = process.env.NODE_ENV === 'production';
                         const updatedOptions = {
                             ...options,
+                            httpOnly: isProduction,
+                            secure: isProduction,
+                            sameSite: 'lax',
+                            path: '/',
                             maxAge: SHORT_EXPIRY_SECONDS
-                        }
+                        };
                         currentResponse.cookies.set(name, value, updatedOptions);
                     });
                 },
