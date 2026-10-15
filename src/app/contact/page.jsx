@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import EstimateCalculator from '@/components/EstimateCalculator';
 import ContactInquiryForm from '@/components/ContactInquiryForm';
 
 export const metadata = {
@@ -169,8 +168,6 @@ export default function ContactPage() {
                             📞 Call Sales Manager (+91 9950711475)
                         </a>
                     </div>
-
-                    <EstimateCalculator />
                 </div>
             </section>
 
