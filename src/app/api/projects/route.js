@@ -45,7 +45,7 @@ async function requireAdmin(request) {
 
 const escapeRegex = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); // typed text must not act as a regex
 const MAX_GALLERY_IMAGE_BYTES = 4 * 1024 * 1024;
-const GALLERY_IMAGE_EXTENSIONS = {
+const PROJECT_IMAGE_EXTENSIONS = {
     'image/jpeg': 'jpg',
     'image/png': 'png',
     'image/webp': 'webp',
@@ -95,7 +95,7 @@ export async function GET(request) {
 }
 
 // ---------------------------------------------------------------------------
-// PATCH /api/projects body: { currentTitle, title, category, location, description, image, gallery }
+// PATCH /api/projects accepts the project JSON and optional image/gallery files.
 // The unique currentTitle identifies the project; slug is left unchanged so existing links keep working.
 // ---------------------------------------------------------------------------
 export async function PATCH(request) {
@@ -115,11 +115,13 @@ export async function PATCH(request) {
 
     try {
         let body;
+        let imageFile = null;
         let galleryFiles = [];
         try {
             if (request.headers.get('content-type')?.includes('multipart/form-data')) {
                 const formData = await request.formData();
                 body = JSON.parse(formData.get('project')?.toString() || '');
+                imageFile = formData.get('imageFile');
                 galleryFiles = formData.getAll('galleryFiles');
             } else {
                 body = await request.json();
@@ -134,12 +136,24 @@ export async function PATCH(request) {
         const category = str(body?.category);
         const location = str(body?.location);
         const description = str(body?.description);
-        const image = str(body?.image);
+        let image = str(body?.image);
         const gallery = body?.gallery ?? [];
 
         if (!currentTitle) return reply({ error: 'The current project title is required.' }, 400);
-        if (!title || !category || !location || !description || !image) {
+        if (!title || !category || !location || !description || (!image && !imageFile)) {
             return reply({ error: 'Title, category, location, description and image are required.' }, 400);
+        }
+        if (
+            imageFile !== null &&
+            (!(imageFile instanceof File) ||
+                !PROJECT_IMAGE_EXTENSIONS[imageFile.type] ||
+                imageFile.size === 0 ||
+                imageFile.size > MAX_GALLERY_IMAGE_BYTES)
+        ) {
+            return reply(
+                { error: 'The main image must be a JPG, PNG or WebP file no larger than 4 MB.' },
+                400
+            );
         }
         if (
             !Array.isArray(gallery) ||
@@ -159,7 +173,7 @@ export async function PATCH(request) {
             galleryFiles.some(
                 (file) =>
                     !(file instanceof File) ||
-                    !GALLERY_IMAGE_EXTENSIONS[file.type] ||
+                    !PROJECT_IMAGE_EXTENSIONS[file.type] ||
                     file.size > MAX_GALLERY_IMAGE_BYTES
             )
         ) {
@@ -167,6 +181,14 @@ export async function PATCH(request) {
                 { error: 'Gallery images must be JPG, PNG or WebP files no larger than 4 MB each.' },
                 400
             );
+        }
+
+        let imageBuffer;
+        if (imageFile) {
+            imageBuffer = Buffer.from(await imageFile.arrayBuffer());
+            if (!validateImageMagicBytes(imageBuffer, imageFile.type)) {
+                return reply({ error: 'The uploaded main image is not a valid image file.' }, 400);
+            }
         }
 
         const imageBuffers = [];
@@ -179,8 +201,27 @@ export async function PATCH(request) {
         }
 
         await dbConnect();
+        if (imageFile) {
+            const storagePath = `projects/${randomUUID()}.${PROJECT_IMAGE_EXTENSIONS[imageFile.type]}`;
+            const { error: uploadError } = await getSupabaseAdmin().storage
+                .from(STORAGE_BUCKET)
+                .upload(storagePath, imageBuffer, {
+                    contentType: imageFile.type,
+                    cacheControl: '31536000',
+                    upsert: false,
+                });
+
+            if (uploadError) {
+                console.error('Main project image upload failed:', uploadError.message);
+                return reply({ error: 'Main project image upload failed.' }, 500);
+            }
+
+            uploadedPaths.push(storagePath);
+            image = storagePath;
+        }
+
         for (const [index, { file, buffer }] of imageBuffers.entries()) {
-            const storagePath = `projects/${randomUUID()}.${GALLERY_IMAGE_EXTENSIONS[file.type]}`;
+            const storagePath = `projects/${randomUUID()}.${PROJECT_IMAGE_EXTENSIONS[file.type]}`;
             const { error: uploadError } = await getSupabaseAdmin().storage
                 .from(STORAGE_BUCKET)
                 .upload(storagePath, buffer, {

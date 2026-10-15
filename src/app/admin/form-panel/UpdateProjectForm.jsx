@@ -31,16 +31,23 @@ export default function UpdateProjectForm() {
     const [results, setResults] = useState([]);
     const [selectedProject, setSelectedProject] = useState(null);
     const [formData, setFormData] = useState(EMPTY_FORM);
+    const [imageFile, setImageFile] = useState(null);
+    const [imagePreview, setImagePreview] = useState('');
     const [galleryFiles, setGalleryFiles] = useState([]);
     const [galleryPreviews, setGalleryPreviews] = useState([]);
+    const imagePreviewRef = useRef('');
     const galleryPreviewsRef = useRef([]);
+    const imageInputRef = useRef(null);
     const galleryInputRef = useRef(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isSearching, setIsSearching] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
 
-    useEffect(() => () => galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview)), []);
+    useEffect(() => () => {
+        if (imagePreviewRef.current) URL.revokeObjectURL(imagePreviewRef.current);
+        galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
+    }, []);
 
     useEffect(() => {
         const term = query.trim();
@@ -73,8 +80,14 @@ export default function UpdateProjectForm() {
 
     const chooseProject = (project) => {
         setSelectedProject(project);
+        if (imagePreviewRef.current) URL.revokeObjectURL(imagePreviewRef.current);
+        imagePreviewRef.current = '';
+        setImageFile(null);
+        setImagePreview('');
+        if (imageInputRef.current) imageInputRef.current.value = '';
         galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
         galleryPreviewsRef.current = [];
+        if (galleryInputRef.current) galleryInputRef.current.value = '';
         setGalleryFiles([]);
         setGalleryPreviews([]);
         setFormData({
@@ -94,8 +107,14 @@ export default function UpdateProjectForm() {
     const closeProject = () => {
         setSelectedProject(null);
         setFormData(EMPTY_FORM);
+        if (imagePreviewRef.current) URL.revokeObjectURL(imagePreviewRef.current);
+        imagePreviewRef.current = '';
+        setImageFile(null);
+        setImagePreview('');
+        if (imageInputRef.current) imageInputRef.current.value = '';
         galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
         galleryPreviewsRef.current = [];
+        if (galleryInputRef.current) galleryInputRef.current.value = '';
         setGalleryFiles([]);
         setGalleryPreviews([]);
         setQuery('');
@@ -105,7 +124,34 @@ export default function UpdateProjectForm() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
+        if (name === 'image' && imageFile) {
+            if (imagePreviewRef.current) URL.revokeObjectURL(imagePreviewRef.current);
+            imagePreviewRef.current = '';
+            setImageFile(null);
+            setImagePreview('');
+            if (imageInputRef.current) imageInputRef.current.value = '';
+        }
         setFormData((current) => ({ ...current, [name]: value }));
+    };
+
+    const handleImageChange = (event) => {
+        const file = event.target.files?.[0] || null;
+        if (imagePreviewRef.current) URL.revokeObjectURL(imagePreviewRef.current);
+
+        const preview = file ? URL.createObjectURL(file) : '';
+        imagePreviewRef.current = preview;
+        setImageFile(file);
+        setImagePreview(preview);
+        if (file) setFormData((current) => ({ ...current, image: '' }));
+    };
+
+    const removeMainImage = () => {
+        if (imagePreviewRef.current) URL.revokeObjectURL(imagePreviewRef.current);
+        imagePreviewRef.current = '';
+        setImageFile(null);
+        setImagePreview('');
+        if (imageInputRef.current) imageInputRef.current.value = '';
+        setFormData((current) => ({ ...current, image: '' }));
     };
 
     const handleGalleryChange = (event) => {
@@ -141,14 +187,21 @@ export default function UpdateProjectForm() {
             };
             const updateData = new FormData();
             updateData.append('project', JSON.stringify(projectData));
+            if (imageFile) updateData.append('imageFile', imageFile);
             galleryFiles.forEach((file) => updateData.append('galleryFiles', file));
             const data = await updateProject(updateData);
             setSelectedProject((current) => ({ ...current, ...data.project }));
             setFormData((current) => ({ ...current, ...data.project }));
+            if (imagePreviewRef.current) URL.revokeObjectURL(imagePreviewRef.current);
+            imagePreviewRef.current = '';
+            setImageFile(null);
+            setImagePreview('');
+            if (imageInputRef.current) imageInputRef.current.value = '';
             galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
             galleryPreviewsRef.current = [];
             setGalleryFiles([]);
             setGalleryPreviews([]);
+            if (galleryInputRef.current) galleryInputRef.current.value = '';
             setSuccess('Project updated successfully.');
         } catch (requestError) {
             setError(requestError.data?.error || 'Could not update project.');
@@ -246,16 +299,16 @@ export default function UpdateProjectForm() {
 
                     <div>
                         <p className="text-sm font-medium text-slate-300">Main image</p>
-                        {formData.image ? (
+                        {imagePreview || formData.image ? (
                             <div className="relative mt-2 overflow-hidden rounded-xl border border-slate-700">
                                 <img
-                                    src={imageUrl(formData.image)}
+                                    src={imagePreview || imageUrl(formData.image)}
                                     alt={`${formData.title} main project image`}
                                     className="h-56 w-full object-cover"
                                 />
                                 <button
                                     type="button"
-                                    onClick={() => setFormData((current) => ({ ...current, image: '' }))}
+                                    onClick={removeMainImage}
                                     aria-label="Remove main image"
                                     className="absolute right-3 top-3 rounded-full bg-slate-950/90 px-3 py-1 text-xl leading-none text-white hover:bg-red-700"
                                 >
@@ -264,15 +317,25 @@ export default function UpdateProjectForm() {
                             </div>
                         ) : (
                             <p className="mt-2 text-sm text-amber-300">
-                                Main image removed. Enter an image path below to replace it.
+                                Main image removed. Upload an image or enter an image path to replace it.
                             </p>
                         )}
+                        <label className="mt-3 block text-sm font-medium text-slate-300">
+                            Upload main image
+                            <input
+                                ref={imageInputRef}
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp"
+                                onChange={handleImageChange}
+                                className="mt-2 block w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-yellow-600 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-yellow-500"
+                            />
+                        </label>
                         <label className="mt-3 block text-sm font-medium text-slate-300">
                             Main image path
                             <input
                                 name="image"
                                 type="text"
-                                required
+                                required={!imageFile}
                                 value={formData.image}
                                 onChange={handleChange}
                                 placeholder="projects/image.jpg"
@@ -309,19 +372,17 @@ export default function UpdateProjectForm() {
                                 ))}
                             </div>
                         )}
-                        {formData.gallery.length === 0 && (
-                            <label className="mt-3 block text-sm font-medium text-slate-300">
-                                Upload gallery images
-                                <input
-                                    ref={galleryInputRef}
-                                    type="file"
-                                    accept="image/jpeg,image/png,image/webp"
-                                    multiple
-                                    onChange={handleGalleryChange}
-                                    className="mt-2 block w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-yellow-600 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-yellow-500"
-                                />
-                            </label>
-                        )}
+                        <label className="mt-3 block text-sm font-medium text-slate-300">
+                            Upload gallery images
+                            <input
+                                ref={galleryInputRef}
+                                type="file"
+                                accept="image/jpeg,image/png,image/webp"
+                                multiple
+                                onChange={handleGalleryChange}
+                                className="mt-2 block w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-300 file:mr-4 file:rounded-lg file:border-0 file:bg-yellow-600 file:px-3 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-yellow-500"
+                            />
+                        </label>
                         {galleryPreviews.length > 0 && (
                             <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
                                 {galleryPreviews.map((preview, index) => (
