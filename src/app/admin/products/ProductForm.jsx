@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
 import { apiPost } from '@/lib/api/client';
+import { setFileInputFiles } from '@/lib/fileInput';
 
 const EMPTY_TECHNICAL_SPEC = { feature: '', detail: '' };
 const EMPTY_BENEFIT = { icon: '', title: '', text: '' };
@@ -28,6 +29,7 @@ export default function ProductForm() {
     const formRef = useRef(null);
     const mainPreviewRef = useRef('');
     const galleryPreviewsRef = useRef([]);
+    const galleryInputRef = useRef(null);
     const [mainImage, setMainImage] = useState(null);
     const [mainPreview, setMainPreview] = useState('');
     const [galleryImages, setGalleryImages] = useState([]);
@@ -72,10 +74,10 @@ export default function ProductForm() {
         galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
             (_, previewIndex) => previewIndex !== index
         );
-        setGalleryImages((current) => current.filter((_, fileIndex) => fileIndex !== index));
-        setGalleryPreviews((current) =>
-            current.filter((_, previewIndex) => previewIndex !== index)
-        );
+        const nextFiles = galleryImages.filter((_, fileIndex) => fileIndex !== index);
+        setFileInputFiles(galleryInputRef.current, nextFiles);
+        setGalleryImages(nextFiles);
+        setGalleryPreviews(galleryPreviewsRef.current);
     };
 
     const resetForm = () => {
@@ -198,6 +200,7 @@ export default function ProductForm() {
                         <label className="block text-sm font-medium text-slate-300">
                             Primary product image
                             <input
+                                ref={galleryInputRef}
                                 type="file"
                                 accept="image/jpeg,image/png,image/webp"
                                 required

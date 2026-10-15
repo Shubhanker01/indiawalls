@@ -6,6 +6,7 @@ import Image from 'next/image';
 import ProductForm from './ProductForm';
 import ProductCatalog from './ProductCatalog';
 import { apiDelete, apiGet, apiPut } from '@/lib/api/client';
+import { setFileInputFiles } from '@/lib/fileInput';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -36,6 +37,7 @@ function UpdateProductForm() {
     const [galleryFiles, setGalleryFiles] = useState([]);
     const [galleryPreviews, setGalleryPreviews] = useState([]);
     const galleryPreviewsRef = useRef([]);
+    const galleryInputRef = useRef(null);
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
     const [isLoadingProduct, setIsLoadingProduct] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
@@ -134,7 +136,9 @@ function UpdateProductForm() {
         galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
             (_, previewIndex) => previewIndex !== index
         );
-        setGalleryFiles((current) => current.filter((_, fileIndex) => fileIndex !== index));
+        const nextFiles = galleryFiles.filter((_, fileIndex) => fileIndex !== index);
+        setFileInputFiles(galleryInputRef.current, nextFiles);
+        setGalleryFiles(nextFiles);
         setGalleryPreviews(galleryPreviewsRef.current);
     }
 
@@ -349,6 +353,7 @@ function UpdateProductForm() {
                                                 Images will be uploaded to Supabase Storage.
                                             </p>
                                             <input
+                                                ref={galleryInputRef}
                                                 type="file"
                                                 accept="image/jpeg,image/png,image/webp"
                                                 multiple

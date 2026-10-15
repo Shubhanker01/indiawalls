@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+import { setFileInputFiles } from '@/lib/fileInput';
 import { searchProjects, updateProject } from '@/lib/api/products';
 
 const EMPTY_FORM = {
@@ -33,6 +34,7 @@ export default function UpdateProjectForm() {
     const [galleryFiles, setGalleryFiles] = useState([]);
     const [galleryPreviews, setGalleryPreviews] = useState([]);
     const galleryPreviewsRef = useRef([]);
+    const galleryInputRef = useRef(null);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isSearching, setIsSearching] = useState(false);
@@ -111,6 +113,17 @@ export default function UpdateProjectForm() {
         galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
         galleryPreviewsRef.current = files.map((file) => URL.createObjectURL(file));
         setGalleryFiles(files);
+        setGalleryPreviews(galleryPreviewsRef.current);
+    };
+
+    const removeSelectedGalleryImage = (index) => {
+        URL.revokeObjectURL(galleryPreviewsRef.current[index]);
+        galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
+            (_, previewIndex) => previewIndex !== index
+        );
+        const nextFiles = galleryFiles.filter((_, fileIndex) => fileIndex !== index);
+        setFileInputFiles(galleryInputRef.current, nextFiles);
+        setGalleryFiles(nextFiles);
         setGalleryPreviews(galleryPreviewsRef.current);
     };
 
@@ -300,6 +313,7 @@ export default function UpdateProjectForm() {
                             <label className="mt-3 block text-sm font-medium text-slate-300">
                                 Upload gallery images
                                 <input
+                                    ref={galleryInputRef}
                                     type="file"
                                     accept="image/jpeg,image/png,image/webp"
                                     multiple
@@ -319,14 +333,7 @@ export default function UpdateProjectForm() {
                                         />
                                         <button
                                             type="button"
-                                            onClick={() => {
-                                                URL.revokeObjectURL(preview);
-                                                galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
-                                                    (_, previewIndex) => previewIndex !== index
-                                                );
-                                                setGalleryFiles((current) => current.filter((_, fileIndex) => fileIndex !== index));
-                                                setGalleryPreviews((current) => current.filter((_, previewIndex) => previewIndex !== index));
-                                            }}
+                                            onClick={() => removeSelectedGalleryImage(index)}
                                             aria-label={`Remove selected gallery image ${index + 1}`}
                                             className="absolute right-2 top-2 rounded-full bg-slate-950/90 p-1.5 text-white transition hover:bg-red-600"
                                         >

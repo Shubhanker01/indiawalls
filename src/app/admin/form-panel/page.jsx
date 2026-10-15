@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { X } from 'lucide-react';
+import { setFileInputFiles } from '@/lib/fileInput';
 import { deleteProject, uploadProduct } from '@/lib/api/products';
 import UpdateProjectForm from './UpdateProjectForm';
 import ProjectCards from './ProjectCards';
@@ -62,7 +63,9 @@ export default function FormPanelPage() {
         galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
             (_, previewIndex) => previewIndex !== index
         );
-        setGalleryFiles((current) => current.filter((_, fileIndex) => fileIndex !== index));
+        const nextFiles = galleryFiles.filter((_, fileIndex) => fileIndex !== index);
+        setFileInputFiles(galleryInputRef.current, nextFiles);
+        setGalleryFiles(nextFiles);
         setGalleryPreviews(galleryPreviewsRef.current);
     };
 
