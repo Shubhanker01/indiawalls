@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { X } from 'lucide-react';
 import { deleteProject, uploadProduct } from '@/lib/api/products';
 import UpdateProjectForm from './UpdateProjectForm';
 import ProjectCards from './ProjectCards';
@@ -23,6 +24,7 @@ export default function FormPanelPage() {
     const [imagePreview, setImagePreview] = useState('');
     const [galleryFiles, setGalleryFiles] = useState([]);
     const [galleryPreviews, setGalleryPreviews] = useState([]);
+    const galleryPreviewsRef = useRef([]);
     const [state, setState] = useState({
         error: '',
         success: false,
@@ -49,9 +51,19 @@ export default function FormPanelPage() {
 
     const handleGalleryChange = (event) => {
         const files = Array.from(event.target.files || []);
-        galleryPreviews.forEach((url) => URL.revokeObjectURL(url));
+        galleryPreviewsRef.current.forEach((url) => URL.revokeObjectURL(url));
+        galleryPreviewsRef.current = files.map((file) => URL.createObjectURL(file));
         setGalleryFiles(files);
-        setGalleryPreviews(files.map((file) => URL.createObjectURL(file)));
+        setGalleryPreviews(galleryPreviewsRef.current);
+    };
+
+    const removeGalleryImage = (index) => {
+        URL.revokeObjectURL(galleryPreviewsRef.current[index]);
+        galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
+            (_, previewIndex) => previewIndex !== index
+        );
+        setGalleryFiles((current) => current.filter((_, fileIndex) => fileIndex !== index));
+        setGalleryPreviews(galleryPreviewsRef.current);
     };
 
     const resetForm = () => {
@@ -61,7 +73,8 @@ export default function FormPanelPage() {
             URL.revokeObjectURL(imagePreview);
         }
         setImagePreview('');
-        galleryPreviews.forEach((url) => URL.revokeObjectURL(url));
+        galleryPreviewsRef.current.forEach((url) => URL.revokeObjectURL(url));
+        galleryPreviewsRef.current = [];
         setGalleryFiles([]);
         setGalleryPreviews([]);
 
@@ -93,7 +106,7 @@ export default function FormPanelPage() {
             setState({ error: '', success: true });
         } catch (requestError) {
             setState({
-                error: requestError.response?.data?.error || 'Upload failed. Please try again.',
+                error: requestError.data?.error || 'Upload failed. Please try again.',
                 success: false,
             });
         } finally {
@@ -107,7 +120,7 @@ export default function FormPanelPage() {
         setIsDeleting(true);
 
         try {
-            const { data } = await deleteProject(deleteTitle.trim());
+            const data = await deleteProject(deleteTitle.trim());
             setDeleteState({
                 error: '',
                 success: `Deleted project "${data.project.title}".`,
@@ -115,7 +128,7 @@ export default function FormPanelPage() {
             setDeleteTitle('');
         } catch (requestError) {
             setDeleteState({
-                error: requestError.response?.data?.error || 'Deletion failed. Please try again.',
+                error: requestError.data?.error || 'Deletion failed. Please try again.',
                 success: '',
             });
         } finally {
@@ -129,11 +142,7 @@ export default function FormPanelPage() {
         };
     }, [imagePreview]);
 
-    useEffect(() => {
-        return () => {
-            galleryPreviews.forEach((preview) => URL.revokeObjectURL(preview));
-        };
-    }, [galleryPreviews]);
+    useEffect(() => () => galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview)), []);
 
     return (
         <main className="min-h-screen bg-slate-950 px-4 py-12 text-slate-100 sm:px-6">
@@ -279,12 +288,21 @@ export default function FormPanelPage() {
                     {galleryPreviews.length > 0 && (
                         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                             {galleryPreviews.map((preview, index) => (
-                                <img
-                                    key={preview}
-                                    src={preview}
-                                    alt={`Project gallery preview ${index + 1}: ${galleryFiles[index]?.name || ''}`}
-                                    className="h-32 w-full rounded-lg object-cover"
-                                />
+                                <div key={preview} className="relative">
+                                    <img
+                                        src={preview}
+                                        alt={`Project gallery preview ${index + 1}: ${galleryFiles[index]?.name || ''}`}
+                                        className="h-32 w-full rounded-lg object-cover"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => removeGalleryImage(index)}
+                                        aria-label={`Remove project gallery image ${index + 1}`}
+                                        className="absolute right-2 top-2 rounded-full bg-slate-950/90 p-1.5 text-white transition hover:bg-red-600"
+                                    >
+                                        <X size={16} aria-hidden="true" />
+                                    </button>
+                                </div>
                             ))}
                         </div>
                     )}

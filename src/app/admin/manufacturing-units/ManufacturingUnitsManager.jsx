@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Loader2, MapPin, Pencil, Plus, Trash2, List } from 'lucide-react';
+import { apiPost } from '@/lib/api/client';
 import DeleteManufacturingUnitForm from './DeleteManufacturingUnitForm';
 import UpdateManufacturingUnitForm from './UpdateManufacturingUnitForm';
 import ManufacturingUnitsCatalog from './ManufacturingUnitsCatalog';
@@ -51,15 +52,7 @@ function AddManufacturingUnitForm() {
             if (form.latitude) payload.latitude = form.latitude;
             if (form.longitude) payload.longitude = form.longitude;
 
-            const response = await fetch('/api/manufacturing-units', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload),
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Manufacturing unit could not be created.');
-            }
+            const data = await apiPost('/api/manufacturing-units', payload);
 
             setForm(EMPTY_FORM);
             setSuccess(`"${data.unit.city}" was added as a manufacturing unit.`);

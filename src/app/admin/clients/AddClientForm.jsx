@@ -2,6 +2,7 @@
 
 import { useRef, useState } from 'react';
 import { Loader2, Plus } from 'lucide-react';
+import { apiPost } from '@/lib/api/client';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -30,14 +31,7 @@ export default function AddClientForm() {
         setIsSaving(true);
 
         try {
-            const response = await fetch('/api/clients', {
-                method: 'POST',
-                body: formData,
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Client could not be added.');
-            }
+            const data = await apiPost('/api/clients', formData);
 
             setName('');
             setLogo(null);

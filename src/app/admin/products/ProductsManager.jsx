@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { Check, ChevronDown, Loader2, Plus, Pencil, Trash2, PackageSearch } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Check, ChevronDown, Loader2, Plus, Pencil, Trash2, PackageSearch, X } from 'lucide-react';
 import Image from 'next/image';
 import ProductForm from './ProductForm';
 import ProductCatalog from './ProductCatalog';
+import { apiDelete, apiGet, apiPut } from '@/lib/api/client';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -34,6 +35,7 @@ function UpdateProductForm() {
     const [details, setDetails] = useState({});
     const [galleryFiles, setGalleryFiles] = useState([]);
     const [galleryPreviews, setGalleryPreviews] = useState([]);
+    const galleryPreviewsRef = useRef([]);
     const [isLoadingProducts, setIsLoadingProducts] = useState(true);
     const [isLoadingProduct, setIsLoadingProduct] = useState(false);
     const [isSaving, setIsSaving] = useState(false);
@@ -41,16 +43,14 @@ function UpdateProductForm() {
     const [success, setSuccess] = useState('');
 
     useEffect(
-        () => () => galleryPreviews.forEach((preview) => URL.revokeObjectURL(preview)),
-        [galleryPreviews]
+        () => () => galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview)),
+        []
     );
 
     useEffect(() => {
         let isMounted = true;
-        fetch('/api/products')
-            .then(async (response) => {
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Could not load products.');
+        apiGet('/api/products')
+            .then((data) => {
                 if (isMounted) setProducts(data);
             })
             .catch((requestError) => {
@@ -72,19 +72,20 @@ function UpdateProductForm() {
         if (!slug) {
             setProduct({ title: '', description: '', badge: '', specs: [] });
             setDetails({});
+            galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
+            galleryPreviewsRef.current = [];
             setGalleryFiles([]);
             setGalleryPreviews([]);
             return;
         }
 
-        galleryPreviews.forEach((preview) => URL.revokeObjectURL(preview));
+        galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
+        galleryPreviewsRef.current = [];
         setGalleryFiles([]);
         setGalleryPreviews([]);
         setIsLoadingProduct(true);
         try {
-            const response = await fetch(`/api/products?slug=${encodeURIComponent(slug)}`);
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Could not load this product.');
+            const data = await apiGet('/api/products', { params: { slug } });
 
             setProduct({
                 title: data.product.title || '',
@@ -121,16 +122,20 @@ function UpdateProductForm() {
             event.target.value = '';
             return;
         }
-        galleryPreviews.forEach((preview) => URL.revokeObjectURL(preview));
+        galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
+        galleryPreviewsRef.current = files.map((file) => URL.createObjectURL(file));
         setGalleryFiles(files);
-        setGalleryPreviews(files.map((file) => URL.createObjectURL(file)));
+        setGalleryPreviews(galleryPreviewsRef.current);
         setError('');
     }
 
     function removeGalleryFile(index) {
-        URL.revokeObjectURL(galleryPreviews[index]);
+        URL.revokeObjectURL(galleryPreviewsRef.current[index]);
+        galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
+            (_, previewIndex) => previewIndex !== index
+        );
         setGalleryFiles((current) => current.filter((_, fileIndex) => fileIndex !== index));
-        setGalleryPreviews((current) => current.filter((_, previewIndex) => previewIndex !== index));
+        setGalleryPreviews(galleryPreviewsRef.current);
     }
 
     async function handleSubmit(event) {
@@ -170,16 +175,12 @@ function UpdateProductForm() {
                 }));
             galleryFiles.forEach((file) => updateData.append('galleryFiles', file));
 
-            const response = await fetch('/api/products', {
-                method: 'PUT',
-                body: updateData,
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Product could not be updated.');
+            const data = await apiPut('/api/products', updateData);
 
             setSuccess(`Product "${data.product.title}" and its details were updated.`);
             setDetails((current) => ({ ...current, gallery: data.productDetail.gallery || [] }));
-            galleryPreviews.forEach((preview) => URL.revokeObjectURL(preview));
+            galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
+            galleryPreviewsRef.current = [];
             setGalleryFiles([]);
             setGalleryPreviews([]);
             if (data.product.slug !== selectedSlug) {
@@ -370,9 +371,9 @@ function UpdateProductForm() {
                                                                 type="button"
                                                                 onClick={() => removeGalleryFile(index)}
                                                                 aria-label={`Remove selected image ${index + 1}`}
-                                                                className="absolute right-1 top-1 rounded-md bg-slate-950/90 p-1.5 text-red-300 hover:text-red-200"
+                                                                className="absolute right-1 top-1 rounded-full bg-slate-950/90 p-1.5 text-white transition hover:bg-red-600"
                                                             >
-                                                                <Trash2 className="h-4 w-4" />
+                                                                <X className="h-4 w-4" aria-hidden="true" />
                                                             </button>
                                                         </div>
                                                     ))}
@@ -524,23 +525,15 @@ function DeleteProductForm() {
         setSuccess('');
         setIsDeleting(true);
         try {
-            const response = await fetch('/api/products', {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: title.trim() }),
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(
-                    data.productDeleted
-                        ? `${data.error} The product is already deleted.`
-                        : data.error || 'Product could not be deleted.'
-                );
-            }
+            const data = await apiDelete('/api/products', { title: title.trim() });
             setSuccess(`Product "${data.product.title}" and its details were deleted.`);
             setTitle('');
         } catch (requestError) {
-            setError(requestError.message || 'Product could not be deleted.');
+            const cleanupNotice =
+                requestError.code === 'PRODUCT_DELETED_STORAGE_CLEANUP_FAILED'
+                    ? ' The product is already deleted.'
+                    : '';
+            setError(`${requestError.message || 'Product could not be deleted.'}${cleanupNotice}`);
         } finally {
             setIsDeleting(false);
         }

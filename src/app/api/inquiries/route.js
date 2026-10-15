@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { apiResponse } from '@/lib/api/response';
 import dbConnect from '@/lib/dbConnect';
 import Inquiry from '@/models/Inquiry.mjs';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
@@ -12,7 +12,7 @@ export async function POST(request) {
     try {
         body = await request.json();
     } catch {
-        return NextResponse.json({ error: 'Invalid JSON request body.' }, { status: 400 });
+        return apiResponse({ error: 'Invalid JSON request body.' }, { status: 400 });
     }
 
     const name = typeof body?.name === 'string' ? body.name.trim() : '';
@@ -25,11 +25,11 @@ export async function POST(request) {
     const heightFeet = Number(body?.heightFeet) || null;
 
     if (!name || name.length < 2) {
-        return NextResponse.json({ error: 'Please enter your full name.' }, { status: 400 });
+        return apiResponse({ error: 'Please enter your full name.' }, { status: 400 });
     }
 
     if (!phone || phone.length < 8) {
-        return NextResponse.json({ error: 'Please enter a valid phone number.' }, { status: 400 });
+        return apiResponse({ error: 'Please enter a valid phone number.' }, { status: 400 });
     }
 
     try {
@@ -46,7 +46,7 @@ export async function POST(request) {
             status: 'new',
         });
 
-        return NextResponse.json(
+        return apiResponse(
             {
                 ok: true,
                 message: 'Inquiry submitted successfully! Our technical team will reach out within 24 hours.',
@@ -56,7 +56,7 @@ export async function POST(request) {
         );
     } catch (err) {
         console.error('Error creating inquiry:', err.message);
-        return NextResponse.json(
+        return apiResponse(
             { error: 'Could not record inquiry. Please call our sales desk directly.' },
             { status: 500 }
         );
@@ -65,16 +65,34 @@ export async function POST(request) {
 
 // GET: Authenticated Admin retrieval of inquiries
 export async function GET(request) {
-    const response = NextResponse.json({ ok: true });
-    const { supabase } = createSupabaseServerClient({ request, response });
+    const response = apiResponse({ ok: true });
+    const { supabase, getResponse } = createSupabaseServerClient({ request, response });
+    const reply = (body, status = 200) => {
+        const result = apiResponse(body, { status });
+        getResponse().cookies.getAll().forEach((cookie) => result.cookies.set(cookie));
+        return result;
+    };
 
     const {
         data: { user },
         error: userError,
     } = await supabase.auth.getUser();
 
-    if (userError || !user || !verifyAdminRole(user)) {
-        return NextResponse.json({ error: 'Unauthorized.' }, { status: 403 });
+    if (userError || !user) {
+        return reply({ error: 'Authentication is required.' }, 401);
+    }
+    if (!verifyAdminRole(user)) {
+        return reply({ error: 'Forbidden: Admin role required.' }, 403);
+    }
+
+    const { data: assurance, error: assuranceError } =
+        await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (assuranceError) {
+        console.error('Failed to verify inquiry access MFA level:', assuranceError.message);
+        return reply({ error: 'Could not verify authentication level.' }, 500);
+    }
+    if (assurance?.currentLevel !== 'aal2') {
+        return reply({ error: 'MFA verification required (AAL2).' }, 403);
     }
 
     try {
@@ -84,10 +102,9 @@ export async function GET(request) {
             .limit(100)
             .lean();
 
-        return NextResponse.json({ ok: true, inquiries });
+        return reply({ ok: true, inquiries });
     } catch (err) {
         console.error('Error fetching inquiries:', err);
-        return NextResponse.json({ error: 'Database error fetching inquiries.' }, { status: 500 });
+        return reply({ error: 'Database error fetching inquiries.' }, 500);
     }
 }
-

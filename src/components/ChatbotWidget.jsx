@@ -1,12 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import dynamic from 'next/dynamic'
 const MessageScroller = dynamic(() => import('@/components/MessageScroller'))
 
 export default function ChatbotWidget() {
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState([]);
+    const sessionIdRef = useRef(null);
+    if (!sessionIdRef.current) {
+        sessionIdRef.current = `web_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
+    }
 
     return (
         <div className="fixed bottom-6 right-6 z-150 flex flex-col items-end cursor-pointer">
@@ -38,7 +42,11 @@ export default function ChatbotWidget() {
 
                     {/* Body: Your Shadcn Message Scroller Component */}
                     <div className="flex-1 overflow-hidden p-3 bg-slate-50">
-                        <MessageScroller messages={messages} setMessages={setMessages} />
+                        <MessageScroller
+                            messages={messages}
+                            setMessages={setMessages}
+                            sessionId={sessionIdRef.current}
+                        />
                     </div>
                 </div>
             )}

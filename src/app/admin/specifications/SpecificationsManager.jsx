@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Check, Loader2, Pencil, Plus, Trash2, Rows3 } from 'lucide-react';
 import Image from 'next/image';
+import { apiPost } from '@/lib/api/client';
 import DeleteSpecificationForm from './DeleteSpecificationForm';
 import UpdateSpecificationForm from './UpdateSpecificationForm';
 import SpecificationCatalog from './SpecificationCatalog';
@@ -87,14 +88,7 @@ function SpecificationCreateForm() {
                 })
             );
             formData.set('image', imageFile);
-            const response = await fetch('/api/specifications', {
-                method: 'POST',
-                body: formData,
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Specification could not be created.');
-            }
+            const data = await apiPost('/api/specifications', formData);
 
             formRef.current?.reset();
             setForm(EMPTY_FORM);

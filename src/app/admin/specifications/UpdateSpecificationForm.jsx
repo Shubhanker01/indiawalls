@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Loader2, Plus, Save, Trash2 } from 'lucide-react';
+import { apiGet, apiPut } from '@/lib/api/client';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -20,11 +21,7 @@ export default function UpdateSpecificationForm() {
 
         async function loadSpecifications() {
             try {
-                const response = await fetch('/api/specifications');
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Could not load specifications.');
-                }
+                const data = await apiGet('/api/specifications');
                 if (isMounted) setItems(data.specifications);
             } catch (requestError) {
                 if (isMounted) setError(requestError.message || 'Could not load specifications.');
@@ -76,18 +73,10 @@ export default function UpdateSpecificationForm() {
         setIsSaving(true);
 
         try {
-            const response = await fetch(
+            const data = await apiPut(
                 `/api/specifications?slug=${encodeURIComponent(selectedSlug)}`,
-                {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(form),
-                }
+                form
             );
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Specification could not be updated.');
-            }
 
             setItems((current) =>
                 current.map((item) =>

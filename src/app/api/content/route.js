@@ -1,5 +1,5 @@
+import { apiResponse } from '@/lib/api/response';
 import { randomUUID } from 'node:crypto';
-import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
@@ -26,9 +26,9 @@ function copyCookies(source, destination) {
 }
 
 async function authorize(request) {
-    const base = NextResponse.json({ ok: true });
+    const base = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response: base });
-    const reply = (body, status = 200) => copyCookies(getResponse(), NextResponse.json(body, { status }));
+    const reply = (body, status = 200) => copyCookies(getResponse(), apiResponse(body, { status }));
     const { data: { user }, error } = await supabase.auth.getUser();
     if (error || !user) return { deny: reply({ error: 'Authentication is required.' }, 401) };
     if (!verifyAdminRole(user)) return { deny: reply({ error: 'Admin role required.' }, 403) };

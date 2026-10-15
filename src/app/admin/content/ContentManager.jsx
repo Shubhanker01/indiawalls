@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import DeleteConfirmationModal from './DeleteConfirmationModal';
+import { apiDelete, apiGet, apiPost } from '@/lib/api/client';
 
 const emptyBlog = { title: '', slug: '', excerpt: '', content: '', category: 'Industry Insights', readTime: '4 min read', coverImage: '', author: 'Rajasthanwalls Technical Desk', published: false };
 const emptyTestimonial = { name: '', role: '', location: '', rating: 5, quote: '', avatar: '', order: 0, published: false };
@@ -20,9 +21,10 @@ export default function ContentManager() {
 
     const loadItems = useCallback(async () => {
         try {
-            const response = await fetch(`/api/content?type=${type}`, { cache: 'no-store' });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Could not load content.');
+            const data = await apiGet('/api/content', {
+                params: { type },
+                cache: 'no-store',
+            });
             setItems(data.items || []);
         } catch (error) {
             setStatus({ message: error.message, error: true });
@@ -36,9 +38,10 @@ export default function ContentManager() {
 
         async function fetchItems() {
             try {
-                const response = await fetch(`/api/content?type=${type}`, { cache: 'no-store' });
-                const data = await response.json();
-                if (!response.ok) throw new Error(data.error || 'Could not load content.');
+                const data = await apiGet('/api/content', {
+                    params: { type },
+                    cache: 'no-store',
+                });
                 if (isMounted) setItems(data.items || []);
             } catch (error) {
                 if (isMounted) setStatus({ message: error.message, error: true });
@@ -77,23 +80,15 @@ export default function ContentManager() {
         setStatus({ message: '', error: false });
         try {
             const payload = { type, ...form, ...(editingId ? { id: editingId } : {}) };
-            let requestBody = JSON.stringify(payload);
-            const headers = { 'Content-Type': 'application/json' };
+            let requestBody = payload;
             if (type === 'blog') {
                 const formData = new FormData();
                 const { coverImage, ...blogPayload } = payload;
                 formData.append('payload', JSON.stringify(blogPayload));
                 if (coverImageFile) formData.append('coverImage', coverImageFile);
                 requestBody = formData;
-                delete headers['Content-Type'];
             }
-            const response = await fetch('/api/content', {
-                method: 'POST',
-                headers,
-                body: requestBody,
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Could not save content.');
+            await apiPost('/api/content', requestBody);
             setStatus({ message: editingId ? 'Changes saved.' : 'Content created.', error: false });
             resetForm();
             await loadItems();
@@ -108,12 +103,10 @@ export default function ContentManager() {
         setBusy(true);
         setStatus({ message: '', error: false });
         try {
-            const response = await fetch('/api/content', {
-                method: 'DELETE', headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: pendingDelete.type, id: pendingDelete.item._id }),
+            await apiDelete('/api/content', {
+                type: pendingDelete.type,
+                id: pendingDelete.item._id,
             });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Could not delete content.');
             if (editingId === pendingDelete.item._id) resetForm();
             setPendingDelete(null);
             setStatus({ message: 'Content deleted.', error: false });

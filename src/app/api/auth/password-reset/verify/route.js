@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { apiResponse } from '@/lib/api/response';
 import dbConnect from '@/lib/dbConnect';
 import AuthSecurityTracker from '@/models/AuthSecurityTracker.mjs';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
@@ -8,12 +8,12 @@ export async function POST(request) {
     try {
         body = await request.json();
     } catch {
-        return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+        return apiResponse({ error: 'Invalid request body.' }, { status: 400 });
     }
 
     const tokenHash = typeof body?.token_hash === 'string' ? body.token_hash.trim() : '';
     if (!tokenHash || tokenHash.length > 512) {
-        return NextResponse.json(
+        return apiResponse(
             { error: 'The password recovery link is invalid or expired.' },
             { status: 400 }
         );
@@ -27,13 +27,13 @@ export async function POST(request) {
     }).lean();
 
     if (!tracker) {
-        return NextResponse.json(
+        return apiResponse(
             { error: 'The password recovery link is invalid or expired. Request a new recovery email.' },
             { status: 400 }
         );
     }
 
-    const response = NextResponse.json({ ok: true });
+    const response = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
     const { error } = await supabase.auth.verifyOtp({
         token_hash: tokenHash,
@@ -42,12 +42,12 @@ export async function POST(request) {
 
     if (error) {
         return getResponse(
-            NextResponse.json(
+            apiResponse(
                 { error: 'The password recovery link is invalid or expired. Request a new recovery email.' },
                 { status: 400 }
             )
         );
     }
 
-    return getResponse(NextResponse.json({ ok: true }));
+    return getResponse(apiResponse({ ok: true }));
 }

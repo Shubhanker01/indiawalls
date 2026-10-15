@@ -3,8 +3,8 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import axios from 'axios';
 import { ArrowLeft, CheckCircle2, KeyRound, Loader2 } from 'lucide-react';
+import { apiPost } from '@/lib/api/client';
 
 function PasswordResetForm() {
     const router = useRouter();
@@ -25,12 +25,12 @@ function PasswordResetForm() {
 
         async function verifyRecoveryToken() {
             try {
-                await axios.post('/api/auth/password-reset/verify', { token_hash: tokenHash });
+                await apiPost('/api/auth/password-reset/verify', { token_hash: tokenHash });
                 setIsRecoveryReady(true);
                 router.replace('/password-reset');
             } catch (error) {
                 setErrorMessage(
-                    error.response?.data?.error ||
+                    error.data?.error ||
                     'The password recovery link is invalid or expired. Request a new recovery email.'
                 );
             } finally {
@@ -52,10 +52,10 @@ function PasswordResetForm() {
 
         setIsSaving(true);
         try {
-            await axios.post('/api/auth/password-reset', { password });
+            await apiPost('/api/auth/password-reset', { password });
             setIsSuccess(true);
         } catch (error) {
-            setErrorMessage(error.response?.data?.error || 'Unable to reset your password. Try again.');
+            setErrorMessage(error.data?.error || 'Unable to reset your password. Try again.');
         } finally {
             setIsSaving(false);
         }

@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { Images, MapPin, RefreshCw } from 'lucide-react';
+import { apiGet } from '@/lib/api/client';
 
 function imageUrl(path) {
     if (!path) return '';
@@ -21,10 +21,10 @@ export default function ProjectCards() {
         setIsLoading(true);
         setError('');
         try {
-            const { data } = await axios.get('/api/projects');
+            const data = await apiGet('/api/projects');
             setProjects(data.results);
         } catch (requestError) {
-            setError(requestError.response?.data?.error || 'Could not load projects.');
+            setError(requestError.data?.error || 'Could not load projects.');
         } finally {
             setIsLoading(false);
         }
@@ -32,11 +32,11 @@ export default function ProjectCards() {
 
     useEffect(() => {
         const controller = new AbortController();
-        axios.get('/api/projects', { signal: controller.signal })
-            .then(({ data }) => setProjects(data.results))
+        apiGet('/api/projects', { signal: controller.signal })
+            .then((data) => setProjects(data.results))
             .catch((requestError) => {
-                if (requestError.name !== 'CanceledError') {
-                    setError(requestError.response?.data?.error || 'Could not load projects.');
+                if (requestError.name !== 'AbortError') {
+                    setError(requestError.data?.error || 'Could not load projects.');
                 }
             })
             .finally(() => {

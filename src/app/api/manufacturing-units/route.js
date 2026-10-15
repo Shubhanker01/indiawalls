@@ -1,5 +1,5 @@
+import { apiResponse } from '@/lib/api/response';
 import { randomUUID } from 'node:crypto';
-import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { verifyAdminRole } from '@/lib/security/rbac';
@@ -14,13 +14,13 @@ function copyCookies(source, destination) {
 }
 
 function getReply(request) {
-    const initialResponse = NextResponse.json({ ok: true });
+    const initialResponse = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({
         request,
         response: initialResponse,
     });
     const reply = (body, status = 200) =>
-        copyCookies(getResponse(), NextResponse.json(body, { status }));
+        copyCookies(getResponse(), apiResponse(body, { status }));
     return { supabase, reply };
 }
 

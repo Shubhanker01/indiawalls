@@ -1,5 +1,5 @@
+import { apiResponse } from '@/lib/api/response';
 import { randomUUID } from 'node:crypto';
-import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { supabaseAdmin } from '@/lib/supabase/admin';
@@ -8,6 +8,7 @@ import dbConnect from '@/lib/dbConnect';
 import { getProducts } from '@/lib/products';
 import Product from '@/models/Product.mjs';
 import ProductDetail from '@/models/ProductDetail.mjs';
+import Project from '@/models/Project.mjs';
 
 export const runtime = 'nodejs';
 
@@ -42,6 +43,145 @@ function parseJsonField(formData, name, defaultValue, isValid) {
         return isValid(parsed) ? { value: parsed } : { error: `${name} has an invalid format.` };
     } catch {
         return { error: `${name} must be valid JSON.` };
+    }
+}
+
+async function createProjectFromFormData(formData, user, reply) {
+    const getText = (name) => {
+        const value = formData.get(name);
+        return typeof value === 'string' ? value.trim() : '';
+    };
+
+    const title = getText('title');
+    const type = getText('type');
+    const location = getText('location');
+    const description = getText('description');
+    const longDescription = getText('longDescription');
+    const image = formData.get('image');
+    const galleryFiles = formData.getAll('gallery');
+
+    if (!title || !type || !location || !description || !(image instanceof File)) {
+        return reply(
+            { error: 'Title, type, location, description, and an image are required.' },
+            400
+        );
+    }
+    if (galleryFiles.length > MAX_GALLERY_IMAGES) {
+        return reply(
+            { error: `A maximum of ${MAX_GALLERY_IMAGES} gallery images is allowed.` },
+            400
+        );
+    }
+
+    const imageBuffers = [];
+    for (const file of [image, ...galleryFiles]) {
+        if (!(file instanceof File)) {
+            return reply({ error: 'Invalid project gallery image.' }, 400);
+        }
+        if (!IMAGE_EXTENSIONS[file.type]) {
+            return reply({ error: 'Only JPG, PNG or WebP images are allowed.' }, 400);
+        }
+        if (file.size === 0 || file.size > MAX_IMAGE_BYTES) {
+            return reply({ error: 'Each image must be between 1 byte and 4 MB.' }, 413);
+        }
+
+        const buffer = Buffer.from(await file.arrayBuffer());
+        if (!validateImageMagicBytes(buffer, file.type)) {
+            return reply(
+                { error: `File "${file.name}" failed binary signature verification.` },
+                400
+            );
+        }
+        imageBuffers.push({ file, buffer });
+    }
+
+    const uploadedPaths = [];
+    const cleanupUploads = async () => {
+        if (uploadedPaths.length === 0) return;
+        const { error } = await supabaseAdmin.storage
+            .from(STORAGE_BUCKET)
+            .remove(uploadedPaths);
+        if (error) console.error('Project image cleanup failed:', error.message);
+    };
+
+    try {
+        await dbConnect();
+        const gallery = [];
+        let imagePath;
+
+        for (const [index, { file, buffer }] of imageBuffers.entries()) {
+            const storagePath = `projects/${randomUUID()}.${IMAGE_EXTENSIONS[file.type]}`;
+            const { error: uploadError } = await supabaseAdmin.storage
+                .from(STORAGE_BUCKET)
+                .upload(storagePath, buffer, {
+                    contentType: file.type,
+                    cacheControl: '31536000',
+                    upsert: false,
+                });
+
+            if (uploadError) {
+                console.error('Project image upload failed:', uploadError.message);
+                await cleanupUploads();
+                return reply({ error: 'Project image upload failed.' }, 500);
+            }
+
+            uploadedPaths.push(storagePath);
+            if (index === 0) {
+                imagePath = storagePath;
+            } else {
+                gallery.push({ src: storagePath, alt: `${title} project photo ${index}` });
+            }
+        }
+
+        const project = await Project.create({
+            title,
+            slug: `${slugify(title) || 'project'}-${randomUUID().slice(0, 6)}`,
+            category: type,
+            location,
+            description,
+            longDescription,
+            image: imagePath,
+            gallery,
+            order: 0,
+            published: true,
+        });
+
+        uploadedPaths.length = 0;
+        const { data: publicImage } = supabaseAdmin.storage
+            .from(STORAGE_BUCKET)
+            .getPublicUrl(imagePath);
+
+        revalidatePath('/projects');
+        return reply(
+            {
+                ok: true,
+                upload: {
+                    id: project._id.toString(),
+                    slug: project.slug,
+                    title,
+                    type,
+                    location,
+                    description,
+                    longDescription,
+                    imageName: image.name,
+                    imageUrl: publicImage.publicUrl,
+                    createdBy: user.id,
+                    createdAt: project.createdAt,
+                },
+            },
+            201
+        );
+    } catch (error) {
+        try {
+            await cleanupUploads();
+        } catch (cleanupError) {
+            console.error('Project image cleanup failed:', cleanupError.message);
+        }
+        if (error?.name === 'ValidationError' || error?.name === 'CastError') {
+            return reply({ error: error.message }, 400);
+        }
+        console.error('Project upload failed:', error);
+        return reply({ error: 'Project data could not be saved.' }, 500);
     }
 }
 
@@ -129,13 +269,13 @@ const hasOwn = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
 export async function GET(request) {
     try {
         if (request.nextUrl.searchParams.get('adminCatalog') === '1') {
-            const initialResponse = NextResponse.json({ ok: true });
+            const initialResponse = apiResponse({ ok: true });
             const { supabase, getResponse } = createSupabaseServerClient({
                 request,
                 response: initialResponse,
             });
             const reply = (body, status = 200) =>
-                copyAuthCookies(getResponse(), NextResponse.json(body, { status }));
+                copyAuthCookies(getResponse(), apiResponse(body, { status }));
             const {
                 data: { user },
                 error: userError,
@@ -179,7 +319,7 @@ export async function GET(request) {
                 .select('title slug badge description longDescription image specs')
                 .lean();
             if (!product) {
-                return NextResponse.json({ error: 'Product not found.' }, { status: 404 });
+                return apiResponse({ error: 'Product not found.' }, { status: 404 });
             }
 
             const productDetail = await ProductDetail.findOne({ productSlug: slug })
@@ -187,7 +327,7 @@ export async function GET(request) {
                     'benefitsIntro benefitsTitle gallery hero installationSteps installationTitle manufacturingSteps processTitle'
                 )
                 .lean();
-            return NextResponse.json({
+            return apiResponse({
                 product: {
                     ...product,
                     id: product._id.toString(),
@@ -205,21 +345,21 @@ export async function GET(request) {
         }
 
         const products = await getProducts();
-        return NextResponse.json(products);
+        return apiResponse(products);
     } catch (error) {
         console.error('Failed to fetch products:', error);
-        return NextResponse.json({ error: 'Failed to fetch products.' }, { status: 500 });
+        return apiResponse({ error: 'Failed to fetch products.' }, { status: 500 });
     }
 }
 
 export async function POST(request) {
-    const initialResponse = NextResponse.json({ ok: true });
+    const initialResponse = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({
         request,
         response: initialResponse,
     });
     const reply = (body, status = 200) =>
-        copyAuthCookies(getResponse(), NextResponse.json(body, { status }));
+        copyAuthCookies(getResponse(), apiResponse(body, { status }));
 
     try {
         const {
@@ -249,6 +389,10 @@ export async function POST(request) {
             formData = await request.formData();
         } catch {
             return reply({ error: 'Invalid form data.' }, 400);
+        }
+
+        if (formData.has('type')) {
+            return createProjectFromFormData(formData, user, reply);
         }
 
         const getText = (name) => {
@@ -425,13 +569,13 @@ export async function POST(request) {
 }
 
 export async function PUT(request) {
-    const initialResponse = NextResponse.json({ ok: true });
+    const initialResponse = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({
         request,
         response: initialResponse,
     });
     const reply = (body, status = 200) =>
-        copyAuthCookies(getResponse(), NextResponse.json(body, { status }));
+        copyAuthCookies(getResponse(), apiResponse(body, { status }));
     const uploadedGalleryPaths = [];
     const cleanupGalleryUploads = async () => {
         if (uploadedGalleryPaths.length === 0) return;
@@ -731,13 +875,13 @@ export async function PUT(request) {
 }
 
 export async function DELETE(request) {
-    const initialResponse = NextResponse.json({ ok: true });
+    const initialResponse = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({
         request,
         response: initialResponse,
     });
     const reply = (body, status = 200) =>
-        copyAuthCookies(getResponse(), NextResponse.json(body, { status }));
+        copyAuthCookies(getResponse(), apiResponse(body, { status }));
 
     try {
         const {

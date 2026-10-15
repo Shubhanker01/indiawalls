@@ -1,9 +1,9 @@
+import { apiResponse } from '@/lib/api/response';
 // route to enroll a user in MFA
-import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 
 export async function POST(request) {
-    const response = NextResponse.json({ ok: true, nextStep: 'mfa-setup' });
+    const response = apiResponse({ ok: true, nextStep: 'mfa-setup' });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
 
     // Must already be signed in (AAL1)
@@ -12,7 +12,7 @@ export async function POST(request) {
     } = await supabase.auth.getUser();
 
     if (!user) {
-        return NextResponse.json({ error: 'Not authenticated.' }, { status: 401 });
+        return apiResponse({ error: 'Not authenticated.' }, { status: 401 });
     }
 
     // Remove abandoned, unverified factors from earlier attempts
@@ -34,10 +34,10 @@ export async function POST(request) {
             code: error.code,
             status: error.status,
         });
-        return NextResponse.json({ error: 'Could not start enrollment.' }, { status: 400 });
+        return apiResponse({ error: 'Could not start enrollment.' }, { status: 400 });
     }
 
-    const result = NextResponse.json({
+    const result = apiResponse({
         ok: true,
         factorId: data.id,
         qrCode: data.totp.qr_code, // SVG data URL, use as <img src>

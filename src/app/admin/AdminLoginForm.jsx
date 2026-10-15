@@ -20,18 +20,18 @@ export default function AdminLoginForm() {
 
         try {
             const res = await loginAdmin({ email, password });
-            if (res.data.ok === true) {
+            if (res.ok === true) {
                 const destination =
-                    res.data.nextStep === 'mfa'
+                    res.nextStep === 'mfa'
                         ? '/mfa'
-                        : res.data.nextStep === 'mfa-setup'
+                        : res.nextStep === 'mfa-setup'
                             ? '/mfa/setup'
                             : '/admin/form-panel';
                 router.push(destination);
             }
 
         } catch (requestError) {
-            setError(requestError.response?.data?.error || 'Unable to sign in. Please try again.');
+            setError(requestError.data?.error || 'Unable to sign in. Please try again.');
         } finally {
             setIsLoading(false);
         }

@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, X } from 'lucide-react';
 import Image from 'next/image';
+import { apiPost } from '@/lib/api/client';
 
 const EMPTY_TECHNICAL_SPEC = { feature: '', detail: '' };
 const EMPTY_BENEFIT = { icon: '', title: '', text: '' };
@@ -64,6 +65,17 @@ export default function ProductForm() {
         galleryPreviewsRef.current = previews;
         setGalleryImages(files);
         setGalleryPreviews(previews);
+    };
+
+    const removeGalleryImage = (index) => {
+        URL.revokeObjectURL(galleryPreviewsRef.current[index]);
+        galleryPreviewsRef.current = galleryPreviewsRef.current.filter(
+            (_, previewIndex) => previewIndex !== index
+        );
+        setGalleryImages((current) => current.filter((_, fileIndex) => fileIndex !== index));
+        setGalleryPreviews((current) =>
+            current.filter((_, previewIndex) => previewIndex !== index)
+        );
     };
 
     const resetForm = () => {
@@ -134,12 +146,7 @@ export default function ProductForm() {
         galleryImages.forEach((file) => formData.append('gallery', file));
 
         try {
-            const response = await fetch('/api/products', {
-                method: 'POST',
-                body: formData,
-            });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Product could not be created.');
+            const data = await apiPost('/api/products', formData);
 
             resetForm();
             setSuccess(`Product "${data.product.title}" and its specifications were created.`);
@@ -397,15 +404,24 @@ export default function ProductForm() {
                 {galleryPreviews.length > 0 && (
                     <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                         {galleryPreviews.map((preview, index) => (
-                            <Image
-                                key={preview}
-                                src={preview}
-                                alt={`Product gallery preview ${index + 1}`}
-                                width={400}
-                                height={256}
-                                unoptimized
-                                className="h-32 w-full rounded-lg border border-slate-700 object-cover"
-                            />
+                            <div key={preview} className="relative">
+                                <Image
+                                    src={preview}
+                                    alt={`Product gallery preview ${index + 1}`}
+                                    width={400}
+                                    height={256}
+                                    unoptimized
+                                    className="h-32 w-full rounded-lg border border-slate-700 object-cover"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => removeGalleryImage(index)}
+                                    aria-label={`Remove product gallery image ${index + 1}`}
+                                    className="absolute right-2 top-2 rounded-full bg-slate-950/90 p-1.5 text-white transition hover:bg-red-600"
+                                >
+                                    <X className="h-4 w-4" aria-hidden="true" />
+                                </button>
+                            </div>
                         ))}
                     </div>
                 )}

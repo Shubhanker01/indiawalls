@@ -1,7 +1,7 @@
 'use client';
 import { Suspense, useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { apiPost } from '@/lib/api/client';
 
 function MfaSetup() {
     const router = useRouter();
@@ -19,12 +19,12 @@ function MfaSetup() {
         started.current = true;
         (async () => {
             try {
-                const res = await axios.post('/api/auth/mfa/enroll');
-                setFactorId(res.data.factorId);
-                setQrCode(res.data.qrCode);
-                setSecret(res.data.secret);
+                const data = await apiPost('/api/auth/mfa/enroll');
+                setFactorId(data.factorId);
+                setQrCode(data.qrCode);
+                setSecret(data.secret);
             } catch (e) {
-                setError(e.response?.data?.error || 'Could not start setup.');
+                setError(e.data?.error || 'Could not start setup.');
             }
         })();
     }, []);
@@ -34,12 +34,12 @@ function MfaSetup() {
         setError('');
         setLoading(true);
         try {
-            const res = await axios.post('/api/auth/mfa/verify', { factorId, code });
-            if (res.data.ok === true) {
+            const data = await apiPost('/api/auth/mfa/verify', { factorId, code });
+            if (data.ok === true) {
                 router.push('/admin/form-panel');
             }
         } catch (e) {
-            setError(e.response?.data?.error || 'Invalid code. Try again.');
+            setError(e.data?.error || 'Invalid code. Try again.');
             setCode('');
         } finally {
             setLoading(false);

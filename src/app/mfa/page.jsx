@@ -2,7 +2,7 @@
 import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import { apiGet, apiPost } from '@/lib/api/client';
 
 function MfaVerify() {
     const router = useRouter();
@@ -14,22 +14,22 @@ function MfaVerify() {
 
     useEffect(() => {
         let cancelled = false;
-        axios.get('/api/auth/mfa/verify')
+        apiGet('/api/auth/mfa/verify')
             .then(() => {
                 if (!cancelled) setIsCheckingLockout(false);
             })
             .catch((requestError) => {
                 if (cancelled) return;
-                if (requestError.response?.status === 423) {
+                if (requestError.status === 423) {
                     setIsLocked(true);
                     router.replace('/mfa/reset');
                     return;
                 }
-                if (requestError.response?.status === 401) {
+                if (requestError.status === 401) {
                     router.replace('/admin');
                     return;
                 }
-                setError(requestError.response?.data?.error || 'Unable to verify MFA lockout status.');
+                setError(requestError.data?.error || 'Unable to verify MFA lockout status.');
                 setIsCheckingLockout(false);
             });
         return () => {
@@ -42,15 +42,15 @@ function MfaVerify() {
         setError('');
         setLoading(true);
         try {
-            const { data } = await axios.post('/api/auth/mfa/verify', { code });
+            const data = await apiPost('/api/auth/mfa/verify', { code });
             if (data?.ok !== true) {
                 setError('Verification could not be completed. Try again.');
                 return;
             }
             window.location.replace('/admin/form-panel');
         } catch (e) {
-            const errorMsg = e.response?.data?.error || 'Invalid code. Try again.';
-            const lockedState = e.response?.status === 423 || e.response?.data?.locked === true;
+            const errorMsg = e.data?.error || 'Invalid code. Try again.';
+            const lockedState = e.status === 423 || e.code?.startsWith('MFA_LOCKED');
 
             setError(errorMsg);
             setCode('');
@@ -58,7 +58,7 @@ function MfaVerify() {
             if (lockedState) {
                 setIsLocked(true);
                 router.replace(
-                    e.response?.data?.emailSent === true ? '/mfa/reset?otpSent=1' : '/mfa/reset'
+                    e.code === 'MFA_LOCKED_EMAIL_SENT' ? '/mfa/reset?otpSent=1' : '/mfa/reset'
                 );
             }
         } finally {

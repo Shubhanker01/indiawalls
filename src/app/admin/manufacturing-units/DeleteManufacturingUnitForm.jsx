@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Loader2, Trash2 } from 'lucide-react';
+import { apiDelete } from '@/lib/api/client';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -20,15 +21,10 @@ export default function DeleteManufacturingUnitForm() {
         setIsDeleting(true);
 
         try {
-            const response = await fetch('/api/manufacturing-units', {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ city: city.trim(), address: address.trim() }),
+            const data = await apiDelete('/api/manufacturing-units', {
+                city: city.trim(),
+                address: address.trim(),
             });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Manufacturing unit could not be deleted.');
-            }
 
             setSuccess(`Manufacturing unit "${data.unit.city}" was deleted.`);
             setCity('');

@@ -1,7 +1,7 @@
 'use client';
 
-import axios from 'axios';
 import { useState, useRef, useEffect } from 'react';
+import { apiPost } from '@/lib/api/client';
 import {
     MessageScrollerProvider,
     MessageScroller,
@@ -20,19 +20,11 @@ const BotIcon = () => (
 const UserIcon = () => (<div className="w-9 h-9 flex items-center justify-center shrink-0 text-xl">
     🧑
 </div>);
-export default function MessageAttachmentDemo({ messages, setMessages }) {
+export default function MessageAttachmentDemo({ messages, setMessages, sessionId }) {
     // const [messages, setMessages] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [input, setInput] = useState('');
-    const sessionIdRef = useRef(null);
-
-    useEffect(() => {
-        if (!sessionIdRef.current) {
-            sessionIdRef.current = `web_${Date.now()}_${Math.random().toString(36).substring(2, 8)}`;
-        }
-    }, []);
-
     const formatCurrentTime = () =>
         new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
@@ -54,9 +46,9 @@ export default function MessageAttachmentDemo({ messages, setMessages }) {
         setError(null);
 
         try {
-            const { data } = await axios.post('/api/chat', {
+            const data = await apiPost('/api/chat', {
                 query: input.trim(),
-                session_id: sessionIdRef.current || `web_${Date.now()}`,
+                session_id: sessionId,
             });
             const botMsg = {
                 id: (Date.now() + 1).toString(),

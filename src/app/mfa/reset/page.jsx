@@ -3,8 +3,8 @@
 import { Suspense, useState } from 'react';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import axios from 'axios';
 import { ShieldAlert, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
+import { apiPost } from '@/lib/api/client';
 
 function MfaReset() {
     const router = useRouter();
@@ -25,11 +25,11 @@ function MfaReset() {
         setStatusMessage('');
         setIsRequestingOtp(true);
         try {
-            const { data } = await axios.post('/api/auth/mfa/reset-request');
+            const data = await apiPost('/api/auth/mfa/reset-request');
             setHasRequestedOtp(true);
             setStatusMessage(data.message || 'A new 6-digit OTP has been dispatched to your email.');
         } catch (err) {
-            setErrorMessage(err.response?.data?.error || 'Unable to send OTP. Please check your email.');
+            setErrorMessage(err.data?.error || 'Unable to send OTP. Please check your email.');
         } finally {
             setIsRequestingOtp(false);
         }
@@ -42,7 +42,7 @@ function MfaReset() {
         setIsLoading(true);
 
         try {
-            const { data } = await axios.post('/api/auth/mfa/reset-verify', { otp });
+            const data = await apiPost('/api/auth/mfa/reset-verify', { otp });
             if (data.ok) {
                 setIsSuccess(true);
                 setStatusMessage('MFA factor reset successfully! Redirecting to setup a new authenticator...');
@@ -51,7 +51,7 @@ function MfaReset() {
                 }, 1500);
             }
         } catch (err) {
-            setErrorMessage(err.response?.data?.error || 'Failed to verify OTP. Please try again.');
+            setErrorMessage(err.data?.error || 'Failed to verify OTP. Please try again.');
         } finally {
             setIsLoading(false);
         }

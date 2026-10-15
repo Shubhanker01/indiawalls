@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import axios from 'axios';
 import { Loader2, CheckCircle2 } from 'lucide-react';
+import { apiPost } from '@/lib/api/client';
 
 export default function ContactInquiryForm() {
     const [formData, setFormData] = useState({
@@ -28,7 +28,7 @@ export default function ContactInquiryForm() {
         setStatus({ loading: true, error: '', success: false, message: '' });
 
         try {
-            const { data } = await axios.post('/api/inquiries', formData);
+            const data = await apiPost('/api/inquiries', formData);
             setStatus({
                 loading: false,
                 error: '',
@@ -48,7 +48,7 @@ export default function ContactInquiryForm() {
         } catch (err) {
             setStatus({
                 loading: false,
-                error: err.response?.data?.error || 'Unable to submit inquiry. Please call +91 9950711475 directly.',
+                error: err.data?.error || 'Unable to submit inquiry. Please call +91 9950711475 directly.',
                 success: false,
                 message: '',
             });
@@ -213,4 +213,3 @@ export default function ContactInquiryForm() {
         </form>
     );
 }
-

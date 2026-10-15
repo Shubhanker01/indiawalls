@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Loader2, PackageSearch, RefreshCw } from 'lucide-react';
+import { apiGet } from '@/lib/api/client';
 
 function getImageUrl(image) {
     if (!image) return '';
@@ -18,9 +19,10 @@ export default function ProductCatalog() {
     async function loadCatalog(signal) {
         setError('');
         try {
-            const response = await fetch('/api/products?adminCatalog=1', { signal });
-            const data = await response.json();
-            if (!response.ok) throw new Error(data.error || 'Could not load the product catalog.');
+            const data = await apiGet('/api/products', {
+                params: { adminCatalog: 1 },
+                signal,
+            });
             setProducts(data.products);
         } catch (requestError) {
             if (requestError.name !== 'AbortError') {

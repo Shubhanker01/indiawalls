@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import { X } from 'lucide-react';
 import { searchProjects, updateProject } from '@/lib/api/products';
 
 const EMPTY_FORM = {
@@ -51,11 +52,11 @@ export default function UpdateProjectForm() {
         setIsSearching(true);
         const timeout = setTimeout(async () => {
             try {
-                const { data } = await searchProjects(term, controller.signal);
+                const data = await searchProjects(term, controller.signal);
                 setResults(data.results);
             } catch (requestError) {
-                if (requestError.name !== 'CanceledError') {
-                    setError(requestError.response?.data?.error || 'Could not search projects.');
+                if (requestError.name !== 'AbortError') {
+                    setError(requestError.data?.error || 'Could not search projects.');
                 }
             } finally {
                 if (!controller.signal.aborted) setIsSearching(false);
@@ -128,7 +129,7 @@ export default function UpdateProjectForm() {
             const updateData = new FormData();
             updateData.append('project', JSON.stringify(projectData));
             galleryFiles.forEach((file) => updateData.append('galleryFiles', file));
-            const { data } = await updateProject(updateData);
+            const data = await updateProject(updateData);
             setSelectedProject((current) => ({ ...current, ...data.project }));
             setFormData((current) => ({ ...current, ...data.project }));
             galleryPreviewsRef.current.forEach((preview) => URL.revokeObjectURL(preview));
@@ -137,7 +138,7 @@ export default function UpdateProjectForm() {
             setGalleryPreviews([]);
             setSuccess('Project updated successfully.');
         } catch (requestError) {
-            setError(requestError.response?.data?.error || 'Could not update project.');
+            setError(requestError.data?.error || 'Could not update project.');
         } finally {
             setIsSaving(false);
         }
@@ -287,9 +288,9 @@ export default function UpdateProjectForm() {
                                                 }))
                                             }
                                             aria-label={`Remove gallery image ${index + 1}`}
-                                            className="absolute right-2 top-2 rounded-full bg-slate-950/90 px-2 py-1 text-lg leading-none text-white hover:bg-red-700"
+                                            className="absolute right-2 top-2 rounded-full bg-slate-950/90 p-1.5 text-white transition hover:bg-red-600"
                                         >
-                                            ×
+                                            <X size={16} aria-hidden="true" />
                                         </button>
                                     </div>
                                 ))}
@@ -327,9 +328,9 @@ export default function UpdateProjectForm() {
                                                 setGalleryPreviews((current) => current.filter((_, previewIndex) => previewIndex !== index));
                                             }}
                                             aria-label={`Remove selected gallery image ${index + 1}`}
-                                            className="absolute right-2 top-2 rounded-full bg-slate-950/90 px-2 py-1 text-lg leading-none text-white hover:bg-red-700"
+                                            className="absolute right-2 top-2 rounded-full bg-slate-950/90 p-1.5 text-white transition hover:bg-red-600"
                                         >
-                                            ×
+                                            <X size={16} aria-hidden="true" />
                                         </button>
                                     </div>
                                 ))}

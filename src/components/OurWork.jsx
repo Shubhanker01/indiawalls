@@ -130,16 +130,10 @@ export default function OurWorkAccordion() {
                                                     animate={{ opacity: 1, y: 0 }}
                                                     exit={{ opacity: 0, y: 10 }}
                                                     transition={{ duration: 0.25, delay: 0.1 }}
-                                                    className="mt-3 pt-3 border-t border-white/20 flex items-center justify-between"
+                                                    className="mt-3 border-t border-white/20 pt-3"
                                                 >
                                                     <span className="text-xs text-slate-200">
                                                         Precast Reinforced Concrete Project
-                                                    </span>
-                                                    <span className="text-xs font-medium text-white flex items-center gap-1 group">
-                                                        View Details
-                                                        <span className="inline-block transition-transform duration-200 group-hover:translate-x-1">
-                                                            →
-                                                        </span>
                                                     </span>
                                                 </motion.div>
                                             )}

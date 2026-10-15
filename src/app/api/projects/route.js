@@ -1,5 +1,5 @@
+import { apiResponse } from '@/lib/api/response';
 import { randomUUID } from 'node:crypto';
-import { NextResponse } from 'next/server';
 import { revalidatePath } from 'next/cache';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { getSupabaseAdmin } from '@/lib/supabase/admin';
@@ -19,9 +19,9 @@ function copyAuthCookies(source, destination) {
 // Returns { deny } (a ready response) when blocked, otherwise { reply } which builds
 // JSON responses that carry the refreshed auth cookies.
 async function requireAdmin(request) {
-    const response = NextResponse.json({ ok: true });
+    const response = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
-    const reply = (body, status = 200) => copyAuthCookies(getResponse(), NextResponse.json(body, { status }));
+    const reply = (body, status = 200) => copyAuthCookies(getResponse(), apiResponse(body, { status }));
 
     const {
         data: { user },
@@ -247,7 +247,7 @@ export async function PATCH(request) {
 }
 
 export async function DELETE(request) {
-    const response = NextResponse.json({ ok: true });
+    const response = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
 
     try {
@@ -259,14 +259,14 @@ export async function DELETE(request) {
         if (userError || !user) {
             return copyAuthCookies(
                 getResponse(),
-                NextResponse.json({ error: 'Authentication is required.' }, { status: 401 })
+                apiResponse({ error: 'Authentication is required.' }, { status: 401 })
             );
         }
 
         if (!verifyAdminRole(user)) {
             return copyAuthCookies(
                 getResponse(),
-                NextResponse.json({ error: 'Forbidden: Admin role required.' }, { status: 403 })
+                apiResponse({ error: 'Forbidden: Admin role required.' }, { status: 403 })
             );
         }
 
@@ -276,13 +276,13 @@ export async function DELETE(request) {
             console.error('Failed to verify MFA level:', assuranceError);
             return copyAuthCookies(
                 getResponse(),
-                NextResponse.json({ error: 'Could not verify authentication level.' }, { status: 500 })
+                apiResponse({ error: 'Could not verify authentication level.' }, { status: 500 })
             );
         }
         if (assurance?.currentLevel !== 'aal2') {
             return copyAuthCookies(
                 getResponse(),
-                NextResponse.json({ error: 'MFA required.' }, { status: 403 })
+                apiResponse({ error: 'MFA required.' }, { status: 403 })
             );
         }
 
@@ -292,7 +292,7 @@ export async function DELETE(request) {
         } catch {
             return copyAuthCookies(
                 getResponse(),
-                NextResponse.json({ error: 'Invalid request body.' }, { status: 400 })
+                apiResponse({ error: 'Invalid request body.' }, { status: 400 })
             );
         }
 
@@ -300,7 +300,7 @@ export async function DELETE(request) {
         if (!title) {
             return copyAuthCookies(
                 getResponse(),
-                NextResponse.json({ error: 'A project title is required.' }, { status: 400 })
+                apiResponse({ error: 'A project title is required.' }, { status: 400 })
             );
         }
 
@@ -309,19 +309,19 @@ export async function DELETE(request) {
         if (!project) {
             return copyAuthCookies(
                 getResponse(),
-                NextResponse.json({ error: 'Project not found.' }, { status: 404 })
+                apiResponse({ error: 'Project not found.' }, { status: 404 })
             );
         }
 
         return copyAuthCookies(
             getResponse(),
-            NextResponse.json({ ok: true, project: { title: project.title } })
+            apiResponse({ ok: true, project: { title: project.title } })
         );
     } catch (error) {
         console.error('Failed to delete project:', error);
         return copyAuthCookies(
             getResponse(),
-            NextResponse.json({ error: 'Failed to delete project.' }, { status: 500 })
+            apiResponse({ error: 'Failed to delete project.' }, { status: 500 })
         );
     }
 }

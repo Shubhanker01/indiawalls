@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { apiResponse } from '@/lib/api/response';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import {
     checkLoginLockout,
@@ -15,7 +15,7 @@ export async function POST(request) {
     try {
         body = await request.json();
     } catch {
-        return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+        return apiResponse({ error: 'Invalid request body.' }, { status: 400 });
     }
 
     // 1. Type check and length cap (prevents DoS payloads)
@@ -23,30 +23,30 @@ export async function POST(request) {
     let rawPassword = typeof body?.password === 'string' ? body.password : '';
 
     if (rawEmail.length > 254 || rawPassword.length > 128) {
-        return NextResponse.json({ error: 'Input length exceeds limit.' }, { status: 400 });
+        return apiResponse({ error: 'Input length exceeds limit.' }, { status: 400 });
     }
 
     // 2. Email format validation
     const email = rawEmail.toLowerCase();
     if (!email || !EMAIL_REGEX.test(email)) {
-        return NextResponse.json({ error: 'Please enter a valid email address.' }, { status: 400 });
+        return apiResponse({ error: 'Please enter a valid email address.' }, { status: 400 });
     }
 
     if (!rawPassword) {
-        return NextResponse.json({ error: 'Password is required.' }, { status: 400 });
+        return apiResponse({ error: 'Password is required.' }, { status: 400 });
     }
 
     // 3. Brute-force protection: Check 5-attempt account lockout status
     const lockout = await checkLoginLockout(email);
     if (lockout.locked) {
-        return NextResponse.json(
+        return apiResponse(
             { error: lockout.message, locked: true },
             { status: 423 } // 423 Locked
         );
     }
 
     // 4. Initialize response & Supabase client
-    let response = NextResponse.json({ ok: true });
+    let response = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
 
     // 5. Authenticate
@@ -60,7 +60,7 @@ export async function POST(request) {
         const failResult = await handleLoginFailure(email);
         const status = failResult.locked ? 423 : 401;
 
-        return NextResponse.json(
+        return apiResponse(
             {
                 error: failResult.message,
                 locked: failResult.locked,
@@ -78,7 +78,7 @@ export async function POST(request) {
     let nextStep = 'done';
 
     if (aalError) {
-        return NextResponse.json({ error: 'Internal server error occurred.' }, { status: 500 });
+        return apiResponse({ error: 'Internal server error occurred.' }, { status: 500 });
     }
 
     if (aal?.nextLevel === 'aal1') {
@@ -87,5 +87,5 @@ export async function POST(request) {
         nextStep = 'mfa';
     }
 
-    return getResponse(NextResponse.json({ ok: true, nextStep }));
+    return getResponse(apiResponse({ ok: true, nextStep }));
 }

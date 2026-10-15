@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Loader2, MapPin, RefreshCw } from 'lucide-react';
+import { apiGet } from '@/lib/api/client';
 
 export default function ManufacturingUnitsCatalog() {
     const [units, setUnits] = useState([]);
@@ -14,11 +15,7 @@ export default function ManufacturingUnitsCatalog() {
 
         async function loadCatalog() {
             try {
-                const response = await fetch('/api/manufacturing-units');
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Could not load manufacturing units.');
-                }
+                const data = await apiGet('/api/manufacturing-units');
                 if (isMounted) setUnits(data.units);
             } catch (requestError) {
                 if (isMounted) {

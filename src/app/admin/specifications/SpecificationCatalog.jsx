@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Loader2, RefreshCw, Rows3 } from 'lucide-react';
+import { apiGet } from '@/lib/api/client';
 
 export default function SpecificationCatalog() {
     const [specifications, setSpecifications] = useState([]);
@@ -14,11 +15,7 @@ export default function SpecificationCatalog() {
 
         async function loadCatalog() {
             try {
-                const response = await fetch('/api/specifications');
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Could not load the specifications catalog.');
-                }
+                const data = await apiGet('/api/specifications');
                 if (isMounted) setSpecifications(data.specifications);
             } catch (requestError) {
                 if (isMounted) {

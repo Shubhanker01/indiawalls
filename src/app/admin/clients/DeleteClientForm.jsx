@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Loader2, Trash2 } from 'lucide-react';
+import { apiDelete } from '@/lib/api/client';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -19,24 +20,16 @@ export default function DeleteClientForm() {
         setIsDeleting(true);
 
         try {
-            const response = await fetch('/api/clients', {
-                method: 'DELETE',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name: name.trim() }),
-            });
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(
-                    data.clientDeleted
-                        ? `${data.error} The client record is already deleted.`
-                        : data.error || 'Client could not be deleted.'
-                );
-            }
+            const data = await apiDelete('/api/clients', { name: name.trim() });
 
             setSuccess(`Client "${data.client.name}" was deleted.`);
             setName('');
         } catch (requestError) {
-            setError(requestError.message || 'Client could not be deleted.');
+            const cleanupNotice =
+                requestError.code === 'CLIENT_DELETED_STORAGE_CLEANUP_FAILED'
+                    ? ' The client record is already deleted.'
+                    : '';
+            setError(`${requestError.message || 'Client could not be deleted.'}${cleanupNotice}`);
         } finally {
             setIsDeleting(false);
         }

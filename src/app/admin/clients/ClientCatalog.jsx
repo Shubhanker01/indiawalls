@@ -2,6 +2,35 @@
 
 import { useEffect, useState } from 'react';
 import { Loader2, RefreshCw } from 'lucide-react';
+import { apiGet } from '@/lib/api/client';
+
+const IMAGE_BASE_URL = process.env.NEXT_PUBLIC_IMAGES?.replace(/\/+$/, '');
+
+function getClientLogoUrl(logo) {
+    if (!logo) return '';
+
+    let logoPath = logo;
+    if (/^https?:\/\//i.test(logo)) {
+        try {
+            const parsedUrl = new URL(logo);
+            const publicStoragePath = '/storage/v1/object/public/';
+            const publicPathIndex = parsedUrl.pathname.indexOf(publicStoragePath);
+
+            if (publicPathIndex === -1) return logo;
+
+            const pathAfterPublic = parsedUrl.pathname.slice(
+                publicPathIndex + publicStoragePath.length
+            );
+            const [, ...objectPath] = pathAfterPublic.split('/');
+            logoPath = objectPath.join('/');
+        } catch {
+            return logo;
+        }
+    }
+
+    const normalizedPath = logoPath.replace(/^\/+/, '');
+    return IMAGE_BASE_URL ? `${IMAGE_BASE_URL}/${normalizedPath}` : logo;
+}
 
 export default function ClientCatalog() {
     const [clients, setClients] = useState([]);
@@ -14,11 +43,7 @@ export default function ClientCatalog() {
 
         async function loadCatalog() {
             try {
-                const response = await fetch('/api/clients');
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Could not load the clients catalog.');
-                }
+                const data = await apiGet('/api/clients');
                 if (isMounted) setClients(data.clients);
             } catch (requestError) {
                 if (isMounted) {
@@ -93,7 +118,7 @@ export default function ClientCatalog() {
                             <div className="flex h-44 items-center justify-center bg-white p-6">
                                 {client.logo ? (
                                     <img
-                                        src={client.logo}
+                                        src={getClientLogoUrl(client.logo)}
                                         alt={`${client.name} logo`}
                                         loading="lazy"
                                         className="max-h-full max-w-full object-contain"

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Loader2, Save } from 'lucide-react';
+import { apiGet, apiPut } from '@/lib/api/client';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -20,13 +21,9 @@ export default function UpdateManufacturingUnitForm() {
 
         async function loadUnits() {
             try {
-                const response = await fetch('/api/manufacturing-units', {
+                const data = await apiGet('/api/manufacturing-units', {
                     cache: 'no-store',
                 });
-                const data = await response.json();
-                if (!response.ok) {
-                    throw new Error(data.error || 'Could not load manufacturing units.');
-                }
                 if (isMounted) setUnits(data.units);
             } catch (requestError) {
                 if (isMounted) {
@@ -71,18 +68,10 @@ export default function UpdateManufacturingUnitForm() {
         setIsSaving(true);
 
         try {
-            const response = await fetch(
+            const data = await apiPut(
                 `/api/manufacturing-units?slug=${encodeURIComponent(selectedSlug)}`,
-                {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(form),
-                }
+                form
             );
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error(data.error || 'Manufacturing unit could not be updated.');
-            }
 
             setUnits((current) =>
                 current.map((unit) =>

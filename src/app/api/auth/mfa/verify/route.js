@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { apiResponse } from '@/lib/api/response';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import {
     checkMfaLockout,
@@ -7,27 +7,27 @@ import {
 } from '@/lib/security/authLockout';
 
 export async function GET(request) {
-    const response = NextResponse.json({ ok: true });
+    const response = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
     const {
         data: { user },
     } = await supabase.auth.getUser();
 
     if (!user) {
-        return getResponse(NextResponse.json({ error: 'Not authenticated.' }, { status: 401 }));
+        return getResponse(apiResponse({ error: 'Not authenticated.' }, { status: 401 }));
     }
 
     const mfaLock = await checkMfaLockout(user.email);
     if (mfaLock.locked) {
         return getResponse(
-            NextResponse.json(
+            apiResponse(
                 { error: mfaLock.message, locked: true, redirect: '/mfa/reset' },
                 { status: 423 }
             )
         );
     }
 
-    return getResponse(NextResponse.json({ ok: true, locked: false }));
+    return getResponse(apiResponse({ ok: true, locked: false }));
 }
 
 export async function POST(request) {
@@ -35,15 +35,15 @@ export async function POST(request) {
     try {
         body = await request.json();
     } catch {
-        return NextResponse.json({ error: 'Invalid request body.' }, { status: 400 });
+        return apiResponse({ error: 'Invalid request body.' }, { status: 400 });
     }
 
     const code = typeof body?.code === 'string' ? body.code.trim() : '';
     if (!/^\d{6}$/.test(code)) {
-        return NextResponse.json({ error: 'Enter a valid 6-digit code.' }, { status: 400 });
+        return apiResponse({ error: 'Enter a valid 6-digit code.' }, { status: 400 });
     }
 
-    const response = NextResponse.json({ ok: true });
+    const response = apiResponse({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
 
     const {
@@ -51,14 +51,14 @@ export async function POST(request) {
     } = await supabase.auth.getUser();
 
     if (!user) {
-        return NextResponse.json({ error: 'Not authenticated.' }, { status: 401 });
+        return apiResponse({ error: 'Not authenticated.' }, { status: 401 });
     }
 
     // 1. Enforce 5-attempt hard lockout: check if MFA input is frozen
     const mfaLock = await checkMfaLockout(user.email);
     if (mfaLock.locked) {
         return getResponse(
-            NextResponse.json(
+            apiResponse(
                 {
                     error: mfaLock.message,
                     locked: true,
@@ -78,7 +78,7 @@ export async function POST(request) {
     }
 
     if (!factorId) {
-        return NextResponse.json({ error: 'No MFA factor found for this account.' }, { status: 400 });
+        return apiResponse({ error: 'No MFA factor found for this account.' }, { status: 400 });
     }
 
     // 3. Challenge + verify in one call
@@ -89,7 +89,7 @@ export async function POST(request) {
         const failResult = await handleMfaFailure(user);
         const status = failResult.locked ? 423 : 401;
 
-        const failureResponse = NextResponse.json(
+        const failureResponse = apiResponse(
             {
                 error: failResult.message,
                 locked: failResult.locked,
