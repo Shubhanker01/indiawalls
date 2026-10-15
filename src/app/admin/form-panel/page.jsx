@@ -141,9 +141,6 @@ export default function FormPanelPage() {
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400">
                         Admin Panel
                     </p>
-                    <a href="/admin/content" className="mt-2 inline-block text-sm font-semibold text-yellow-400 hover:text-yellow-300">
-                        Manage blogs & testimonials →
-                    </a>
                     <h1 className="mt-2 text-3xl font-bold tracking-tight">
                         Project Details
                     </h1>

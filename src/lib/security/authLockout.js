@@ -1,5 +1,8 @@
 import crypto from 'node:crypto';
 import dbConnect from '../dbConnect.js';
+import { sendPasswordLockoutAlertEmail } from '../email/passwordLockoutAlert.js';
+import { sendPasswordRecoveryEmail } from '../email/passwordRecovery.js';
+import { sendMfaResetOtpEmail } from '../email/mfaResetOtp.js';
 import AuthSecurityTracker from '../../models/AuthSecurityTracker.mjs';
 import { supabaseAdmin } from '../supabase/admin.js';
 
@@ -15,6 +18,109 @@ export function normalizeIdentifier(email) {
     return (email || '').trim().toLowerCase();
 }
 
+const PASSWORD_RECOVERY_EMAIL_RETRY_MS = 60 * 1000;
+const PASSWORD_RECOVERY_LINK_TTL_MS = 15 * 60 * 1000;
+
+function getPasswordRecoveryUrl(tokenHash) {
+    const siteUrl = new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000');
+    if (
+        !['http:', 'https:'].includes(siteUrl.protocol) ||
+        siteUrl.username ||
+        siteUrl.password
+    ) {
+        throw new Error('NEXT_PUBLIC_SITE_URL must be a valid HTTP or HTTPS origin.');
+    }
+
+    const recoveryUrl = new URL('/password-reset', siteUrl);
+    recoveryUrl.searchParams.set('token_hash', tokenHash);
+    recoveryUrl.searchParams.set('type', 'recovery');
+    return recoveryUrl.toString();
+}
+
+async function sendRecoveryEmailForLockedAccount(identifier, tracker, invalidatePassword = false) {
+    const now = Date.now();
+    const hasUsableToken =
+        tracker.passwordResetToken &&
+        tracker.passwordResetExpires &&
+        tracker.passwordResetExpires.getTime() > now;
+
+    if (
+        tracker.passwordRecoveryEmailSentAt &&
+        hasUsableToken &&
+        tracker.passwordRecoveryEmailSentAt.getTime() > now - PASSWORD_RECOVERY_LINK_TTL_MS
+    ) {
+        return true;
+    }
+
+    if (
+        tracker.passwordRecoveryEmailAttemptedAt &&
+        tracker.passwordRecoveryEmailAttemptedAt.getTime() > now - PASSWORD_RECOVERY_EMAIL_RETRY_MS
+    ) {
+        return false;
+    }
+
+    tracker.passwordRecoveryEmailAttemptedAt = new Date(now);
+    await tracker.save();
+
+    try {
+        let tokenHash = hasUsableToken ? tracker.passwordResetToken : null;
+
+        if (!tokenHash) {
+            const { data: linkData, error: linkError } =
+                await supabaseAdmin.auth.admin.generateLink({
+                    type: 'recovery',
+                    email: identifier,
+                });
+
+            if (linkError) {
+                throw linkError;
+            }
+
+            tokenHash = linkData?.properties?.hashed_token;
+            if (!tokenHash) {
+                throw new Error('Supabase did not return a password recovery token.');
+            }
+
+            tracker.passwordResetToken = tokenHash;
+            tracker.passwordResetExpires = new Date(now + PASSWORD_RECOVERY_LINK_TTL_MS);
+            tracker.passwordRecoveryEmailSentAt = null;
+            await tracker.save();
+
+            if (invalidatePassword) {
+                const userId = linkData?.user?.id;
+                if (!userId) {
+                    throw new Error('Supabase did not return the account for the recovery link.');
+                }
+
+                const { error: updateError } = await supabaseAdmin.auth.admin.updateUserById(
+                    userId,
+                    {
+                        password: crypto.randomBytes(32).toString('hex') + '!' + Date.now() + 'Aa1#',
+                    }
+                );
+                if (updateError) {
+                    throw updateError;
+                }
+            }
+        }
+
+        await sendPasswordRecoveryEmail(identifier, getPasswordRecoveryUrl(tokenHash));
+        tracker.passwordRecoveryEmailSentAt = new Date();
+        await tracker.save();
+        console.info(`[AUTH_SECURITY] Password recovery email accepted for "${identifier}".`);
+        return true;
+    } catch (emailError) {
+        await tracker.save();
+        console.error('[AUTH_SECURITY] Password recovery email delivery failed:', {
+            code: emailError?.code,
+            responseCode: emailError?.responseCode,
+            command: emailError?.command,
+            message: emailError?.message,
+        });
+        return false;
+    }
+}
+
 /**
  * Checks if an email account is currently locked due to brute-force password failures.
  */
@@ -25,14 +131,16 @@ export async function checkLoginLockout(email) {
     }
 
     await dbConnect();
-    const tracker = await AuthSecurityTracker.findOne({ identifier }).lean();
+    const tracker = await AuthSecurityTracker.findOne({ identifier });
 
     if (tracker?.isPasswordLocked) {
+        const recoveryEmailSent = await sendRecoveryEmailForLockedAccount(identifier, tracker);
         return {
             locked: true,
             attemptsRemaining: 0,
-            message:
-                'Account is locked due to 5 failed login attempts. Your old password has been invalidated. Please use the password reset link sent to your email to regain access.',
+            message: recoveryEmailSent
+                ? 'Your account is locked after 5 failed login attempts. A password recovery link has been sent to your email.'
+                : 'Your account is locked after 5 failed login attempts, but we could not send a recovery email. Please contact an administrator.',
         };
     }
 
@@ -74,60 +182,30 @@ export async function handleLoginFailure(email) {
         tracker.isPasswordLocked = true;
         tracker.lockedAt = new Date();
 
-        let recoveryUrl = null;
-
-        try {
-            // 1. Locate user in Supabase to invalidate password
-            const { data: usersData } = await supabaseAdmin.auth.admin.listUsers();
-            const user = usersData?.users?.find(
-                (u) => (u.email || '').toLowerCase() === identifier
-            );
-
-            if (user) {
-                // 2. Invalidate old password by randomizing it
-                const randomizedPassword =
-                    crypto.randomBytes(32).toString('hex') + '!' + Date.now() + 'Aa1#';
-                await supabaseAdmin.auth.admin.updateUserById(user.id, {
-                    password: randomizedPassword,
-                });
-
-                // 3. Generate secure Supabase password recovery link
-                const { data: linkData, error: linkError } =
-                    await supabaseAdmin.auth.admin.generateLink({
-                        type: 'recovery',
-                        email: identifier,
-                    });
-
-                if (!linkError && linkData?.properties?.action_link) {
-                    recoveryUrl = linkData.properties.action_link;
-                    tracker.passwordResetToken = linkData.properties.hashed_token || null;
-                    tracker.passwordResetExpires = new Date(Date.now() + 15 * 60 * 1000);
-                }
-
-                // 4. Trigger official Supabase password reset email
-                try {
-                    await supabaseAdmin.auth.resetPasswordForEmail(identifier);
-                } catch (emailErr) {
-                    console.error('[AUTH_SECURITY] Supabase reset email dispatch notice:', emailErr.message);
-                }
-            }
-        } catch (adminErr) {
-            console.error('[AUTH_SECURITY] Emergency password invalidation error:', adminErr);
-        }
+        const recoveryEmailSent = await sendRecoveryEmailForLockedAccount(identifier, tracker, true);
 
         await tracker.save();
 
+        try {
+            await sendPasswordLockoutAlertEmail({
+                identifier,
+                attempts: tracker.passwordFailures,
+                lockedAt: tracker.lockedAt,
+            });
+        } catch (emailErr) {
+            console.error('[AUTH_SECURITY] Password lockout alert email failed:', emailErr);
+        }
+
         console.warn(
-            `[SECURITY ALERT] Account "${identifier}" LOCKED after ${tracker.passwordFailures} failed attempts. Password invalidated.` +
-                (recoveryUrl ? ` Recovery URL generated: ${recoveryUrl}` : '')
+            `[SECURITY ALERT] Account "${identifier}" LOCKED after ${tracker.passwordFailures} failed attempts. Password invalidated.`
         );
 
         return {
             locked: true,
             attemptsRemaining: 0,
-            recoveryUrl,
-            message:
-                'Account has been locked due to 5 failed attempts. Your old password has been invalidated. A password reset link has been dispatched to your email.',
+            message: recoveryEmailSent
+                ? 'Your account is locked after 5 failed login attempts. A password recovery link has been sent to your email.'
+                : 'Your account is locked after 5 failed login attempts, but we could not send a recovery email. Please contact an administrator.',
         };
     }
 
@@ -139,6 +217,29 @@ export async function handleLoginFailure(email) {
         attemptsRemaining: remaining,
         message: `Invalid email or password. (${remaining} attempt${remaining === 1 ? '' : 's'} remaining)`,
     };
+}
+
+export async function handlePasswordResetSuccess(email) {
+    const identifier = normalizeIdentifier(email);
+    if (!identifier) {
+        throw new Error('A valid account email is required to reset the lockout.');
+    }
+
+    await dbConnect();
+    await AuthSecurityTracker.findOneAndUpdate(
+        { identifier },
+        {
+            $set: {
+                passwordFailures: 0,
+                isPasswordLocked: false,
+                passwordResetToken: null,
+                passwordResetExpires: null,
+                passwordRecoveryEmailAttemptedAt: null,
+                passwordRecoveryEmailSentAt: null,
+                lockedAt: null,
+            },
+        }
+    );
 }
 
 /**
@@ -233,7 +334,7 @@ export async function handleMfaFailure(user) {
 
         console.warn(
             `[SECURITY ALERT] MFA LOCKED for "${identifier}" after 5 failed TOTP attempts. ` +
-                `Emergency 6-digit OTP generated: [ ${otp} ] (Expires in 10 minutes).`
+            `Emergency 6-digit OTP generated: [ ${otp} ] (Expires in 10 minutes).`
         );
 
         return {
@@ -303,13 +404,10 @@ export async function requestMfaResetOtp(email) {
         { upsert: true, returnDocument: 'after' }
     );
 
-    console.warn(
-        `[SECURITY ALERT] MFA Reset OTP requested for "${identifier}": [ ${otp} ] (Valid for 10 minutes).`
-    );
+    await sendMfaResetOtpEmail(identifier, otp);
 
     return {
         success: true,
-        otp,
         message: 'A 6-digit recovery OTP has been dispatched to your email.',
     };
 }
@@ -361,19 +459,23 @@ export async function verifyMfaResetOtpAndPurgeFactors(user, submittedOtp) {
     }
 
     // OTP is valid! Purge all enrolled factors for the user so they can set up a fresh authenticator
-    try {
-        const { data: factorsData } = await supabaseAdmin.auth.admin.mfa.listFactors({
+    const { data: factorsData, error: listError } = await supabaseAdmin.auth.admin.mfa.listFactors({
+        userId: user.id,
+    });
+    if (listError) {
+        console.error('[AUTH_SECURITY] listFactors failed:', listError.message);
+        return { success: false, error: 'Could not reset MFA. Please try again.' };
+    }
+
+    for (const factor of factorsData?.factors || []) {
+        const { error: deleteError } = await supabaseAdmin.auth.admin.mfa.deleteFactor({
+            id: factor.id, // was `factorId`, which the SDK ignores
             userId: user.id,
         });
-
-        for (const factor of factorsData?.factors || []) {
-            await supabaseAdmin.auth.admin.mfa.deleteFactor({
-                userId: user.id,
-                factorId: factor.id,
-            });
+        if (deleteError) {
+            console.error('[AUTH_SECURITY] deleteFactor failed:', deleteError.message);
+            return { success: false, error: 'Could not reset MFA. Please try again.' };
         }
-    } catch (factorErr) {
-        console.error('[AUTH_SECURITY] Error purging factors via admin SDK:', factorErr.message);
     }
 
     // Reset MFA security tracker

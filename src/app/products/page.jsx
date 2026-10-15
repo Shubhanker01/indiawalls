@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import Link from 'next/link';
 import { getProducts, imageSrc } from '@/lib/products';
 
@@ -163,16 +164,7 @@ export default async function ProductsPage() {
                 })}
             </main>
 
-            {/* Footer */}
-            <footer className="border-t border-slate-800 bg-slate-900 py-8 text-md text-slate-400">
-                <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 text-center sm:flex-row sm:px-6 sm:text-left lg:px-8">
-                    <div>
-                        <p className="font-semibold text-slate-300">RajasthanWall Manufacturing Unit</p>
-                        <p className="mt-1">Near Gyan Sagar, Alampur, Kotkasim, Rajasthan.</p>
-                    </div>
-                    <p className="text-slate-500">Copyright © 2026 RajasthanWall. All Rights Reserved.</p>
-                </div>
-            </footer>
+            <Footer />
         </div>
     );
 }

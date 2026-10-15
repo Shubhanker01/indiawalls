@@ -38,6 +38,14 @@ const AuthSecurityTrackerSchema = new mongoose.Schema(
             type: Date,
             default: null,
         },
+        passwordRecoveryEmailAttemptedAt: {
+            type: Date,
+            default: null,
+        },
+        passwordRecoveryEmailSentAt: {
+            type: Date,
+            default: null,
+        },
         mfaOtpHash: {
             type: String,
             default: null,
@@ -71,4 +79,3 @@ const AuthSecurityTrackerSchema = new mongoose.Schema(
 
 export default mongoose.models.AuthSecurityTracker ||
     mongoose.model('AuthSecurityTracker', AuthSecurityTrackerSchema);
-

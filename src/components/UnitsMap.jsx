@@ -28,6 +28,7 @@ function FlyToActive({ units, active }) {
     useEffect(() => {
         if (active === null) return;
         const u = units[active];
+        if (!u || !Number.isFinite(u.lat) || !Number.isFinite(u.lng)) return;
         map.flyTo([u.lat, u.lng], Math.max(map.getZoom(), 10), { duration: 0.8 });
     }, [active, units, map]);
     return null;
@@ -40,7 +41,11 @@ function ResetButton({ bounds, onReset }) {
             type="button"
             onClick={() => {
                 onReset();
-                map.fitBounds(bounds, { padding: [40, 40] });
+                if (bounds.isValid()) {
+                    map.fitBounds(bounds, { padding: [40, 40] });
+                } else {
+                    map.setView([27.5, 76], 6);
+                }
             }}
             className="absolute right-3 top-3 z-1000 rounded-lg bg-white px-3 py-2 text-xs font-bold text-slate-900 shadow-md transition hover:bg-slate-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-slate-900"
         >
@@ -50,11 +55,23 @@ function ResetButton({ bounds, onReset }) {
 }
 
 export default function UnitsMap({ units, active, onSelect, onReset }) {
-    const bounds = useMemo(() => L.latLngBounds(units.map((u) => [u.lat, u.lng])), [units]);
+    const mappedUnits = useMemo(
+        () =>
+            units
+                .map((unit, index) => ({ unit, index }))
+                .filter(({ unit }) => Number.isFinite(unit.lat) && Number.isFinite(unit.lng)),
+        [units]
+    );
+    const bounds = useMemo(
+        () => L.latLngBounds(mappedUnits.map(({ unit }) => [unit.lat, unit.lng])),
+        [mappedUnits]
+    );
 
     return (
         <MapContainer
-            bounds={bounds}
+            center={[27.5, 76]}
+            zoom={6}
+            bounds={bounds.isValid() ? bounds : undefined}
             boundsOptions={{ padding: [40, 40] }}
             scrollWheelZoom={false} // stops the page getting "stuck" while scrolling past the map
             className="h-full w-full"
@@ -64,16 +81,16 @@ export default function UnitsMap({ units, active, onSelect, onReset }) {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
 
-            {units.map((u, i) => {
-                const isActive = active === i;
+            {mappedUnits.map(({ unit: u, index }) => {
+                const isActive = active === index;
                 return (
                     <Marker
                         // key includes isActive so the icon and tooltip remount when selection changes
-                        key={`${u.city}-${isActive}`}
+                        key={`${u.id || u.slug || u.city}-${isActive}`}
                         position={[u.lat, u.lng]}
                         icon={pinIcon(isActive)}
                         zIndexOffset={isActive ? 1000 : 0}
-                        eventHandlers={{ click: () => onSelect(i) }}
+                        eventHandlers={{ click: () => onSelect(index) }}
                         title={u.city}
                     >
                         <Tooltip direction="top" permanent={isActive}>

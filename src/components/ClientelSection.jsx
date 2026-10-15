@@ -1,27 +1,11 @@
 import Image from 'next/image';
+import { getClients } from '@/lib/api/getClients';
 
-const clients = [
-    { name: 'Tata', logo: 'Tata.webp' },
-    { name: 'Adani', logo: 'adani.webp' },
-    { name: 'One Group', logo: 'OneGroup.webp' },
-    { name: 'Nagar Nigam', logo: 'municipal.webp' },
-    { name: 'Indian Railways', logo: 'IndianRailways.webp' },
-    { name: 'Humanity Ahead', logo: 'HumanityAhead.webp' },
-    { name: 'Nagar Vikas', logo: 'NagarVikas.webp' },
-    { name: 'Essel', logo: 'Essel.webp' },
-    { name: 'Aviana', logo: 'Aviana.jpg' },
-    { name: 'Bhaskar Jyoti', logo: 'Bhaskar%20Jyoti%20(India%20Pvt%20Ltd).png' },
-    { name: 'ats', logo: 'ats.png' },
-    { name: 'Bharta Construction', logo: 'Bharata%20Construction.png' },
-    { name: 'cosine power', logo: 'Cosine%20Power%20Ltd.jpg' },
-    { name: 'Modi Groups', logo: 'modi%20groups.jpg' },
-    { name: 'DCC Infra', logo: 'dcc_infra.jpg' },
-];
+export default async function ClienteleSection() {
+    const clients = await getClients();
+    const doubledClients = [...clients, ...clients];
+    const imageBaseUrl = process.env.NEXT_PUBLIC_IMAGES?.replace(/\/+$/, '');
 
-// Duplicate array for seamless endless scrolling loop
-const doubledClients = [...clients, ...clients];
-
-export default function ClienteleSection() {
     return (
         <section className="py-16 border-y border-slate-200 overflow-hidden" id="clientele">
             <div className="max-w-7xl mx-auto px-4 sm:px-8 mb-10 text-center">
@@ -44,13 +28,17 @@ export default function ClienteleSection() {
                 <div className="flex gap-6 sm:gap-8 items-center animate-marquee whitespace-nowrap w-max">
                     {doubledClients.map((client, idx) => (
                         <div
-                            key={idx}
+                            key={`${client.id}-${idx}`}
                             className="relative flex w-36 sm:w-48 h-36 sm:h-40 shrink-0 items-center justify-center rounded-2xl bg-slate-100 p-5 sm:p-8 opacity-100 transition-all duration-450"
                         >
                             <div className="relative h-full w-full">
                                 <Image
-                                    src={`${process.env.NEXT_PUBLIC_IMAGES}/${client.logo}`}
-                                    alt={`${client.name} Logo`}
+                                    src={
+                                        client.logo.startsWith('http')
+                                            ? client.logo
+                                            : `${imageBaseUrl}/${client.logo}`
+                                    }
+                                    alt={`${client.name} logo`}
                                     fill
                                     className="object-contain"
                                     sizes="(min-width: 640px) 160px, 112px"

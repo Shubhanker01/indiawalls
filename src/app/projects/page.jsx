@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import ProjectsGrid from '@/components/ProjectsGrid';
 import { getProjects } from '@/lib/api/getProjects';
 
@@ -69,6 +70,7 @@ export default async function ProjectsPage() {
                     </div>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }

@@ -1,7 +1,13 @@
 import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase/server';
 import { verifyMfaResetOtpAndPurgeFactors } from '@/lib/security/authLockout';
-import { supabaseAdmin } from '@/lib/supabase/admin';
+
+export const runtime = 'nodejs';
+
+function copyAuthCookies(source, destination) {
+    source.cookies.getAll().forEach((cookie) => destination.cookies.set(cookie));
+    return destination;
+}
 
 export async function POST(request) {
     let body;
@@ -19,31 +25,34 @@ export async function POST(request) {
     const response = NextResponse.json({ ok: true });
     const { supabase, getResponse } = createSupabaseServerClient({ request, response });
 
-    let {
+    // The user must have passed the password step (aal1 session). The old fallback that looked a
+    // user up by an email from the request body is removed: it let anyone holding only the admin's
+    // email and an OTP strip the MFA factors without ever logging in.
+    const {
         data: { user },
     } = await supabase.auth.getUser();
 
-    // Fallback: lookup user by provided email if session cookies were cleared
-    if (!user && typeof body?.email === 'string') {
-        const email = body.email.trim().toLowerCase();
-        const { data: usersData } = await supabaseAdmin.auth.admin.listUsers();
-        user = usersData?.users?.find((u) => (u.email || '').toLowerCase() === email) || null;
+    if (!user) {
+        return NextResponse.json({ error: 'Session expired. Please log in again.' }, { status: 401 });
     }
 
-    if (!user) {
-        return NextResponse.json(
-            { error: 'Session expired. Please log in first or provide your admin email.' },
-            { status: 401 }
+    let result;
+    try {
+        result = await verifyMfaResetOtpAndPurgeFactors(user, otp);
+    } catch (err) {
+        console.error('MFA reset failed:', err?.message);
+        return copyAuthCookies(getResponse(), NextResponse.json({ error: 'Could not reset MFA.' }, { status: 500 }));
+    }
+
+    if (!result?.success) {
+        return copyAuthCookies(
+            getResponse(),
+            NextResponse.json({ error: result?.error || 'Invalid or expired code.' }, { status: 400 })
         );
     }
 
-    const result = await verifyMfaResetOtpAndPurgeFactors(user, otp);
-
-    if (!result.success) {
-        return NextResponse.json({ error: result.error }, { status: 400 });
-    }
-
-    return getResponse(
+    return copyAuthCookies(
+        getResponse(),
         NextResponse.json({
             ok: true,
             message: result.message,
@@ -52,4 +61,3 @@ export async function POST(request) {
         })
     );
 }
-

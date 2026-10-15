@@ -9,11 +9,11 @@ import { ShieldAlert, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
 function MfaReset() {
     const router = useRouter();
     const [otp, setOtp] = useState('');
-    const [email, setEmail] = useState('');
     const [statusMessage, setStatusMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isRequestingOtp, setIsRequestingOtp] = useState(false);
+    const [hasRequestedOtp, setHasRequestedOtp] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
 
     const handleRequestOtp = async () => {
@@ -21,7 +21,8 @@ function MfaReset() {
         setStatusMessage('');
         setIsRequestingOtp(true);
         try {
-            const { data } = await axios.post('/api/auth/mfa/reset-request', { email });
+            const { data } = await axios.post('/api/auth/mfa/reset-request');
+            setHasRequestedOtp(true);
             setStatusMessage(data.message || 'A new 6-digit OTP has been dispatched to your email.');
         } catch (err) {
             setErrorMessage(err.response?.data?.error || 'Unable to send OTP. Please check your email.');
@@ -37,7 +38,7 @@ function MfaReset() {
         setIsLoading(true);
 
         try {
-            const { data } = await axios.post('/api/auth/mfa/reset-verify', { otp, email });
+            const { data } = await axios.post('/api/auth/mfa/reset-verify', { otp });
             if (data.ok) {
                 setIsSuccess(true);
                 setStatusMessage('MFA factor reset successfully! Redirecting to setup a new authenticator...');
@@ -88,20 +89,23 @@ function MfaReset() {
                     </div>
                 )}
 
-                <form onSubmit={handleVerifyOtp} className="space-y-4">
-                    <div>
-                        <label className="block text-xs font-medium text-slate-300 mb-2">
-                            Admin Email (Optional if already logged in)
-                        </label>
-                        <input
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="admin@rajasthanwalls.in"
-                            className="w-full px-4 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-xs sm:text-sm text-slate-100 placeholder:text-slate-600 focus:outline-none focus:border-yellow-500 transition"
-                        />
-                    </div>
+                <button
+                    type="button"
+                    onClick={handleRequestOtp}
+                    disabled={hasRequestedOtp || isRequestingOtp || isSuccess}
+                    className="mb-4 w-full py-3 border border-yellow-600/50 bg-yellow-600/10 hover:bg-yellow-600/20 text-yellow-400 font-medium text-xs sm:text-sm rounded-xl transition flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                    {isRequestingOtp ? (
+                        <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            Sending OTP...
+                        </>
+                    ) : (
+                        'Send OTP'
+                    )}
+                </button>
 
+                <form onSubmit={handleVerifyOtp} className="space-y-4">
                     <div>
                         <label className="block text-xs font-medium text-slate-300 mb-2">
                             6-Digit Emergency OTP
@@ -155,4 +159,3 @@ export default function Page() {
         </Suspense>
     );
 }
-

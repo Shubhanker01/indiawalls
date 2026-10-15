@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import EstimateCalculator from '@/components/EstimateCalculator';
 import ContactInquiryForm from '@/components/ContactInquiryForm';
 
@@ -179,6 +180,7 @@ export default function ContactPage() {
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d905431.5347039085!2d75.98906689793341!3d27.567415731693576!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d4d5b6dd506d5%3A0xa2d556086c32334c!2sVR%20ENTERPRISES!5e0!3m2!1sen!2sin!4v1789200071199!5m2!1sen!2sin" allowFullScreen="" loading="lazy" height="100%" width="100%" referrerPolicy="strict-origin-when-cross-origin"></iframe>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }

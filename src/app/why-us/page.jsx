@@ -1,5 +1,6 @@
 import Navbar from '@/components/Navbar';
 import Link from 'next/link';
+import Footer from '@/components/Footer';
 
 export const metadata = {
     title: 'Why Choose Us | Rajasthan Wall Infratech - Precast & Fencing Leader',
@@ -223,6 +224,7 @@ export default function WhyUsPage() {
                     </div>
                 </div>
             </section>
+            <Footer />
         </div>
     );
 }

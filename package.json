@@ -10,7 +10,10 @@
     "seed:products": "node --env-file=.env.local scripts/seed-products.mjs",
     "seed:product-details": "node --env-file=.env.local scripts/seed-product-details.mjs",
     "seed:projects": "node --env-file=.env.local scripts/seed-projects.mjs",
-    "seed:content": "node --env-file=.env.local scripts/seed-content.mjs"
+    "seed:content": "node --env-file=.env.local scripts/seed-content.mjs",
+    "seed:specifications": "node --env-file=.env.local scripts/seed-specifications.mjs",
+    "seed:clients": "node --env-file=.env.local scripts/seed-clients.mjs",
+    "seed:manufacturing-units": "node --env-file=.env.local scripts/seed-manufacturing-units.mjs"
   },
   "dependencies": {
     "@ai-sdk/react": "^4.0.95",
@@ -29,6 +32,7 @@
     "lucide-react": "^1.40.0",
     "mongoose": "^9.11.1",
     "next": "16.3.3",
+    "nodemailer": "^10.1.0",
     "qrcode.react": "^4.2.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",

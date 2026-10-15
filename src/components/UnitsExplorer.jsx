@@ -40,16 +40,16 @@ export default function UnitsExplorer({ units, phone }) {
             {/* Unit list */}
             <div className="order-2 space-y-6 lg:order-1 lg:h-150 lg:overflow-y-auto lg:pr-2">
                 {groups.map(([region, items]) => (
-                    <div key={region}>
+                    <div key={region || 'other-region'}>
                         <h3 className="mb-3 text-sm font-bold text-slate-500">
-                            {region} ({items.length})
+                            {region || 'Other locations'} ({items.length})
                         </h3>
                         <ul className="space-y-3">
                             {items.map(({ unit, index }) => {
                                 const isActive = active === index;
                                 return (
                                     <li
-                                        key={unit.city}
+                                        key={unit.id || unit.slug || `${unit.city}-${index}`}
                                         ref={(el) => (itemRefs.current[index] = el)}
                                         className={`rounded-xl border bg-white transition-colors ${isActive
                                                 ? 'border-yellow-400 ring-2 ring-yellow-400/40'
@@ -70,7 +70,7 @@ export default function UnitsExplorer({ units, phone }) {
                                             </span>
                                             <span>
                                                 <span className="block text-lg font-bold text-slate-900">{unit.city}</span>
-                                                <span className="block text-sm text-slate-600">{unit.address}</span>
+                                                <span className="block text-sm text-slate-600">{unit.address || region || 'Address not provided'}</span>
                                             </span>
                                         </button>
                                         <div className="flex gap-2 px-4 pb-4">
@@ -81,7 +81,14 @@ export default function UnitsExplorer({ units, phone }) {
                                                 <Phone size={14} aria-hidden="true" /> Call
                                             </a>
                                             <a
-                                                href={unit.mapsUrl || `https://www.google.com/maps?q=${unit.lat},${unit.lng}`}
+                                                href={
+                                                    unit.mapsUrl ||
+                                                    (Number.isFinite(unit.lat) && Number.isFinite(unit.lng)
+                                                        ? `https://www.google.com/maps?q=${unit.lat},${unit.lng}`
+                                                        : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                                                              [unit.address, unit.city, region].filter(Boolean).join(', ')
+                                                          )}`)
+                                                }
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold text-slate-800 transition hover:border-slate-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-900"

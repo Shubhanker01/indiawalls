@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { loginAdmin } from '@/lib/api/auth';
 
-export default function AdminLoginForm({ callbackUrl }) {
+export default function AdminLoginForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -21,16 +21,12 @@ export default function AdminLoginForm({ callbackUrl }) {
         try {
             const res = await loginAdmin({ email, password });
             if (res.data.ok === true) {
-                const callback =
-                    callbackUrl?.startsWith('/') && !callbackUrl.startsWith('//')
-                        ? callbackUrl
-                        : '/admin/form-panel';
                 const destination =
                     res.data.nextStep === 'mfa'
                         ? '/mfa'
                         : res.data.nextStep === 'mfa-setup'
                             ? '/mfa/setup'
-                            : callback;
+                            : '/admin/form-panel';
                 router.push(destination);
             }
 

@@ -8,45 +8,55 @@ export async function middleware(req) {
         updateRequestCookies: true,
     });
 
-    const { data: { user } } = await supabase.auth.getUser();
-    const isLoggedIn = !!user;
+    const {
+        data: { user },
+        error: userError,
+    } = await supabase.auth.getUser();
     const pathname = req.nextUrl.pathname;
-    const isOnAdmin = pathname.startsWith("/admin");
-    const isAdminLogin = pathname === "/admin";
-    const isErrorRoute = pathname.startsWith("/admin/form-panel") || pathname.startsWith("/admin/api");
+    const isAdminRoute = pathname === '/admin' || pathname.startsWith('/admin/');
+    const isAdminLogin = pathname === '/admin';
 
-    if (isOnAdmin && !isAdminLogin && !pathname.startsWith("/admin/api") && isLoggedIn) {
-        const { data: assurance, error } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
-        if (error) {
-            return NextResponse.json({ error: "Could not verify authentication level." }, { status: 500 });
-        }
-        if (assurance?.nextLevel === "aal1") {
-            return NextResponse.redirect(new URL("/mfa/setup", req.url));
-        }
-        if (assurance?.currentLevel === "aal1" && assurance?.nextLevel === "aal2") {
-            return NextResponse.redirect(new URL("/mfa", req.url));
-        }
+    if (!isAdminRoute || isAdminLogin) {
+        return getResponse();
     }
 
-    if (isOnAdmin && !isAdminLogin && !isLoggedIn && !isErrorRoute) {
-        const loginUrl = new URL("/admin", req.url);
-        loginUrl.searchParams.set("callbackUrl", req.nextUrl.pathname);
-        return NextResponse.redirect(loginUrl);
+    if (userError) {
+        console.error('[AUTH] Could not verify the admin session:', userError.message);
     }
-    if (isErrorRoute && !isLoggedIn) {
-        return NextResponse.json(
-            {
-                error: "Unauthorized Access",
-                message: "Sorry this page is forbidden",
-                status: 403,
-            },
-            { status: 403 }
+
+    if (userError || !user) {
+        return getResponse(
+            NextResponse.json(
+                {
+                    error: 'Unauthorized Access',
+                    message: 'A verified admin session is required to access this route.',
+                    status: 401,
+                },
+                { status: 401 }
+            )
         );
+    }
+
+    const { data: assurance, error: assuranceError } =
+        await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+    if (assuranceError) {
+        console.error('[AUTH] Could not verify the admin assurance level:', assuranceError.message);
+        return getResponse(
+            NextResponse.json(
+                { error: 'Could not verify authentication level.' },
+                { status: 500 }
+            )
+        );
+    }
+
+    if (assurance?.currentLevel !== 'aal2') {
+        const nextPath = assurance?.nextLevel === 'aal2' ? '/mfa' : '/mfa/setup';
+        return getResponse(NextResponse.redirect(new URL(nextPath, req.url)));
     }
 
     return getResponse();
 }
 
 export const config = {
-    matcher: ["/admin/:path*"],
+    matcher: ['/admin/:path*'],
 };
