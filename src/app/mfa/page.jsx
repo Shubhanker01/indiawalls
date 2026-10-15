@@ -1,13 +1,41 @@
 'use client';
-import { Suspense, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 function MfaVerify() {
+    const router = useRouter();
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
     const [isLocked, setIsLocked] = useState(false);
+    const [isCheckingLockout, setIsCheckingLockout] = useState(true);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        let cancelled = false;
+        axios.get('/api/auth/mfa/verify')
+            .then(() => {
+                if (!cancelled) setIsCheckingLockout(false);
+            })
+            .catch((requestError) => {
+                if (cancelled) return;
+                if (requestError.response?.status === 423) {
+                    setIsLocked(true);
+                    router.replace('/mfa/reset');
+                    return;
+                }
+                if (requestError.response?.status === 401) {
+                    router.replace('/admin');
+                    return;
+                }
+                setError(requestError.response?.data?.error || 'Unable to verify MFA lockout status.');
+                setIsCheckingLockout(false);
+            });
+        return () => {
+            cancelled = true;
+        };
+    }, [router]);
 
     const submit = async (e) => {
         e.preventDefault();
@@ -29,6 +57,9 @@ function MfaVerify() {
 
             if (lockedState) {
                 setIsLocked(true);
+                router.replace(
+                    e.response?.data?.emailSent === true ? '/mfa/reset?otpSent=1' : '/mfa/reset'
+                );
             }
         } finally {
             setLoading(false);
@@ -56,14 +87,14 @@ function MfaVerify() {
                     maxLength={6}
                     autoComplete="one-time-code"
                     placeholder="123456"
-                    disabled={isLocked || loading}
+                    disabled={isLocked || loading || isCheckingLockout}
                     autoFocus
                 />
 
                 <button
                     className="mt-5 w-full rounded-xl bg-yellow-600 px-4 py-3 font-semibold text-white transition hover:bg-yellow-500 disabled:cursor-not-allowed disabled:opacity-50 shadow-lg shadow-yellow-900/20"
                     type="submit"
-                    disabled={loading || isLocked || code.length !== 6}
+                    disabled={loading || isLocked || isCheckingLockout || code.length !== 6}
                 >
                     {loading ? 'Verifying...' : 'Verify TOTP Code'}
                 </button>

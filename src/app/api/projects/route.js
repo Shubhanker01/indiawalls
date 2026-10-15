@@ -53,8 +53,8 @@ const GALLERY_IMAGE_EXTENSIONS = {
 const STORAGE_BUCKET = process.env.SUPABASE_BUCKET || 'images';
 
 // ---------------------------------------------------------------------------
-// GET /api/projects?q=wall -> project fields used by the admin update form.
-// Used by the search box: returns up to 8 projects whose title matches.
+// GET /api/projects?q=wall -> matching projects for the admin update form.
+// GET /api/projects -> all projects for the admin project-card view.
 // ---------------------------------------------------------------------------
 export async function GET(request) {
     const { deny, reply } = await requireAdmin(request);
@@ -62,24 +62,30 @@ export async function GET(request) {
 
     try {
         const q = (request.nextUrl.searchParams.get('q') || '').trim().slice(0, 80);
-        if (!q) return reply({ results: [] });
-
         await dbConnect();
-        // Unpublished projects are included on purpose: the admin must be able to edit them too.
-        const docs = await Project.find({ title: { $regex: escapeRegex(q), $options: 'i' } })
-            .select('title category location description image gallery')
-            .sort({ title: 1 })
-            .limit(8)
-            .lean();
+        const query = q ? { title: { $regex: escapeRegex(q), $options: 'i' } } : {};
+        let projectsQuery = Project.find(query)
+            .select('title slug category productSlug location description longDescription image gallery order published')
+            .sort(q ? { title: 1 } : { order: 1, title: 1 });
+
+        if (q) projectsQuery = projectsQuery.limit(8);
+
+        // Unpublished projects are included so admins can review and edit all items.
+        const docs = await projectsQuery.lean();
 
         return reply({
             results: docs.map((d) => ({
                 title: d.title,
+                slug: d.slug,
                 category: d.category,
+                productSlug: d.productSlug,
                 location: d.location,
                 description: d.description || '',
+                longDescription: d.longDescription || '',
                 image: d.image,
                 gallery: d.gallery || [],
+                order: d.order ?? 0,
+                published: d.published,
             })),
         });
     } catch (error) {

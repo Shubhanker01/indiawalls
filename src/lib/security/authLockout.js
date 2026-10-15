@@ -324,7 +324,7 @@ export async function handleMfaFailure(user) {
         tracker.lockedAt = new Date();
 
         // Generate emergency 6-digit OTP
-        const otp = String(crypto.randomInt(100000, 999999));
+        const otp = String(crypto.randomInt(100000, 1000000));
         const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
 
         tracker.mfaOtpHash = otpHash;
@@ -332,17 +332,21 @@ export async function handleMfaFailure(user) {
         tracker.mfaOtpAttempts = 0;
         await tracker.save();
 
-        console.warn(
-            `[SECURITY ALERT] MFA LOCKED for "${identifier}" after 5 failed TOTP attempts. ` +
-            `Emergency 6-digit OTP generated: [ ${otp} ] (Expires in 10 minutes).`
-        );
+        let emailSent = false;
+        try {
+            await sendMfaResetOtpEmail(identifier, otp, { lockout: true });
+            emailSent = true;
+        } catch (error) {
+            console.error('[AUTH_SECURITY] MFA lockout recovery email could not be sent:', error?.message);
+        }
 
         return {
             locked: true,
             attemptsRemaining: 0,
-            otp, // Available in server logs/testing
-            message:
-                'MFA locked: 5 failed attempts reached. Authenticator input is frozen. An emergency 6-digit recovery OTP has been dispatched to your email to reset your authenticator.',
+            emailSent,
+            message: emailSent
+                ? 'MFA locked after 5 failed attempts. An emergency recovery OTP was sent to your email.'
+                : 'MFA locked after 5 failed attempts, but the recovery email could not be sent. Please use the resend option on the reset screen.',
         };
     }
 
@@ -388,7 +392,7 @@ export async function requestMfaResetOtp(email) {
     }
 
     await dbConnect();
-    const otp = String(crypto.randomInt(100000, 999999));
+    const otp = String(crypto.randomInt(100000, 1000000));
     const otpHash = crypto.createHash('sha256').update(otp).digest('hex');
 
     await AuthSecurityTracker.findOneAndUpdate(

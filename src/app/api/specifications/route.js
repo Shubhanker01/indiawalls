@@ -206,7 +206,7 @@ export async function GET(request) {
         await dbConnect();
         const specifications = await Specification.find({})
             .sort({ specificationName: 1 })
-            .select('specificationName slug label description specifications')
+            .select('specificationName slug label description image specifications published')
             .lean();
         return reply({
             specifications: specifications.map(({ _id, ...specification }) => ({

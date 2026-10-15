@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { getClients } from '@/lib/api/getClients';
 
 export default async function ClienteleSection() {
@@ -32,16 +31,16 @@ export default async function ClienteleSection() {
                             className="relative flex w-36 sm:w-48 h-36 sm:h-40 shrink-0 items-center justify-center rounded-2xl bg-slate-100 p-5 sm:p-8 opacity-100 transition-all duration-450"
                         >
                             <div className="relative h-full w-full">
-                                <Image
+                                <img
                                     src={
-                                        client.logo.startsWith('http')
+                                        /^https?:\/\//i.test(client.logo)
                                             ? client.logo
-                                            : `${imageBaseUrl}/${client.logo}`
+                                            : `${imageBaseUrl}/${client.logo.replace(/^\/+/, '')}`
                                     }
                                     alt={`${client.name} logo`}
-                                    fill
-                                    className="object-contain"
-                                    sizes="(min-width: 640px) 160px, 112px"
+                                    loading="lazy"
+                                    decoding="async"
+                                    className="h-full w-full object-contain"
                                 />
                             </div>
                         </div>

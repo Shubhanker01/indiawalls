@@ -66,6 +66,30 @@ function slugify(value) {
         .slice(0, 80);
 }
 
+export async function GET(request) {
+    const { supabase, reply } = getReply(request);
+    const denied = await authorize(supabase, reply);
+    if (denied) return denied;
+
+    try {
+        await dbConnect();
+        const clients = await Client.find({})
+            .sort({ order: 1, name: 1 })
+            .select('name slug logo order published')
+            .lean();
+
+        return reply({
+            clients: clients.map(({ _id, ...client }) => ({
+                ...client,
+                id: String(_id),
+            })),
+        });
+    } catch (error) {
+        console.error('Failed to load clients for admin:', error);
+        return reply({ error: 'Failed to load clients.' }, 500);
+    }
+}
+
 export async function POST(request) {
     const { supabase, reply } = getReply(request);
     const denied = await authorize(supabase, reply);

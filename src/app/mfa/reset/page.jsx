@@ -2,18 +2,22 @@
 
 import { Suspense, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import { ShieldAlert, ArrowLeft, Loader2, CheckCircle2 } from 'lucide-react';
 
 function MfaReset() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const otpWasSent = searchParams.get('otpSent') === '1';
     const [otp, setOtp] = useState('');
-    const [statusMessage, setStatusMessage] = useState('');
+    const [statusMessage, setStatusMessage] = useState(
+        otpWasSent ? 'A recovery OTP was sent to your email. Check your inbox to continue.' : ''
+    );
     const [errorMessage, setErrorMessage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [isRequestingOtp, setIsRequestingOtp] = useState(false);
-    const [hasRequestedOtp, setHasRequestedOtp] = useState(false);
+    const [hasRequestedOtp, setHasRequestedOtp] = useState(otpWasSent);
     const [isSuccess, setIsSuccess] = useState(false);
 
     const handleRequestOtp = async () => {

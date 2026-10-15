@@ -1,9 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Loader2, MapPin, Pencil, Plus, Trash2 } from 'lucide-react';
+import { Loader2, MapPin, Pencil, Plus, Trash2, List } from 'lucide-react';
 import DeleteManufacturingUnitForm from './DeleteManufacturingUnitForm';
 import UpdateManufacturingUnitForm from './UpdateManufacturingUnitForm';
+import ManufacturingUnitsCatalog from './ManufacturingUnitsCatalog';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -12,6 +13,7 @@ const MODES = [
     { id: 'create', label: 'Add a new unit', icon: Plus },
     { id: 'update', label: 'Update', icon: Pencil },
     { id: 'delete', label: 'Delete', icon: Trash2 },
+    { id: 'catalog', label: 'Show Catalog', icon: List },
 ];
 
 const EMPTY_FORM = {
@@ -224,7 +226,7 @@ export default function ManufacturingUnitsManager() {
             >
                 <h2 className="flex items-center gap-2 text-xl font-bold text-white">
                     <ActiveIcon className="h-5 w-5 text-yellow-400" />
-                    {activeMode.label}
+                    {mode === 'catalog' ? 'Manufacturing units catalog' : activeMode.label}
                 </h2>
                 {mode === 'create' ? (
                     <AddManufacturingUnitForm />
@@ -232,6 +234,8 @@ export default function ManufacturingUnitsManager() {
                     <UpdateManufacturingUnitForm />
                 ) : mode === 'delete' ? (
                     <DeleteManufacturingUnitForm />
+                ) : mode === 'catalog' ? (
+                    <ManufacturingUnitsCatalog />
                 ) : (
                     <p className="rounded-xl border border-slate-800 bg-slate-900 px-4 py-6 text-sm text-slate-400">
                         {activeMode.label} functionality will be available here in a future update.

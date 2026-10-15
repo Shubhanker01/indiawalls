@@ -1,9 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Check, ChevronDown, Loader2, Plus, Pencil, Trash2 } from 'lucide-react';
+import { Check, ChevronDown, Loader2, Plus, Pencil, Trash2, PackageSearch } from 'lucide-react';
 import Image from 'next/image';
 import ProductForm from './ProductForm';
+import ProductCatalog from './ProductCatalog';
 
 const FIELD_CLASS =
     'mt-2 w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-yellow-500';
@@ -12,6 +13,7 @@ const MODES = [
     { id: 'create', label: 'Create', icon: Plus },
     { id: 'update', label: 'Update', icon: Pencil },
     { id: 'delete', label: 'Delete', icon: Trash2 },
+    { id: 'catalog', label: 'Show Catalog', icon: PackageSearch },
 ];
 
 const DETAIL_FIELDS = [
@@ -624,11 +626,12 @@ export default function ProductsManager() {
             >
                 <h2 className="flex items-center gap-2 text-xl font-bold text-white">
                     <ActiveIcon className="h-5 w-5 text-yellow-400" />
-                    {activeMode.label} product
+                    {mode === 'catalog' ? 'Product catalog' : `${activeMode.label} product`}
                 </h2>
                 {mode === 'create' && <ProductForm />}
                 {mode === 'update' && <UpdateProductForm />}
                 {mode === 'delete' && <DeleteProductForm />}
+                {mode === 'catalog' && <ProductCatalog />}
             </section>
         </>
     );

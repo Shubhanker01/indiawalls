@@ -6,6 +6,30 @@ import {
     handleMfaSuccess,
 } from '@/lib/security/authLockout';
 
+export async function GET(request) {
+    const response = NextResponse.json({ ok: true });
+    const { supabase, getResponse } = createSupabaseServerClient({ request, response });
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+        return getResponse(NextResponse.json({ error: 'Not authenticated.' }, { status: 401 }));
+    }
+
+    const mfaLock = await checkMfaLockout(user.email);
+    if (mfaLock.locked) {
+        return getResponse(
+            NextResponse.json(
+                { error: mfaLock.message, locked: true, redirect: '/mfa/reset' },
+                { status: 423 }
+            )
+        );
+    }
+
+    return getResponse(NextResponse.json({ ok: true, locked: false }));
+}
+
 export async function POST(request) {
     let body;
     try {
@@ -33,13 +57,15 @@ export async function POST(request) {
     // 1. Enforce 5-attempt hard lockout: check if MFA input is frozen
     const mfaLock = await checkMfaLockout(user.email);
     if (mfaLock.locked) {
-        return NextResponse.json(
-            {
-                error: mfaLock.message,
-                locked: true,
-                redirect: '/mfa/reset',
-            },
-            { status: 423 } // 423 Locked
+        return getResponse(
+            NextResponse.json(
+                {
+                    error: mfaLock.message,
+                    locked: true,
+                    redirect: '/mfa/reset',
+                },
+                { status: 423 }
+            )
         );
     }
 
@@ -63,15 +89,17 @@ export async function POST(request) {
         const failResult = await handleMfaFailure(user);
         const status = failResult.locked ? 423 : 401;
 
-        return NextResponse.json(
+        const failureResponse = NextResponse.json(
             {
                 error: failResult.message,
                 locked: failResult.locked,
+                emailSent: failResult.locked ? failResult.emailSent : undefined,
                 redirect: failResult.locked ? '/mfa/reset' : undefined,
                 attemptsRemaining: failResult.attemptsRemaining,
             },
             { status }
         );
+        return getResponse(failureResponse);
     }
 
     // Reset failure counter on successful TOTP verification

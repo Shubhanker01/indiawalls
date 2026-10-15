@@ -77,7 +77,7 @@ export async function GET(request) {
         await dbConnect();
         const units = await ManufacturingUnit.find({})
             .sort({ order: 1, city: 1 })
-            .select('city slug address mapsUrl region')
+            .select('city slug address mapsUrl region lat lng order published')
             .lean();
 
         return reply({

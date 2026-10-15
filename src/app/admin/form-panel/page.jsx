@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { deleteProject, uploadProduct } from '@/lib/api/products';
 import UpdateProjectForm from './UpdateProjectForm';
+import ProjectCards from './ProjectCards';
 
 const initialFormData = {
     title: '',
@@ -136,7 +137,7 @@ export default function FormPanelPage() {
 
     return (
         <main className="min-h-screen bg-slate-950 px-4 py-12 text-slate-100 sm:px-6">
-            <div className="mx-auto max-w-2xl">
+            <div className="mx-auto max-w-5xl">
                 <div className="mb-8">
                     <p className="text-xs font-semibold uppercase tracking-[0.2em] text-yellow-400">
                         Admin Panel
@@ -149,8 +150,8 @@ export default function FormPanelPage() {
                     </p>
                 </div>
 
-                <div className="mb-4 flex gap-2" role="group" aria-label="Product actions">
-                    {['create', 'delete', 'update'].map((action) => (
+                <div className="mb-4 flex flex-wrap gap-2" role="group" aria-label="Project actions">
+                    {['create', 'delete', 'update', 'display'].map((action) => (
                         <button
                             key={action}
                             type="button"
@@ -162,7 +163,9 @@ export default function FormPanelPage() {
                                     : 'border border-slate-700 bg-slate-900 text-slate-300 hover:border-yellow-500'
                             }`}
                         >
-                            {action[0].toUpperCase() + action.slice(1)}
+                            {action === 'display'
+                                ? 'Show Project Catalog'
+                                : action[0].toUpperCase() + action.slice(1)}
                         </button>
                     ))}
                 </div>
@@ -351,6 +354,10 @@ export default function FormPanelPage() {
 
                 {activeForm === 'update' && (
                     <UpdateProjectForm />
+                )}
+
+                {activeForm === 'display' && (
+                    <ProjectCards />
                 )}
             </div>
         </main>

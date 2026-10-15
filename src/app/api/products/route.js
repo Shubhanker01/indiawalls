@@ -128,6 +128,50 @@ const hasOwn = (value, key) => Object.prototype.hasOwnProperty.call(value, key);
 
 export async function GET(request) {
     try {
+        if (request.nextUrl.searchParams.get('adminCatalog') === '1') {
+            const initialResponse = NextResponse.json({ ok: true });
+            const { supabase, getResponse } = createSupabaseServerClient({
+                request,
+                response: initialResponse,
+            });
+            const reply = (body, status = 200) =>
+                copyAuthCookies(getResponse(), NextResponse.json(body, { status }));
+            const {
+                data: { user },
+                error: userError,
+            } = await supabase.auth.getUser();
+
+            if (userError || !user) {
+                return reply({ error: 'Authentication is required.' }, 401);
+            }
+            if (!verifyAdminRole(user)) {
+                return reply({ error: 'Forbidden: Admin role required.' }, 403);
+            }
+
+            const { data: assurance, error: assuranceError } =
+                await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+            if (assuranceError) {
+                console.error('Failed to verify MFA level:', assuranceError.message);
+                return reply({ error: 'Could not verify authentication level.' }, 500);
+            }
+            if (assurance?.currentLevel !== 'aal2') {
+                return reply({ error: 'MFA verification required (AAL2).' }, 403);
+            }
+
+            await dbConnect();
+            const products = await Product.find({})
+                .select('title slug badge description longDescription image specs order published')
+                .sort({ order: 1, title: 1 })
+                .lean();
+
+            return reply({
+                products: products.map(({ _id, ...product }) => ({
+                    ...product,
+                    id: String(_id),
+                })),
+            });
+        }
+
         const slug = request.nextUrl.searchParams.get('slug')?.trim().toLowerCase();
         if (slug) {
             await dbConnect();

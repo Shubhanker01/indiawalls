@@ -1,13 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, GalleryVertical } from 'lucide-react';
 import AddClientForm from './AddClientForm';
 import DeleteClientForm from './DeleteClientForm';
+import ClientCatalog from './ClientCatalog';
 
 const MODES = [
     { id: 'add', label: 'Add a new client', icon: Plus },
     { id: 'delete', label: 'Delete a client', icon: Trash2 },
+    { id: 'catalog', label: 'Show Catalog', icon: GalleryVertical },
 ];
 
 export default function ClientsManager() {
@@ -61,9 +63,15 @@ export default function ClientsManager() {
             >
                 <h2 className="flex items-center gap-2 text-xl font-bold text-white">
                     <ActiveIcon className="h-5 w-5 text-yellow-400" />
-                    {activeMode.label}
+                    {mode === 'catalog' ? 'Clients catalog' : activeMode.label}
                 </h2>
-                {mode === 'add' ? <AddClientForm /> : <DeleteClientForm />}
+                {mode === 'add' ? (
+                    <AddClientForm />
+                ) : mode === 'delete' ? (
+                    <DeleteClientForm />
+                ) : (
+                    <ClientCatalog />
+                )}
             </section>
         </>
     );
