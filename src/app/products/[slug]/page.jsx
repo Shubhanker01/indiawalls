@@ -194,10 +194,10 @@ export default async function ProductDetailPage({ params }) {
             {/* Specs + manufacturing process */}
             {(detail?.technicalSpecs?.length > 0 || detail?.manufacturingSteps?.length > 0) && (
                 <section className="border-b border-slate-200 bg-white px-4 py-16">
-                    <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-2">
+                    <div className="mx-auto flex max-w-7xl flex-col gap-12">
                         {detail.technicalSpecs?.length > 0 && (
-                            <div>
-                                <h2 className="mb-6 text-2xl font-extrabold text-slate-900">{detail.specsTitle}</h2>
+                            <div className="mx-auto w-full max-w-4xl">
+                                <h2 className="mb-6 text-center text-2xl font-extrabold text-slate-900">{detail.specsTitle}</h2>
                                 <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
                                     <table className="w-full text-left text-base">
                                         <tbody>
